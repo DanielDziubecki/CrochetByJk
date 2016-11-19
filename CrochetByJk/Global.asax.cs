@@ -14,6 +14,7 @@ namespace CrochetByJk
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterComponents();
+            
         }
     }
 }
