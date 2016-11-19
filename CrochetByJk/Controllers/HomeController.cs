@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using CrochetByJk.Messaging.Core;
+using CrochetByJk.Messaging.Queries;
 
 namespace CrochetByJk.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly ICqrsBus bus;
+
+        public HomeController(ICqrsBus bus)
         {
+            this.bus = bus;
+        }
+        public async  Task<ActionResult> Index()
+        {
+            var result = await bus.RunQueryAsync<string>(new TestQuery{TestString = "test"});
             return View();
         }
 
