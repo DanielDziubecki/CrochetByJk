@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using CrochetByJk.Messaging.Core;
-using CrochetByJk.Messaging.Queries;
+
 
 namespace CrochetByJk.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ICqrsBus bus;

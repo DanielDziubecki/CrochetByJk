@@ -12,7 +12,8 @@ namespace CrochetByJk
 		        .AddScript("~/Content/ReactComponents/Navbar.jsx")
 		        .AddScript("~/Content/ReactComponents/Footer.jsx")
 		        .AddScript("~/Content/ReactComponents/ItemContainer.jsx")
-		        .AddScript("~/Content/ReactComponents/Baner.jsx");
+		        .AddScript("~/Content/ReactComponents/Baner.jsx")
+                .AddScript("~/Content/ReactComponents/AdminLoginForm.jsx");
 		    // If you want to use server-side rendering of React components, 
 		    // add all the necessary JavaScript files here. This includes 
 		    // your components as well as all of their dependencies.
