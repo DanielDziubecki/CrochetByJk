@@ -11,7 +11,7 @@ var Footer = React.createClass({
         </div>
       </Nav>
       <Navbar.Text pullRight>
-        <a href="https://www.facebook.com/Aktualne-promocje-w-sieci%C3%B3wkach-1376117769338648/">
+        <a href="https://www.facebook.com/Crochet-by-Joanna-Kuczynska-300469270100790">
           <i className="fa fa-facebook-square" style={{ fontSize: '30px', color: 'royalblue' }}></i></a>
       </Navbar.Text>
     </Navbar>);

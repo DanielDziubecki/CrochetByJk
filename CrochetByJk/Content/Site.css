@@ -18,10 +18,12 @@ textarea { max-width: 280px; }
 
 #baner {
   width: 100%;
-  background: #67A3D9
+  background: #67A3D9;
+  max-height: 400px;
 }
 #baner img{
- margin: 0 0 0 19%;
+   width: 65%;
+   margin: 0 18% 0 18%;
 }
 
 .navbar-default .navbar-brand { color: black; }
@@ -216,7 +218,7 @@ textarea { max-width: 280px; }
     margin: 0 auto;
     box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 }
-.footer-item { margin-top: 20px; }
+.footer-item { margin-top: 21px; }
 
 @media (max-width: 1000px), screen and (max-width: 766px) {
     .navbar-header { float: none; }

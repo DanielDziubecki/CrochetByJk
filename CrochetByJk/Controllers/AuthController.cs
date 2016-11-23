@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CrochetByJk.Messaging.Core;
@@ -7,7 +6,6 @@ using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
 using CrochetByJk.ViewModel;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin;
 using Microsoft.Owin.Security;
 
 namespace CrochetByJk.Controllers
