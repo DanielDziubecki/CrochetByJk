@@ -20,8 +20,7 @@ namespace CrochetByJk.Controllers
         public AuthController(ICqrsBus bus)
         {
             this.bus = bus;
-            userManager = bus.RunQueryAsync<UserManager<ApplicationUser>>(new GetApplicationUserManagerQuery()).Result;
-
+            userManager = bus.RunQuery<UserManager<ApplicationUser>>(new GetApplicationUserManagerQuery());
         }
 
         public ActionResult Index()
@@ -79,11 +78,10 @@ namespace CrochetByJk.Controllers
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return View();
-            }
+            
 
-            var user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 UserName = model.Email,
             };
@@ -93,13 +91,12 @@ namespace CrochetByJk.Controllers
             if (result.Succeeded)
             {
                 await SignIn(user);
-                return RedirectToAction("index", "home");
+                return RedirectToAction("Index", "Home");
             }
 
             foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
+                    ModelState.AddModelError("", error);
+            
 
             return View();
         }

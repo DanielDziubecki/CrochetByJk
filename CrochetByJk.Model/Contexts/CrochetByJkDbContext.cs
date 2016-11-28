@@ -1,15 +1,16 @@
 ﻿using System.Data.Entity;
 using CrochetByJk.Model.Model;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CrochetByJk.Model.Contexts
 {
-
-    public class CrochetByJkDbContext : IdentityDbContext<ApplicationUser>
+    public class CrochetByJkDbContext : DbContext
     {
-        public CrochetByJkDbContext()
-            : base("CrochetByJk")
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+        public CrochetByJkDbContext():base("CrochetByJk")
         {
+            
         }
     }
 }

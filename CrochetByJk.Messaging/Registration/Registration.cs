@@ -2,6 +2,7 @@
 using Autofac;
 using CrochetByJk.Messaging.Bus;
 using CrochetByJk.Messaging.Core;
+using CrochetByJk.Model.Contexts;
 
 namespace CrochetByJk.Messaging.Registration
 {
@@ -12,6 +13,7 @@ namespace CrochetByJk.Messaging.Registration
             var assembly = Assembly.GetExecutingAssembly();
 
             containerBuilder.RegisterType<CqrsBus>().As<ICqrsBus>();
+            containerBuilder.RegisterType<CrochetByJkDbContext>().AsSelf();
 
             containerBuilder.RegisterAssemblyTypes(assembly)
                 .AsClosedTypesOf(typeof(ICommandHandler<>));

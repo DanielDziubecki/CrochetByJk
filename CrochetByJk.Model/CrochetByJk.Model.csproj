@@ -57,8 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ApplicationUser.cs" />
     <Compile Include="Contexts\CrochetByJkDbContext.cs" />
+    <Compile Include="Model\ApplicationUser.cs" />
+    <Compile Include="Contexts\SecurityContext.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

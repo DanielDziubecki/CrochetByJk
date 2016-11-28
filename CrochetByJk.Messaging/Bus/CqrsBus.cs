@@ -14,23 +14,23 @@ namespace CrochetByJk.Messaging.Bus
             this.context = context;
         }
 
-        public async Task<IHandleResult> ExecuteCommandAsync(ICommand command)
+        public IHandleResult ExecuteCommand(ICommand command)
         {
             var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
             dynamic handler = context.Resolve(handlerType);
             if (handler == null)
                 throw new NotImplementedHandlerException($"Cannot find handler for {command.GetType()}");
-            await (Task) handler.HandleAsync((dynamic) command);
+            handler.Handle((dynamic) command);
             return new HandleResult.HandleResult(true);
         }
 
-        public async Task<TResult> RunQueryAsync<TResult>(IQuery query)
+        public TResult RunQuery<TResult>(IQuery query)
         {
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
             dynamic handler = context.Resolve(handlerType);
             if (handler == null)
                 throw new NotImplementedHandlerException($"Cannot find handler for {query.GetType()}");
-            return await (Task<TResult>) handler.HandleAsync((dynamic) query);
+            return handler.Handle((dynamic) query);
         }
     }
 }

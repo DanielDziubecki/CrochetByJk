@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace CrochetByJk.Messaging.Core
 {
-    public interface IQueryHandler<in TQuery, TResult> : IDisposable
+    public interface IQueryHandler<in TQuery, out TResult> : IDisposable
     {
-         Task<TResult> HandleAsync(TQuery query);
+         TResult Handle(TQuery query);
     }
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk", "CrochetByJk\CrochetByJk.csproj", "{09C2D767-EFE3-4DE1-9064-ACD2147A3C3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Web", "CrochetByJk\CrochetByJk.Web.csproj", "{09C2D767-EFE3-4DE1-9064-ACD2147A3C3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Messaging.Core", "CrochetByJk.Messaging.Core\CrochetByJk.Messaging.Core.csproj", "{F20A8F04-7131-4A2E-8B94-BD193056730A}"
 EndProject

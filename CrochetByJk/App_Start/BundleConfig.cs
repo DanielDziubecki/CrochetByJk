@@ -10,9 +10,9 @@ namespace CrochetByJk
         {
 
             bundles.Add(new ScriptBundle("~/bundles/react")
-               .Include("~/Scripts/react/react.js",
-                   "~/Scripts/react/react-dom.js",
-                   "~/Scripts/react/react-bootstrap.js"));
+                .Include("~/Scripts/react/react.js",
+                    "~/Scripts/react/react-dom.js",
+                    "~/Scripts/react/react-bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js"));

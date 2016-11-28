@@ -15,16 +15,16 @@ namespace CrochetByJk.Messaging.QueryHandlers
     public class GetApplicationUserManagerQueryHandler :
         IQueryHandler<GetApplicationUserManagerQuery, UserManager<ApplicationUser>>
     {
-        public Task<UserManager<ApplicationUser>> HandleAsync(GetApplicationUserManagerQuery query)
+        public UserManager<ApplicationUser> Handle(GetApplicationUserManagerQuery query)
         {
             var usermanager = new UserManager<ApplicationUser>(
                               new UserStore<ApplicationUser>(
-                              new CrochetByJkDbContext()));
+                              new SecurityContext()));
             usermanager.UserValidator = new UserValidator<ApplicationUser>(usermanager)
             {
                 AllowOnlyAlphanumericUserNames = false
             };
-            return Task.FromResult(usermanager);
+            return usermanager;
         }
         public void Dispose()
         {

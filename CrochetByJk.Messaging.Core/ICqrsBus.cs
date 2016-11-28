@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace CrochetByJk.Messaging.Core
+﻿namespace CrochetByJk.Messaging.Core
 {
     public interface ICqrsBus
     {
-        Task<IHandleResult> ExecuteCommandAsync(ICommand command);
-        Task<TResult> RunQueryAsync<TResult>(IQuery query);
+        IHandleResult ExecuteCommand(ICommand command);
+        TResult RunQuery<TResult>(IQuery query);
     }
 }
