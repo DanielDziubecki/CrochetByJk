@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace CrochetByJk
 {
@@ -10,7 +9,7 @@ namespace CrochetByJk
         {
 
             bundles.Add(new ScriptBundle("~/bundles/react")
-                .Include("~/Scripts/react/react.js",
+                .Include("~/Scripts/react/react-with-addons.js",
                     "~/Scripts/react/react-dom.js",
                     "~/Scripts/react/react-bootstrap.js"));
 

@@ -2,8 +2,8 @@
 
 namespace CrochetByJk.Messaging.Core
 {
-    public interface IQueryHandler<in TQuery, out TResult> : IDisposable
+    public interface IQueryHandler<in TQuery, out TResult> where TQuery : IQuery
     {
-         TResult Handle(TQuery query);
+        TResult Handle(TQuery query);
     }
 }

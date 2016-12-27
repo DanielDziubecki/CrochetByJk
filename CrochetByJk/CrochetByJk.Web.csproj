@@ -51,6 +51,10 @@
       <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ClearScript, Version=5.4.7.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
       <HintPath>..\packages\JavaScriptEngineSwitcher.V8.2.0.0\lib\net451\ClearScript.dll</HintPath>
       <Private>True</Private>
@@ -230,6 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ReactConfig.cs" />
@@ -238,10 +243,14 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Roles\ApplicationRoles.cs" />
+    <Compile Include="ViewModel\Categories.cs" />
+    <Compile Include="Dto\ProductDto.cs" />
+    <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\UserLoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,6 +265,7 @@
     <Content Include="Content\Img\3.jpg" />
     <Content Include="Content\Img\crochetIcon.png" />
     <Content Include="Content\Img\me.jpg" />
+    <Content Include="Content\Img\my.jpg" />
     <Content Include="Content\Img\v3.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
@@ -275,7 +285,8 @@
     <Content Include="Content\ReactComponents\Navbar.jsx" />
     <Content Include="Content\ReactComponents\Baner.jsx" />
     <Content Include="Content\ReactComponents\AboutMe.jsx" />
-    <Content Include="Content\ReactComponents\CreateNewProductForm.jsx" />
+    <Content Include="Content\ReactComponents\Welcome.jsx" />
+    <Content Include="Content\ReactComponents\CategoryProducts.jsx" />
     <None Include="Properties\PublishProfiles\crochetbyjk.pl - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -320,10 +331,11 @@
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Admin\Panel.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Admin\TestView.cshtml" />
+    <Content Include="Views\Product\Dresses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\ProductsGalleries\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -334,6 +346,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrochetByJk.Components\CrochetByJk.Components.csproj">
+      <Project>{d7b83a38-9fa5-4a6d-8f8d-74bb122b2fdb}</Project>
+      <Name>CrochetByJk.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CrochetByJk.Messaging.Core\CrochetByJk.Messaging.Core.csproj">
       <Project>{f20a8f04-7131-4a2e-8b94-bd193056730a}</Project>
       <Name>CrochetByJk.Messaging.Core</Name>

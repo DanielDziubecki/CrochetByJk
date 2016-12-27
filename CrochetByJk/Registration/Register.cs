@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Integration.Mvc;
 
 namespace CrochetByJk.Registration
 {
@@ -6,7 +7,11 @@ namespace CrochetByJk.Registration
     {
         public static void Register(ContainerBuilder containerBuilder)
         {
-           Messaging.Registration.Registration.Register(containerBuilder);
+            containerBuilder.RegisterControllers(typeof(MvcApplication).Assembly);
+            containerBuilder.RegisterInstance(AutoMapperConfig.GetMapper());
+            Messaging.Registration.Registration.Register(containerBuilder);
+            Components.Registration.Registration.Register(containerBuilder);
+            Model.Registration.Registration.Register(containerBuilder);
         }
     }
 }

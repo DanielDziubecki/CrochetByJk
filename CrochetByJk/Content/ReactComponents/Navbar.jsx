@@ -10,10 +10,10 @@ var MyNavbar = React.createClass({
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-              <MenuItem>Sukienki</MenuItem>
-              <MenuItem>Dla dzieci</MenuItem>
+              <MenuItem href="/Product/Dresses/">Sukienki</MenuItem>
               <MenuItem>Swetry</MenuItem>
               <MenuItem>Torebki</MenuItem>
+              <MenuItem>Dla dzieci</MenuItem>
               <MenuItem>Dekoracje</MenuItem>
               <MenuItem>O mnie</MenuItem>
           </Nav>
@@ -21,6 +21,7 @@ var MyNavbar = React.createClass({
         </Navbar>);
     }
 });
+
 ReactDOM.render(<MyNavbar />,document.getElementById('navbar'));
 
 

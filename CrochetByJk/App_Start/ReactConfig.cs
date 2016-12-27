@@ -9,11 +9,16 @@ namespace CrochetByJk
         public static void Configure()
         {
             ReactSiteConfiguration.Configuration
-                .AddScript("~/Content/ReactComponents/Navbar.jsx")
-                .AddScript("~/Content/ReactComponents/Footer.jsx")
-                .AddScript("~/Content/ReactComponents/ItemContainer.jsx")
-                .AddScript("~/Content/ReactComponents/Baner.jsx")
-                .AddScript("~/Content/ReactComponents/AdminLoginForm.jsx");
+                .AddScript("~/Scripts/react/react-with-addons.js")
+                .AddScript("~/Scripts/react/react-dom.js")
+                .AddScript("~/Scripts/react/react-bootstrap.js")
+                .AddScript("~/Content/ReactComponents/CategoryProducts.jsx");
+            //.AddScript("~/Content/ReactComponents/Navbar.jsx")
+            //.AddScript("~/Content/ReactComponents/Footer.jsx")
+            //.AddScript("~/Content/ReactComponents/ItemContainer.jsx")
+            //.AddScript("~/Content/ReactComponents/Baner.jsx")
+            //.AddScript("~/Content/ReactComponents/AdminLoginForm.jsx")
+            //.AddScript("~/Content/ReactComponents/CategoryProducts.jsx");
             // If you want to use server-side rendering of React components, 
             // add all the necessary JavaScript files here. This includes 
             // your components as well as all of their dependencies.

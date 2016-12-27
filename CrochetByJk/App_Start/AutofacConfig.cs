@@ -10,7 +10,6 @@ namespace CrochetByJk
         {
             var builder = new ContainerBuilder();
             Registration.Registration.Register(builder);
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

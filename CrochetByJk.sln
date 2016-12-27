@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Messaging", "Cr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Model", "CrochetByJk.Model\CrochetByJk.Model.csproj", "{D798377D-E728-43D9-87CF-EE7921617B85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Components", "CrochetByJk.Components\CrochetByJk.Components.csproj", "{D7B83A38-9FA5-4A6D-8F8D-74BB122B2FDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D798377D-E728-43D9-87CF-EE7921617B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D798377D-E728-43D9-87CF-EE7921617B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D798377D-E728-43D9-87CF-EE7921617B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B83A38-9FA5-4A6D-8F8D-74BB122B2FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B83A38-9FA5-4A6D-8F8D-74BB122B2FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B83A38-9FA5-4A6D-8F8D-74BB122B2FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B83A38-9FA5-4A6D-8F8D-74BB122B2FDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

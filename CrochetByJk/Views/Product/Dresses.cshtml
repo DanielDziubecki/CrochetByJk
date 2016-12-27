@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CrochetByJk.ViewModel.ProductViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.React("CategoryProducts", new
+{
+    products = Model
+})
+
+
+@section scripts
+{
+    <script src="~/Content/ReactComponents/CategoryProducts.jsx"></script>
+    @Html.ReactInitJavaScript()
+}

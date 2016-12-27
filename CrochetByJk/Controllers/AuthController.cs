@@ -10,7 +10,6 @@ using Microsoft.Owin.Security;
 
 namespace CrochetByJk.Controllers
 {
-    //todo: przeniesc logowanie do handlerów
     [AllowAnonymous]
     public class AuthController : Controller
     {
