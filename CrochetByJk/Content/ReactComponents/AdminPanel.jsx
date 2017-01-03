@@ -55,63 +55,11 @@ var AddNewProduct = React.createClass({
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
-
-                                <FormGroup controlId="productPrice">
-                                    <Col componentClass={ControlLabel}>
-                                        Cena produktu</Col>
-                                    <Col>
-                                        <FormControl
-                                            placeholder="Cena"
-                                            data-val="true"
-                                            data-val-number="Cena musi być liczbą"
-                                            data-val-required="Cena jest wymagana"
-                                            type="number"
-                                            name="Price" />
-                                    </Col>
-                                </FormGroup>
                             </div>
                         </Col>
+
                         {/*Section two*/}
-                        <Col md={4}>
-                            <div className="newProductFormSection">
-                                <FormGroup controlId="productWorkTime">
-                                    <Col componentClass={ControlLabel}>
-                                        Szacowany czas wykonania</Col>
-                                    <Col>
-                                        <FormControl
-                                            placeholder="Czas"
-                                            data-val="true"
-                                            data-val-required="Czas jest wymagany"
-                                            name="Name"
-                                            type="number"
-                                            />
-                                    </Col>
-                                </FormGroup>
-
-                                <FormGroup controlId="productImages">
-                                    <Col componentClass={ControlLabel}>
-                                        Wybierz zdjęcia do galerii</Col>
-                                    <Col>
-                                        <span className="btn btn-default btn-block btn-file">
-                                            Wybierz<input type="file" multiple id="productGalleryImages" />
-                                        </span>
-                                    </Col>
-                                </FormGroup>
-
-                                <FormGroup controlId="productMainImage">
-                                    <Col componentClass={ControlLabel}>
-                                        Wybierz zdjęcie główne</Col>
-                                    <Col>
-                                        <span className="btn btn-default btn-block btn-file">
-                                            Wybierz<input type="file" id="mainImage" />
-                                        </span>
-                                    </Col>
-                                </FormGroup>
-                            </div>
-                        </Col>
-
-                        {/*Section three*/}
-                        <Col md={4}>
+                        <Col md={8}>
                             <div className="newProductFormSection">
                                 <FormGroup controlId="productDescription">
                                     <Col componentClass={ControlLabel}>
@@ -129,6 +77,28 @@ var AddNewProduct = React.createClass({
                             </div>
                         </Col>
                         <Col>
+                            {/*Section three*/}
+                            <Col md={12}>
+                                <div className="newProductFormSection">
+                                    <FormGroup controlId="productImages">
+                                        <Col componentClass={ControlLabel}>
+                                            Wybierz zdjęcia do galerii</Col>
+                                        <Col>
+                                            <input id="gallery-images" type="file"
+                                                class="file" multiple data-show-upload="false"
+                                                data-show-caption="true" />
+                                        </Col>
+                                    </FormGroup>
+
+                                    <FormGroup controlId="productMainImage">
+                                        <Col componentClass={ControlLabel}>
+                                            Wybierz zdjęcie główne</Col>
+                                        <Col>
+                                            <input id="main-image" type="file" class="file" />
+                                        </Col>
+                                    </FormGroup>
+                                </div>
+                            </Col>
                             <div className="newProductFormSection">
                                 <Button className="btnAddNewProduct" onClick={this.submitForm} type="submit" block>
                                     Dodaj nowy produkt
@@ -136,8 +106,8 @@ var AddNewProduct = React.createClass({
                             </div>
                         </Col>
                     </Form>
-                </fieldset>
-            </ReactCSSTransitionGroup>
+                </fieldset >
+            </ReactCSSTransitionGroup >
         );
     },
     componentDidMount: function () {
@@ -149,6 +119,13 @@ var AddNewProduct = React.createClass({
                 })
             }
         });
+        var $gallery = $('#gallery-images');
+        var $mainImage = $('#main-image');
+        if ($gallery.length)
+            $gallery.fileinput();
+
+        if ($mainImage.length)
+            $mainImage.fileinput();
     },
     submitForm: function (e) {
         var self = this;
@@ -161,13 +138,11 @@ var AddNewProduct = React.createClass({
         var data = new FormData();
         data.append("Name", $("#productName").val())
         data.append("Description", $("#productDescription").val())
-        data.append("Price", $("#productPrice").val())
-        data.append("WorkTime", $("#productWorkTime").val())
         data.append("GalleryUri", $("#productGalleryImages").val())
-        jQuery.each(jQuery('#productGalleryImages')[0].files, function (i, file) {
+        jQuery.each(jQuery('#gallery-images')[0].files, function (i, file) {
             data.append('gallery-image-' + i, file);
         });
-        data.append('MainPhoto', $('#mainImage')[0].files[0]);
+        data.append('MainPhoto', $('#main-image')[0].files[0]);
         data.append('IdCategory', $("#productCategory option:selected").val());
 
         $.ajax({
@@ -177,7 +152,7 @@ var AddNewProduct = React.createClass({
             processData: false,
             data: data,
             success: function (result) {
-                 $('.validationMsg').text(result.responseText);
+                $('.validationMsg').text(result.responseText);
             }
         });
         $('.btnAddNewProduct').text("Dodaj nowy produkt");

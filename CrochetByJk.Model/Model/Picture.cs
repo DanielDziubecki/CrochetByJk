@@ -9,7 +9,7 @@ namespace CrochetByJk.Model.Model
     {
         [Key]
         public Guid IdPicture { get; set; }
-        public string Uri { get; set; }
+        public string Url { get; set; }
         public string Name { get; set; }
         public bool IsMainPhoto { get; set; }
 

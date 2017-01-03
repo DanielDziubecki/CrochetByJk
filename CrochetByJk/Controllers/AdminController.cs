@@ -40,9 +40,8 @@ namespace CrochetByJk.Controllers
         public JsonResult AddNewProduct(ProductDto product)
         {
             if (!ModelState.IsValid)
-            {
                 return Json(new {Success = "False", responseText = "Wprowadź poprawne dane."});
-            }
+            
             var productId = Guid.NewGuid();
             try
             {
@@ -57,9 +56,8 @@ namespace CrochetByJk.Controllers
                     IdCategory = product.IdCategory,
                     Description = product.Description,
                     IdMainPicture = mainPicture.IdPicture,
-                    Price = product.Price,
-                    ProductGallery = enumerable.ToArray(),
-                    WorkTime = product.WorkTime
+                    InsertDate = DateTime.Now,
+                    ProductGallery = enumerable.ToArray()
                 }));
             }
             catch (Exception ex)

@@ -10,33 +10,40 @@ namespace CrochetByJk.Components
     {
         public ProductGalleryProvider()
         {
-            if (!IsDirectoryExists(RootDirectory))
+            if (!IsDirectoryExists(ServerRoot))
                 CreateGalleriesRootDirectory();
         }
 
-        public string RootDirectory { get; } = HttpContext.Current.Server.MapPath(@"~\Content\ProductsGalleries");
+        private string ServerRoot { get; } = HttpContext.Current.Server.MapPath(WebSiteRoot);
 
-        public bool IsDirectoryExists(string path)
+        private static string WebSiteRoot { get; } = @"~\Content\ProductsGalleries";
+
+        private bool IsDirectoryExists(string path)
         {
             return Directory.Exists(path);
         }
 
-        public void CreateGalleryDirectory(Guid productId)
+        private void CreateGalleryDirectory(Guid productId)
         {
-            var galleryUri = Path.Combine(RootDirectory, productId.ToString());
+            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
             if (!IsDirectoryExists(galleryUri))
                 Directory.CreateDirectory(galleryUri);
         }
 
-        public void CreateGalleriesRootDirectory()
+        private void CreateGalleriesRootDirectory()
         {
-            Directory.CreateDirectory(RootDirectory);
+            Directory.CreateDirectory(ServerRoot);
+        }
+
+        private string ConvertUriToUrl(string uri)
+        {
+            return uri.Replace("\\", "/").Replace("~","");
         }
 
         public void DeleteProductGallery(Guid productId)
         {
-            var galleryUri = Path.Combine(RootDirectory, productId.ToString());
-            if(Directory.Exists(galleryUri))
+            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
+            if (Directory.Exists(galleryUri))
                 Directory.Delete(galleryUri);
         }
 
@@ -44,7 +51,7 @@ namespace CrochetByJk.Components
         {
             var files = (HttpFileCollectionBase) requestFiles;
             var pictures = new List<Picture>();
-            var galleryUri = Path.Combine(RootDirectory, productId.ToString());
+            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
             if (!IsDirectoryExists(galleryUri))
                 CreateGalleryDirectory(productId);
 
@@ -55,16 +62,18 @@ namespace CrochetByJk.Components
                 {
                     var stream = fileContent.InputStream;
                     var fileName = fileContent.FileName;
-                    var path = Path.Combine(galleryUri, fileName);
-                    using (var fileStream = File.Create(path))
+                    var physicalPath = Path.Combine(galleryUri, fileName);
+                    using (var fileStream = File.Create(physicalPath))
                     {
                         stream.CopyTo(fileStream);
                     }
+                    var galleryUrl = Path.Combine(WebSiteRoot, productId.ToString());
+                    var webPath = ConvertUriToUrl(Path.Combine(galleryUrl,fileName));
                     pictures.Add(new Picture
                     {
                         IdPicture = Guid.NewGuid(),
                         IdProduct = productId,
-                        Uri = path,
+                        Url = webPath,
                         Name = fileName
                     });
                 }

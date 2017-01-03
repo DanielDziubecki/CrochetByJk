@@ -12,9 +12,9 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 
-input,
+/*input,
 select,
-textarea { max-width: 280px; }
+textarea { max-width: 280px; }*/
 
 #baner {
   background: #67A3D9;
@@ -305,10 +305,9 @@ textarea { max-width: 280px; }
 }
 
 #addNewProductForm{
-  display: flex;
-  justify-content: center;
-  margin: 5%;
+  margin: 5% 15% 5% 15%;
 }
+
 .newProductFormSection{
    margin: 0 10px 0 10px;
 }
@@ -342,7 +341,7 @@ textarea { max-width: 280px; }
 .adminButton:focus{outline: 0;}
 
 .btnAddNewProduct{
-    float: right;
+    /*float: right;*/
 }
 
 .btnAddNewProduct:hover{
@@ -350,27 +349,10 @@ textarea { max-width: 280px; }
  color: white
 }
 .newProductDescription{
-min-height: 185px; 
+min-height: 110px; 
+min-width: 100%;
 }
-.btn-file {
-    position: relative;
-    overflow: hidden;
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
+
 .example-enter{
   opacity: 0.01;
 }

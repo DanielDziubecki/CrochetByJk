@@ -9,9 +9,11 @@ namespace CrochetByJk
         {
 
             bundles.Add(new ScriptBundle("~/bundles/react")
-                .Include("~/Scripts/react/react-with-addons.js",
+                .Include(
+                    "~/Scripts/react/react-with-addons.js",
                     "~/Scripts/react/react-dom.js",
-                    "~/Scripts/react/react-bootstrap.js"));
+                    "~/Scripts/react/react-bootstrap.js"
+                   ));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js"));
@@ -30,6 +32,7 @@ namespace CrochetByJk
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
+                "~/Content/Fileinput/css/fileinput.css",
                 "~/Content/site.css",
                 "~/Content/aos.css"));
         }
