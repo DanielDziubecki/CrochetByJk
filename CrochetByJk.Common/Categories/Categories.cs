@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CrochetByJk.ViewModel
+namespace CrochetByJk.Common.Categories
 {
     public static class Categories
     {

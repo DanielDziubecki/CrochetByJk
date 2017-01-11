@@ -1,6 +1,7 @@
 ﻿body {
     background: #f5f5f5;
-   font-family: 'Patua One', cursive;
+    font-family: 'Dekko', sans-serif;
+    font-weight: bold;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -309,7 +310,7 @@ textarea { max-width: 280px; }*/
 }
 
 .newProductFormSection{
-   margin: 0 10px 0 10px;
+   margin: 0 10px 0px 10px;
 }
 .adminButton {
   display: inline-block;
@@ -322,7 +323,7 @@ textarea { max-width: 280px; }*/
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: #26C6DA;
+  background-color: #67A3D9;
   border: none;
   border-radius: 2px;
   box-shadow: 9px 9px #999;
@@ -333,26 +334,32 @@ textarea { max-width: 280px; }*/
 .adminButton:hover {background-color: rgba(3, 3, 3, 0.5);}
 
 .adminButton:active {
-  background-color: #26C6DA;
+  background-color:#67A3D9;
   box-shadow: 4px 5px #666;
   transform: translateY(4px);
   }
 
 .adminButton:focus{outline: 0;}
 
-.btnAddNewProduct{
-    /*float: right;*/
-}
-
 .btnAddNewProduct:hover{
- background-color:  #26C6DA;
+ background-color:  #67A3D9;
  color: white
 }
-.newProductDescription{
-min-height: 110px; 
-min-width: 100%;
+
+.goToNewProductContainer{
+  display: flex;
+  justify-content: center;
 }
 
+.goToNewProduct:hover{
+ background-color:  #67A3D9;
+ color: white
+}
+
+.newProductDescription{
+min-height: 111px; 
+min-width: 100%;
+}
 .example-enter{
   opacity: 0.01;
 }

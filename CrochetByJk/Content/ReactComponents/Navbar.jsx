@@ -10,7 +10,7 @@ var MyNavbar = React.createClass({
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-              <MenuItem href="/Product/Dresses/">Sukienki</MenuItem>
+              <MenuItem href="/Produkty/Sukienki/">Sukienki</MenuItem>
               <MenuItem>Swetry</MenuItem>
               <MenuItem>Torebki</MenuItem>
               <MenuItem>Dla dzieci</MenuItem>

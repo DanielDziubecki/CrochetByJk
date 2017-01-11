@@ -27,4 +27,3 @@ var Tile = ({product}) => (
 );
 
 
-// ReactDOM.render(<CategoryProducts products={Model} />, document.getElementById('categoryProducts'));

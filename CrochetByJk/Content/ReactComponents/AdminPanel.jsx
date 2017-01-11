@@ -12,6 +12,7 @@ var AdminNavigationPanel = React.createClass({
         );
     }
 });
+
 var AddNewProduct = React.createClass({
     getInitialState: function () {
         return {
@@ -99,6 +100,7 @@ var AddNewProduct = React.createClass({
                                     </FormGroup>
                                 </div>
                             </Col>
+
                             <div className="newProductFormSection">
                                 <Button className="btnAddNewProduct" onClick={this.submitForm} type="submit" block>
                                     Dodaj nowy produkt
@@ -125,7 +127,9 @@ var AddNewProduct = React.createClass({
             $gallery.fileinput();
 
         if ($mainImage.length)
-            $mainImage.fileinput();
+            $mainImage.fileinput({
+                showUpload: false,
+            });
     },
     submitForm: function (e) {
         var self = this;
@@ -139,11 +143,14 @@ var AddNewProduct = React.createClass({
         data.append("Name", $("#productName").val())
         data.append("Description", $("#productDescription").val())
         data.append("GalleryUri", $("#productGalleryImages").val())
+
         jQuery.each(jQuery('#gallery-images')[0].files, function (i, file) {
             data.append('gallery-image-' + i, file);
         });
+
         data.append('MainPhoto', $('#main-image')[0].files[0]);
         data.append('IdCategory', $("#productCategory option:selected").val());
+        data.append('CategoryName', $("#productCategory option:selected").text());
 
         $.ajax({
             url: '/addnewproduct',
@@ -153,6 +160,8 @@ var AddNewProduct = React.createClass({
             data: data,
             success: function (result) {
                 $('.validationMsg').text(result.responseText);
+                ReactDOM.unmountComponentAtNode(document.getElementById('addNewProductForm'));
+                newProductAdded(result.Url);
             }
         });
         $('.btnAddNewProduct').text("Dodaj nowy produkt");
@@ -160,7 +169,26 @@ var AddNewProduct = React.createClass({
     }
 });
 
+var GoToNewProduct = ({url}) => (
+   
+    <div className="goToNewProductContainer">
+        <ReactCSSTransitionGroup transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={500}>
+            <Button className="goToNewProduct" type="submit" href={url}>
+                Przejdź do produktu
+          </Button>
+        </ReactCSSTransitionGroup>
+    </div>
+);
+
+
+
 function addNewProductForm() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('goToNewProduct'));
     ReactDOM.render(<AddNewProduct />, document.getElementById('addNewProductForm'));
+}
+function newProductAdded(url) {
+    ReactDOM.render(<GoToNewProduct url={url} />, document.getElementById('goToNewProduct'));
 }
 ReactDOM.render(<AdminNavigationPanel />, document.getElementById('adminNavigationPanel'));

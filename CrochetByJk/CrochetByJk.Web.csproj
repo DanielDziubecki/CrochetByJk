@@ -247,8 +247,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Roles\ApplicationRoles.cs" />
-    <Compile Include="ViewModel\Categories.cs" />
     <Compile Include="Dto\ProductDto.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
@@ -258,6 +256,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\aos.css" />
+    <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
+    <Content Include="Content\bootstrap-fileinput\css\fileinput.min.css" />
+    <Content Include="Content\bootstrap-fileinput\img\loading-sm.gif" />
+    <Content Include="Content\bootstrap-fileinput\img\loading.gif" />
+    <Content Include="Content\bootstrap-fileinput\themes\fa\theme.js" />
+    <Content Include="Content\bootstrap-fileinput\themes\gly\theme.js" />
     <Content Include="Content\Fileinput\css\fileinput.css" />
     <Content Include="Content\Fileinput\css\fileinput.min.css" />
     <Content Include="Content\Fileinput\img\loading-sm.gif" />
@@ -299,6 +303,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\Fileinput\sass\fileinput.scss" />
+    <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
     <None Include="Properties\PublishProfiles\crochetbyjk.pl - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -395,6 +400,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrochetByJk.Common\CrochetByJk.Common.csproj">
+      <Project>{51736241-5ea5-4ae9-b5ff-1cd986aac07f}</Project>
+      <Name>CrochetByJk.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CrochetByJk.Components\CrochetByJk.Components.csproj">
       <Project>{d7b83a38-9fa5-4a6d-8f8d-74bb122b2fdb}</Project>
       <Name>CrochetByJk.Components</Name>

@@ -380,7 +380,7 @@
         '        {upload} {delete} {zoom} {other}' +
         '    </div>\n' +
         '    {drag}\n' +
-        //'    <div class="file-upload-indicator" title="{indicatorTitle}">{indicator}</div>\n' +
+        // '    <div class="file-upload-indicator" title="{indicatorTitle}">{indicator}</div>\n' +
         '    <div class="clearfix"></div>\n' +
         '</div>';
     //noinspection HtmlUnknownAttribute
@@ -3226,18 +3226,18 @@
     $.fn.fileinputLocales.en = {
         fileSingle: 'file',
         filePlural: 'files',
-        browseLabel: 'Browse &hellip;',
-        removeLabel: 'Remove',
-        removeTitle: 'Clear selected files',
-        cancelLabel: 'Cancel',
-        cancelTitle: 'Abort ongoing upload',
+        browseLabel: 'Wybierz &hellip;',
+        removeLabel: 'Usuń',
+        removeTitle: 'Usuwa wybrane pliki',
+        cancelLabel: 'Anuluj',
+        cancelTitle: 'Zatrzymaj ładowanie plików',
         uploadLabel: 'Upload',
         uploadTitle: 'Upload selected files',
-        msgNo: 'No',
-        msgNoFilesSelected: 'No files selected',
-        msgCancelled: 'Cancelled',
-        msgZoomModalHeading: 'Detailed Preview',
-        msgSizeTooLarge: 'File "{name}" (<b>{size} KB</b>) exceeds maximum allowed upload size of <b>{maxSize} KB</b>.',
+        msgNo: 'Nie',
+        msgNoFilesSelected: 'Nie wybrano plików',
+        msgCancelled: 'Anulowane',
+        msgZoomModalHeading: '',
+        msgSizeTooLarge: 'Plik "{name}" jest za duży. Maksymalny rozmiar to: <b>{maxSize} KB</b>.',
         msgFilesTooLess: 'You must select at least <b>{n}</b> {files} to upload.',
         msgFilesTooMany: 'Number of files selected for upload <b>({n})</b> exceeds maximum allowed limit of <b>{m}</b>.',
         msgFileNotFound: 'File "{name}" not found!',
@@ -3248,11 +3248,11 @@
         msgInvalidFileType: 'Invalid type for file "{name}". Only "{types}" files are supported.',
         msgInvalidFileExtension: 'Invalid extension for file "{name}". Only "{extensions}" files are supported.',
         msgUploadAborted: 'The file upload was aborted',
-        msgUploadThreshold: 'Processing...',
+        msgUploadThreshold: 'Przetwarzam...',
         msgValidationError: 'Validation Error',
         msgLoading: 'Loading file {index} of {files} &hellip;',
         msgProgress: 'Loading file {index} of {files} - {name} - {percent}% completed.',
-        msgSelected: '{n} {files} selected',
+        msgSelected: '{n} plików',
         msgFoldersNotAllowed: 'Drag & drop files only! {n} folder(s) dropped were skipped.',
         msgImageWidthSmall: 'Width of image file "{name}" must be at least {size} px.',
         msgImageHeightSmall: 'Height of image file "{name}" must be at least {size} px.',
@@ -3276,11 +3276,11 @@
 
     /**
      * Convert automatically file inputs with class 'file' into a bootstrap fileinput control.
-     */
-    //$(document).ready(function () {
-    //    var $input = $('input.file[type=file]');
-    //    if ($input.length) {
-    //        $input.fileinput();
-    //    }
-    //});
+    //  */
+    // $(document).ready(function () {
+    //     var $input = $('input.file[type=file]');
+    //     if ($input.length) {
+    //         $input.fileinput();
+    //     }
+    // });
 }));

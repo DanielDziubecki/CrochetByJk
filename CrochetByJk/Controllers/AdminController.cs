@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using CrochetByJk.Common.Roles;
+using CrochetByJk.Common.ShortGuid;
 using CrochetByJk.Components;
 using CrochetByJk.Dto;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
-using CrochetByJk.Roles;
 
 namespace CrochetByJk.Controllers
 {
@@ -37,7 +38,7 @@ namespace CrochetByJk.Controllers
         }
 
         [Route("addnewproduct")]
-        public JsonResult AddNewProduct(ProductDto product)
+        public JsonResult AddNewProduct(ProductDto productDto)
         {
             if (!ModelState.IsValid)
                 return Json(new {Success = "False", responseText = "Wprowadź poprawne dane."});
@@ -47,25 +48,28 @@ namespace CrochetByJk.Controllers
             {
                 var pictures = galleryProvider.SaveProductPictures(productId, Request.Files);
                 var enumerable = pictures as Picture[] ?? pictures.ToArray();
-                var mainPicture = enumerable.Single(x => x.Name == product.MainPhoto.FileName);
+                var mainPicture = enumerable.Single(x => x.Name == productDto.MainPhoto.FileName);
                 mainPicture.IsMainPhoto = true;
-                bus.ExecuteCommand(new SaveProductCommand(new Product
+                var product = new Product
                 {
                     IdProduct = productId,
-                    Name = product.Name,
-                    IdCategory = product.IdCategory,
-                    Description = product.Description,
+                    Name = productDto.Name,
+                    IdCategory = productDto.IdCategory,
+                    Description = productDto.Description,
+                    ProductUrl = $"Produkty/{productDto.CategoryName}/{new ShortGuid(productId)}",
                     IdMainPicture = mainPicture.IdPicture,
                     InsertDate = DateTime.Now,
                     ProductGallery = enumerable.ToArray()
-                }));
+                };
+                bus.ExecuteCommand(new SaveProductCommand(product));
+                return Json(new { Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl });
             }
             catch (Exception ex)
             {
                 galleryProvider.DeleteProductGallery(productId);
                 return Json(new {Success = "False", responseText = "Wystąpił błąd."});
             }
-            return Json(new { Success = "True", responseText = "Dodano produkt." });
+           
         }
     }
 }

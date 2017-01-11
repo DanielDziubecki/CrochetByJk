@@ -13,6 +13,7 @@ namespace CrochetByJk.Model.Model
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public string ProductUrl { get; set; }
         public DateTime InsertDate { get; set; }
 
         public Guid IdMainPicture { get; set; }
