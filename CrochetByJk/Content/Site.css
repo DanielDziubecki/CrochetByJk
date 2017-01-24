@@ -308,7 +308,9 @@ textarea { max-width: 280px; }*/
 #addNewProductForm{
   margin: 5% 15% 5% 15%;
 }
-
+.error{
+    color: #d82323
+}
 .newProductFormSection{
    margin: 0 10px 0px 10px;
 }

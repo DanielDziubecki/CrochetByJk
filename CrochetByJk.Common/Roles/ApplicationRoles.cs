@@ -1,4 +1,4 @@
-﻿namespace CrochetByJk.Roles
+﻿namespace CrochetByJk.Common.Roles
 {
     public static class ApplicationRoles
     {

@@ -25,20 +25,25 @@ var AddNewProduct = React.createClass({
             <ReactCSSTransitionGroup transitionName="example"
                 transitionAppear={true}
                 transitionAppearTimeout={500}>
-                <div className="validationMsg"></div>
+
                 <fieldset disabled={this.state.formDisabled}>
-                    <Form horizontal className="addNewProductForm" method="POST">
+                    <Form horizontal className="addNewProductForm" method="POST" id="productForm">
                         {/*Section one*/}
                         <Col md={4}>
                             <div className="newProductFormSection">
-                                <FormGroup controlId="productName">
+                                <FormGroup
+                                    controlId="productName"
+                                    htmlFor="Name">
                                     <Col componentClass={ControlLabel}>
-                                        Nazwa produktu</Col>
+                                        Nazwa produktu
+                                   </Col>
                                     <Col>
-                                        <FormControl placeholder="Nazwa"
-                                            data-val="true"
-                                            data-val-required="Nazwa jest wymagana"
-                                            name="Name" />
+                                        <FormControl
+                                            placeholder="Nazwa"
+                                            name="Name"
+                                            type="text"
+                                            minLength="5"
+                                            required />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup controlId="productCategory">
@@ -48,8 +53,7 @@ var AddNewProduct = React.createClass({
                                         <FormControl
                                             componentClass="select"
                                             placeholder="select"
-                                            className="productCategories"
-                                            accept=".png, .jpg, .jpeg">
+                                            className="productCategories">
                                             {this.state.data.map(function (category) {
                                                 return <option value={category.IdCategory}>{category.Name}</option>
                                             })}
@@ -62,17 +66,19 @@ var AddNewProduct = React.createClass({
                         {/*Section two*/}
                         <Col md={8}>
                             <div className="newProductFormSection">
-                                <FormGroup controlId="productDescription">
+                                <FormGroup
+                                    controlId="productDescription"
+                                    htmlFor="Description">
                                     <Col componentClass={ControlLabel}>
                                         Opis produktu</Col>
                                     <Col>
                                         <FormControl
                                             placeholder="Opis"
                                             componentClass="textarea"
-                                            data-val="true"
-                                            data-val-required="Opis jest wymagany"
                                             className="newProductDescription"
-                                            name="Description" />
+                                            name="Description"
+                                            minLength="10"
+                                            required />
                                     </Col>
                                 </FormGroup>
                             </div>
@@ -81,22 +87,40 @@ var AddNewProduct = React.createClass({
                             {/*Section three*/}
                             <Col md={12}>
                                 <div className="newProductFormSection">
-                                    <FormGroup controlId="productImages">
+                                    <FormGroup
+                                        controlId="productImages"
+                                        htmlFor="galleryImages">
                                         <Col componentClass={ControlLabel}>
                                             Wybierz zdjęcia do galerii</Col>
                                         <Col>
-                                            <input id="gallery-images" type="file"
-                                                class="file" multiple data-show-upload="false"
-                                                data-show-caption="true" />
+                                            <input
+                                                id="gallery-images"
+                                                type="file"
+                                                className="file"
+                                                name="galleryImages"
+                                                multiple data-show-upload="false"
+                                                data-show-caption="true"
+                                                accept=".png, .jpg, .jpeg"
+                                                required />
                                         </Col>
+                                        <div id="galleryImagesError"></div>
                                     </FormGroup>
 
-                                    <FormGroup controlId="productMainImage">
+                                    <FormGroup
+                                        controlId="productMainImage"
+                                        htmlFor="mainImage">
                                         <Col componentClass={ControlLabel}>
                                             Wybierz zdjęcie główne</Col>
                                         <Col>
-                                            <input id="main-image" type="file" class="file" />
+                                            <input
+                                                id="main-image"
+                                                type="file"
+                                                class="file"
+                                                name="mainImage"
+                                                accept=".png, .jpg, .jpeg"
+                                                required />
                                         </Col>
+                                        <div id="mainImageError"></div>
                                     </FormGroup>
                                 </div>
                             </Col>
@@ -132,6 +156,23 @@ var AddNewProduct = React.createClass({
             });
     },
     submitForm: function (e) {
+        var form = $("#productForm");
+        form.validate({
+            errorPlacement: function (error, element) {
+                if (element.attr("name") == "mainImage" )
+                {
+                    error.insertAfter("#mainImageError");
+                } 
+                else if(element.attr("name") == "galleryImages" ){
+                        error.insertAfter("#galleryImagesError");
+                }
+                else {
+                    error.insertAfter(element);
+                }
+        }});
+        if (!form.valid())
+            return;
+
         var self = this;
         e.preventDefault();
         $('.btnAddNewProduct').text("");
@@ -170,7 +211,7 @@ var AddNewProduct = React.createClass({
 });
 
 var GoToNewProduct = ({url}) => (
-   
+
     <div className="goToNewProductContainer">
         <ReactCSSTransitionGroup transitionName="example"
             transitionAppear={true}
