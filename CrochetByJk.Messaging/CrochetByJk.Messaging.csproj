@@ -103,9 +103,11 @@
     <Compile Include="Queries\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetApplicationUserManagerQuery.cs" />
     <Compile Include="Queries\GetProductsFromCategoryQuery.cs" />
+    <Compile Include="Queries\GetAllProductNamesFromCategoryQuery.cs" />
     <Compile Include="QueryHandlers\GetAllCategoriesQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetApplicationUserManagerQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductsFromCategoryQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetAllProductNamesFromCategoryQueryHandler.cs" />
     <Compile Include="Registration\Registration.cs" />
   </ItemGroup>
   <ItemGroup>

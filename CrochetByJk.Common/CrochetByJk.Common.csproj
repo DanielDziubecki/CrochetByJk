@@ -40,10 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Categories\Categories.cs" />
+    <Compile Include="Constants\CategoriesConstants.cs" />
+    <Compile Include="Constants\PicturesConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\ApplicationRoles.cs" />
     <Compile Include="ShortGuid\ShortGuid.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrochetByJk.Model\CrochetByJk.Model.csproj">
+      <Project>{d798377d-e728-43d9-87cf-ee7921617b85}</Project>
+      <Name>CrochetByJk.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

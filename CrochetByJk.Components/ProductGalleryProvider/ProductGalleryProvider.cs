@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
+using CrochetByJk.Common.Constants;
+using CrochetByJk.Common.Utils;
+using CrochetByJk.Components.Validators;
 using CrochetByJk.Model.Model;
 
-namespace CrochetByJk.Components
+namespace CrochetByJk.Components.ProductGalleryProvider
 {
     public class ProductGalleryProvider : IProductGalleryProvider
     {
-        public ProductGalleryProvider()
+        private readonly IValidator<IEnumerable<Picture>> validator;
+
+        public ProductGalleryProvider(IValidator<IEnumerable<Picture>> validator)
         {
+            this.validator = validator;
             if (!IsDirectoryExists(ServerRoot))
                 CreateGalleriesRootDirectory();
         }
@@ -23,9 +29,9 @@ namespace CrochetByJk.Components
             return Directory.Exists(path);
         }
 
-        private void CreateGalleryDirectory(Guid productId)
+        private void CreateGalleryDirectory(string directoryId)
         {
-            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
+            var galleryUri = Path.Combine(ServerRoot, directoryId);
             if (!IsDirectoryExists(galleryUri))
                 Directory.CreateDirectory(galleryUri);
         }
@@ -47,13 +53,15 @@ namespace CrochetByJk.Components
                 Directory.Delete(galleryUri);
         }
 
-        public IEnumerable<Picture> SaveProductPictures(Guid productId, object requestFiles)
+        public IEnumerable<Picture> SaveProductGallery(Gallery gallery)
         {
-            var files = (HttpFileCollectionBase) requestFiles;
+            var files = gallery.Pictures;
             var pictures = new List<Picture>();
-            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
+            var galleryId = gallery.GalleryId.ToString();
+            var galleryUri = Path.Combine(ServerRoot, galleryId);
+
             if (!IsDirectoryExists(galleryUri))
-                CreateGalleryDirectory(productId);
+                CreateGalleryDirectory(galleryId);
 
             foreach (string file in files)
             {
@@ -61,23 +69,26 @@ namespace CrochetByJk.Components
                 if (fileContent != null && fileContent.ContentLength > 0)
                 {
                     var stream = fileContent.InputStream;
-                    var fileName = fileContent.FileName;
+                    var fileName = fileContent.FileName.RemoveSpecialCharacters()
+                                                       .RemoveWhiteSpace();
                     var physicalPath = Path.Combine(galleryUri, fileName);
                     using (var fileStream = File.Create(physicalPath))
                     {
                         stream.CopyTo(fileStream);
                     }
-                    var galleryUrl = Path.Combine(WebSiteRoot, productId.ToString());
+                    var galleryUrl = Path.Combine(WebSiteRoot, galleryId);
                     var webPath = ConvertUriToUrl(Path.Combine(galleryUrl,fileName));
                     pictures.Add(new Picture
                     {
                         IdPicture = Guid.NewGuid(),
-                        IdProduct = productId,
+                        IdProduct = gallery.GalleryId,
                         Url = webPath,
-                        Name = fileName
+                        Name = fileName,
+                        IsMainPhoto = file == PicturesConstants.MainPhoto
                     });
                 }
             }
+            validator.Validate(pictures);
             return pictures;
         }
     }

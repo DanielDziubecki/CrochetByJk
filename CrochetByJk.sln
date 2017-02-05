@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Components", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Common", "CrochetByJk.Common\CrochetByJk.Common.csproj", "{51736241-5EA5-4AE9-B5FF-1CD986AAC07F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrochetByJk.Tests", "CrochetByJk.Tests\CrochetByJk.Tests.csproj", "{85D3D4CB-8CEE-46F5-8507-DC7D3B2CEE1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{51736241-5EA5-4AE9-B5FF-1CD986AAC07F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51736241-5EA5-4AE9-B5FF-1CD986AAC07F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51736241-5EA5-4AE9-B5FF-1CD986AAC07F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85D3D4CB-8CEE-46F5-8507-DC7D3B2CEE1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85D3D4CB-8CEE-46F5-8507-DC7D3B2CEE1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85D3D4CB-8CEE-46F5-8507-DC7D3B2CEE1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85D3D4CB-8CEE-46F5-8507-DC7D3B2CEE1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

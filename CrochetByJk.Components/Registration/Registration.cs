@@ -1,4 +1,8 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
+using CrochetByJk.Components.ProductGalleryProvider;
+using CrochetByJk.Components.Validators;
+using CrochetByJk.Model.Model;
 
 namespace CrochetByJk.Components.Registration
 {
@@ -6,7 +10,14 @@ namespace CrochetByJk.Components.Registration
     {
         public static void Register(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<ProductGalleryProvider>().As<IProductGalleryProvider>();
+            containerBuilder.RegisterType<ProductGalleryProvider.ProductGalleryProvider>()
+                .As<IProductGalleryProvider>();
+
+            containerBuilder.RegisterType<ProductValidator>()
+                .As<IValidator<Product>>();
+
+            containerBuilder.RegisterType<PictureValidator>()
+                .As<IValidator<IEnumerable<Picture>>>();
         }
     }
 }

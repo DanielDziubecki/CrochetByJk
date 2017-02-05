@@ -6,8 +6,7 @@ var AdminNavigationPanel = React.createClass({
         return (
             <div id="adminButtonGroup">
                 <Button className="adminButton" onClick={addNewProductForm}>Dodaj produkt</Button>
-                <Button className="adminButton">Click Me!</Button>
-                <Button className="adminButton">Click Me!</Button>
+                <Button className="adminButton">Zarządzaj produktami</Button>
             </div>
         );
     }
@@ -22,10 +21,10 @@ var AddNewProduct = React.createClass({
     },
     render: function () {
         return (
-            <ReactCSSTransitionGroup transitionName="example"
+            <ReactCSSTransitionGroup transitionName="adminFormAnimation"
                 transitionAppear={true}
                 transitionAppearTimeout={500}>
-
+                <div id="validationMsg"></div>
                 <fieldset disabled={this.state.formDisabled}>
                     <Form horizontal className="addNewProductForm" method="POST" id="productForm">
                         {/*Section one*/}
@@ -159,17 +158,17 @@ var AddNewProduct = React.createClass({
         var form = $("#productForm");
         form.validate({
             errorPlacement: function (error, element) {
-                if (element.attr("name") == "mainImage" )
-                {
+                if (element.attr("name") == "mainImage") {
                     error.insertAfter("#mainImageError");
-                } 
-                else if(element.attr("name") == "galleryImages" ){
-                        error.insertAfter("#galleryImagesError");
+                }
+                else if (element.attr("name") == "galleryImages") {
+                    error.insertAfter("#galleryImagesError");
                 }
                 else {
                     error.insertAfter(element);
                 }
-        }});
+            }
+        });
         if (!form.valid())
             return;
 
@@ -200,7 +199,10 @@ var AddNewProduct = React.createClass({
             processData: false,
             data: data,
             success: function (result) {
-                $('.validationMsg').text(result.responseText);
+                if (result.Success == "False") {
+                    $('#validationMsg').text(result.responseText);
+                    return;
+                }
                 ReactDOM.unmountComponentAtNode(document.getElementById('addNewProductForm'));
                 newProductAdded(result.Url);
             }
@@ -211,19 +213,16 @@ var AddNewProduct = React.createClass({
 });
 
 var GoToNewProduct = ({url}) => (
-
     <div className="goToNewProductContainer">
-        <ReactCSSTransitionGroup transitionName="example"
+        <ReactCSSTransitionGroup transitionName="adminFormAnimation"
             transitionAppear={true}
             transitionAppearTimeout={500}>
-            <Button className="goToNewProduct" type="submit" href={url}>
+            <Button className="btnGoToNewProduct" href={url}>
                 Przejdź do produktu
           </Button>
         </ReactCSSTransitionGroup>
     </div>
 );
-
-
 
 function addNewProductForm() {
     ReactDOM.unmountComponentAtNode(document.getElementById('goToNewProduct'));

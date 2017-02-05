@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Web.Mvc;
 using CrochetByJk.Common.Roles;
-using CrochetByJk.Common.ShortGuid;
-using CrochetByJk.Components;
+using CrochetByJk.Components.ProductGalleryProvider;
+using CrochetByJk.Components.Validators;
 using CrochetByJk.Dto;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
@@ -16,11 +16,13 @@ namespace CrochetByJk.Controllers
     public class AdminController : Controller
     {
         private readonly ICqrsBus bus;
+        private readonly IValidator<Product> validator;
         private readonly IProductGalleryProvider galleryProvider;
 
-        public AdminController(ICqrsBus bus, IProductGalleryProvider galleryProvider)
+        public AdminController(ICqrsBus bus, IValidator<Product> validator ,IProductGalleryProvider galleryProvider)
         {
             this.bus = bus;
+            this.validator = validator;
             this.galleryProvider = galleryProvider;
         }
 
@@ -41,33 +43,32 @@ namespace CrochetByJk.Controllers
         public JsonResult AddNewProduct(ProductDto productDto)
         {
             if (!ModelState.IsValid)
-                return Json(new {Success = "False", responseText = "Wprowadź poprawne dane."});
+                return Json(new {Success = "False", responseText = "Wystąpił błąd. Wprowadź poprawne dane." });
             
             var productId = Guid.NewGuid();
             try
             {
-                var pictures = galleryProvider.SaveProductPictures(productId, Request.Files);
-                var enumerable = pictures as Picture[] ?? pictures.ToArray();
-                var mainPicture = enumerable.Single(x => x.Name == productDto.MainPhoto.FileName);
-                mainPicture.IsMainPhoto = true;
+                var productGallery = galleryProvider.SaveProductGallery(new Gallery(productId, Request.Files,productDto.MainPhoto)).ToArray();
+                var mainPicture = productGallery.Single(x=>x.IsMainPhoto);
                 var product = new Product
                 {
                     IdProduct = productId,
                     Name = productDto.Name,
                     IdCategory = productDto.IdCategory,
                     Description = productDto.Description,
-                    ProductUrl = $"Produkty/{productDto.CategoryName}/{new ShortGuid(productId)}",
                     IdMainPicture = mainPicture.IdPicture,
                     InsertDate = DateTime.Now,
-                    ProductGallery = enumerable.ToArray()
+                    ProductGallery = productGallery
                 };
+                validator.Validate(product);
+                product.ProductUrl  = $"Produkty/{productDto.CategoryName}/{product.Name}";
                 bus.ExecuteCommand(new SaveProductCommand(product));
                 return Json(new { Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl });
             }
             catch (Exception ex)
             {
                 galleryProvider.DeleteProductGallery(productId);
-                return Json(new {Success = "False", responseText = "Wystąpił błąd."});
+                return Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
             }
            
         }
