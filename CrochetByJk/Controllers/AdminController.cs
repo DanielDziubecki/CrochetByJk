@@ -19,7 +19,7 @@ namespace CrochetByJk.Controllers
         private readonly IValidator<Product> validator;
         private readonly IProductGalleryProvider galleryProvider;
 
-        public AdminController(ICqrsBus bus, IValidator<Product> validator ,IProductGalleryProvider galleryProvider)
+        public AdminController(ICqrsBus bus, IValidator<Product> validator, IProductGalleryProvider galleryProvider)
         {
             this.bus = bus;
             this.validator = validator;
@@ -43,13 +43,15 @@ namespace CrochetByJk.Controllers
         public JsonResult AddNewProduct(ProductDto productDto)
         {
             if (!ModelState.IsValid)
-                return Json(new {Success = "False", responseText = "Wystąpił błąd. Wprowadź poprawne dane." });
-            
+                return Json(new {Success = "False", responseText = "Wystąpił błąd. Wprowadź poprawne dane."});
+
             var productId = Guid.NewGuid();
             try
             {
-                var productGallery = galleryProvider.SaveProductGallery(new Gallery(productId, Request.Files,productDto.MainPhoto)).ToArray();
-                var mainPicture = productGallery.Single(x=>x.IsMainPhoto);
+                var productGallery =
+                    galleryProvider.SaveProductGallery(new Gallery(productId, Request.Files, productDto.MainPhoto))
+                        .ToArray();
+                var mainPicture = productGallery.Single(x => x.IsMainPhoto);
                 var product = new Product
                 {
                     IdProduct = productId,
@@ -61,16 +63,19 @@ namespace CrochetByJk.Controllers
                     ProductGallery = productGallery
                 };
                 validator.Validate(product);
-                product.ProductUrl  = $"Produkty/{productDto.CategoryName}/{product.Name}";
+                if (Request.Url == null)
+                    throw new ArgumentNullException(nameof(Request.Url));
+                var baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+                product.ProductUrl = $"{baseUrl}/Produkty/{productDto.CategoryName}/{product.Name}";
                 bus.ExecuteCommand(new SaveProductCommand(product));
-                return Json(new { Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl });
+                return Json(new {Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl});
             }
             catch (Exception ex)
             {
                 galleryProvider.DeleteProductGallery(productId);
-                return Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
+                return
+                    Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
             }
-           
         }
     }
 }

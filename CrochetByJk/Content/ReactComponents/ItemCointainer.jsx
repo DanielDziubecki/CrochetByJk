@@ -29,4 +29,4 @@ var Tiles = React.createClass({
     }
 });
 
-ReactDOM.render(<Tiles />, document.getElementById('tiles'));
+// ReactDOM.render(<Tiles />, document.getElementById('tiles'));

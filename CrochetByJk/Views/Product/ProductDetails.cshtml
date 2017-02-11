@@ -1,0 +1,13 @@
+﻿@model CrochetByJk.ViewModel.ProductViewModel
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+@Html.React("ProductDetails", new
+{
+    product = Model
+})
+<script src="~/Content/ReactComponents/ImageGallery.jsx"></script>
+<script src="~/Content/ReactComponents/ProductDetails.jsx"></script>
+@Html.ReactInitJavaScript()

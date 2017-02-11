@@ -12,7 +12,8 @@ namespace CrochetByJk
                 .AddScript("~/Scripts/react/react-with-addons.js")
                 .AddScript("~/Scripts/react/react-dom.js")
                 .AddScript("~/Scripts/react/react-bootstrap.js")
-                .AddScript("~/Content/ReactComponents/CategoryProducts.jsx");
+                .AddScript("~/Content/ReactComponents/CategoryProducts.jsx")
+                .AddScript("~/Content/ReactComponents/ProductDetails.jsx");
             //.AddScript("~/Content/ReactComponents/Navbar.jsx")
             //.AddScript("~/Content/ReactComponents/Footer.jsx")
             //.AddScript("~/Content/ReactComponents/ItemContainer.jsx")

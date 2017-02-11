@@ -11,9 +11,13 @@ namespace CrochetByJk
         {
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<Product, ProductTileViewModel>()
+                    .ForMember(vm => vm.PictureUri, opt => opt
+                        .MapFrom(m => m.ProductGallery.Single(e => e.IsMainPhoto).Url));
+
                 cfg.CreateMap<Product, ProductViewModel>()
-                    .ForMember(model => model.PictureUri, opt => opt
-                    .MapFrom(x => x.ProductGallery.Single(e => e.IsMainPhoto).Url));
+                    .ForMember(vm => vm.PictureUrls, opt => opt
+                        .MapFrom(m => m.ProductGallery.Select(x => x.Url)));
             });
             return config.CreateMapper();
         }

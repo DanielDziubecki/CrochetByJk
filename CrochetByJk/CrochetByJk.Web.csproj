@@ -161,7 +161,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
@@ -248,6 +250,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Dto\ProductDto.cs" />
+    <Compile Include="ViewModel\ProductsInCategoryViewModel.cs" />
+    <Compile Include="ViewModel\ProductTileViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\UserLoginViewModel.cs" />
@@ -256,12 +260,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\aos.css" />
-    <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
-    <Content Include="Content\bootstrap-fileinput\css\fileinput.min.css" />
-    <Content Include="Content\bootstrap-fileinput\img\loading-sm.gif" />
-    <Content Include="Content\bootstrap-fileinput\img\loading.gif" />
-    <Content Include="Content\bootstrap-fileinput\themes\fa\theme.js" />
-    <Content Include="Content\bootstrap-fileinput\themes\gly\theme.js" />
     <Content Include="Content\Fileinput\css\fileinput.css" />
     <Content Include="Content\Fileinput\css\fileinput.min.css" />
     <Content Include="Content\Fileinput\img\loading-sm.gif" />
@@ -303,7 +301,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\Fileinput\sass\fileinput.scss" />
-    <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
+    <Content Include="Content\ReactComponents\ImageGallery.jsx" />
+    <Content Include="Content\ReactComponents\ProductDetails.jsx" />
     <None Include="Properties\PublishProfiles\crochetbyjk.pl - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -389,6 +388,7 @@
     <Content Include="Views\Admin\Panel.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Product\CategoryProducts.cshtml" />
+    <Content Include="Views\Product\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

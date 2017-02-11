@@ -10,12 +10,12 @@ var MyNavbar = React.createClass({
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-              <MenuItem href="/Produkty/Sukienki/">Sukienki</MenuItem>
-              <MenuItem>Swetry</MenuItem>
-              <MenuItem>Torebki</MenuItem>
-              <MenuItem>Dla dzieci</MenuItem>
-              <MenuItem>Dekoracje</MenuItem>
-              <MenuItem>O mnie</MenuItem>
+              <MenuItem href="/Produkty/Sukienki/">SUKIENKI</MenuItem>
+              <MenuItem>SWETRY</MenuItem>
+              <MenuItem>TOREBKI</MenuItem>
+              <MenuItem>DLA DZIECI</MenuItem>
+              <MenuItem>DEKORACJE</MenuItem>
+              <MenuItem>O MNIE</MenuItem>
           </Nav>
         </Navbar.Collapse>
         </Navbar>);

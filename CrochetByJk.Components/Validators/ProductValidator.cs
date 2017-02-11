@@ -28,6 +28,8 @@ namespace CrochetByJk.Components.Validators
 
             if (isNameExists)
                 objectToValidate.Name = name + ShortGuid.NewGuid();
+            else
+                objectToValidate.Name = name;
         }
     }
 }
