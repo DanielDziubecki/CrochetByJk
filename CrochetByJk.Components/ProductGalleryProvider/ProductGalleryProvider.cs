@@ -43,14 +43,18 @@ namespace CrochetByJk.Components.ProductGalleryProvider
 
         private string ConvertUriToUrl(string uri)
         {
-            return uri.Replace("\\", "/").Replace("~","");
+            return uri.Replace("\\", "/").Replace("~", "");
         }
 
         public void DeleteProductGallery(Guid productId)
         {
             var galleryUri = Path.Combine(ServerRoot, productId.ToString());
-            if (Directory.Exists(galleryUri))
-                Directory.Delete(galleryUri);
+            if (!Directory.Exists(galleryUri)) return;
+            var files = Directory.GetFiles(galleryUri);
+            foreach (var file in files)
+                 File.Delete(file);
+
+            Directory.Delete(galleryUri);
         }
 
         public IEnumerable<Picture> SaveProductGallery(Gallery gallery)
@@ -70,14 +74,14 @@ namespace CrochetByJk.Components.ProductGalleryProvider
                 {
                     var stream = fileContent.InputStream;
                     var fileName = fileContent.FileName.RemoveSpecialCharacters()
-                                                       .RemoveWhiteSpace();
+                        .RemoveWhiteSpace();
                     var physicalPath = Path.Combine(galleryUri, fileName);
                     using (var fileStream = File.Create(physicalPath))
                     {
                         stream.CopyTo(fileStream);
                     }
                     var galleryUrl = Path.Combine(WebSiteRoot, galleryId);
-                    var webPath = ConvertUriToUrl(Path.Combine(galleryUrl,fileName));
+                    var webPath = ConvertUriToUrl(Path.Combine(galleryUrl, fileName));
                     pictures.Add(new Picture
                     {
                         IdPicture = Guid.NewGuid(),

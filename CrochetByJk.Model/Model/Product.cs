@@ -12,6 +12,7 @@ namespace CrochetByJk.Model.Model
         public Guid IdProduct { get; set; }
 
         public string Name { get; set; }
+        public string UrlFriendlyName { get; set; }
         public string Description { get; set; }
         public string ProductUrl { get; set; }
         public DateTime InsertDate { get; set; }

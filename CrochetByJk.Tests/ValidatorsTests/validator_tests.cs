@@ -38,7 +38,7 @@ namespace CrochetByJk.Tests.ValidatorsTests
         [Fact]
         public void product_validator_should_change_product_name_on_duplicate()
         {
-            var duplicatedProduct = new Product {Name = "Name1"};
+            var duplicatedProduct = new Product {UrlFriendlyName = "Name1"};
 
             var cqrsBusMock = Substitute.For<ICqrsBus>();
 

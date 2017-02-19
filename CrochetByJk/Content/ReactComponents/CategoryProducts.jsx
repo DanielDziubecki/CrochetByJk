@@ -42,7 +42,6 @@ function GenerateTiles(products) {
         counter++;
         if (counter == 4)
             counter = 1;
-        console.log(product.ProductUrl);
         return <Tile product={product} animtation={animtation} delay={counter * 300} />
     })
 }

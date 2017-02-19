@@ -21,15 +21,15 @@ namespace CrochetByJk.Components.Validators
         public void Validate(Product objectToValidate)
         {
             var productNames = bus.RunQuery<IEnumerable<string>>(new GetAllProductNamesFromCategoryQuery {CategoryId = objectToValidate.IdCategory});
-            var name = objectToValidate.Name
+            var name = objectToValidate.UrlFriendlyName
                                        .RemoveWhiteSpace()
                                        .RemoveSpecialCharacters();
             var isNameExists = productNames.Any(x => string.Equals(x.Trim(), name.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             if (isNameExists)
-                objectToValidate.Name = name + ShortGuid.NewGuid();
+                objectToValidate.UrlFriendlyName = name + ShortGuid.NewGuid();
             else
-                objectToValidate.Name = name;
+                objectToValidate.UrlFriendlyName = name;
         }
     }
 }

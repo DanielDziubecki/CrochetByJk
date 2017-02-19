@@ -34,7 +34,7 @@ namespace CrochetByJk.Controllers
                 CategoryName = "SUKIENKI",
                 Products = mapper.Map<ProductTileViewModel[]>(products)
             };
-            return View("CategoryProducts", dresses);
+            return View("ProductsInCategory", dresses);
         }
 
         [Route("sukienki/{name}")]
@@ -61,7 +61,7 @@ namespace CrochetByJk.Controllers
                 CategoryName = "Dla dzieci",
                 Products = mapper.Map<ProductTileViewModel[]>(products)
             };
-            return View("CategoryProducts", forChildren);
+            return View("ProductsInCategory", forChildren);
         }
 
         [Route("swetry")]
@@ -77,7 +77,7 @@ namespace CrochetByJk.Controllers
                 CategoryName = "Swetry",
                 Products = mapper.Map<ProductTileViewModel[]>(products)
             };
-            return View("CategoryProducts", sweaters);
+            return View("ProductsInCategory", sweaters);
         }
 
         [Route("torby")]
@@ -93,7 +93,7 @@ namespace CrochetByJk.Controllers
                 CategoryName = "Torby",
                 Products = mapper.Map<ProductTileViewModel[]>(products)
             };
-            return View("CategoryProducts", bags);
+            return View("ProductsInCategory", bags);
         }
 
         [Route("dekoracje")]
@@ -109,7 +109,7 @@ namespace CrochetByJk.Controllers
                 CategoryName = "Dekoracje",
                 Products = mapper.Map<ProductTileViewModel[]>(products)
             };
-            return View("CategoryProducts", decors);
+            return View("ProductsInCategory", decors);
         }
     }
 }

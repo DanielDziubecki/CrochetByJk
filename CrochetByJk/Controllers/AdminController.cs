@@ -60,13 +60,14 @@ namespace CrochetByJk.Controllers
                     Description = productDto.Description,
                     IdMainPicture = mainPicture.IdPicture,
                     InsertDate = DateTime.Now,
-                    ProductGallery = productGallery
+                    ProductGallery = productGallery,
+                    UrlFriendlyName = productDto.Name
                 };
                 validator.Validate(product);
                 if (Request.Url == null)
                     throw new ArgumentNullException(nameof(Request.Url));
                 var baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
-                product.ProductUrl = $"{baseUrl}/Produkty/{productDto.CategoryName}/{product.Name}";
+                product.ProductUrl = $"{baseUrl}/Produkty/{productDto.CategoryName}/{product.UrlFriendlyName}";
                 bus.ExecuteCommand(new SaveProductCommand(product));
                 return Json(new {Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl});
             }

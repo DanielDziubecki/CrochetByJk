@@ -53,7 +53,7 @@ var AddNewProduct = React.createClass({
                                             componentClass="select"
                                             placeholder="select"
                                             className="productCategories">
-                                            {this.state.data.map(function (category) {
+                                            {this.state.data.map((category,index) =>{
                                                 return <option value={category.IdCategory}>{category.Name}</option>
                                             })}
                                         </FormControl>
@@ -77,6 +77,7 @@ var AddNewProduct = React.createClass({
                                             className="newProductDescription"
                                             name="Description"
                                             minLength="10"
+                                            maxLength="250"
                                             required />
                                     </Col>
                                 </FormGroup>
@@ -114,7 +115,7 @@ var AddNewProduct = React.createClass({
                                             <input
                                                 id="main-image"
                                                 type="file"
-                                                class="file"
+                                                className="file"
                                                 name="mainImage"
                                                 accept=".png, .jpg, .jpeg"
                                                 required />
@@ -205,6 +206,9 @@ var AddNewProduct = React.createClass({
                 }
                 ReactDOM.unmountComponentAtNode(document.getElementById('addNewProductForm'));
                 newProductAdded(result.Url);
+            },
+            error: function(data){
+                console.log(data);
             }
         });
         $('.btnAddNewProduct').text("Dodaj nowy produkt");

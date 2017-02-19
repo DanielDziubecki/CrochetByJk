@@ -12,7 +12,9 @@ namespace CrochetByJk
                 .Include(
                     "~/Scripts/react/react-with-addons.js",
                     "~/Scripts/react/react-dom.js",
-                    "~/Scripts/react/react-bootstrap.js"
+                    "~/Scripts/react/react-bootstrap.js",
+                    "~/Scripts/unitegallery/js/unitegallery.js",
+                    "~/Scripts/unitegallery/themes/grid/ug-theme-grid.js"
                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -33,8 +35,10 @@ namespace CrochetByJk
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/Fileinput/css/fileinput.css",
-                "~/Content/site.css",
-                "~/Content/aos.css"));
+                "~/Content/aos.css",
+                "~/Scripts/unitegallery/css/ug-theme-default.css",
+                "~/Scripts/unitegallery/css/unite-gallery.css",
+                 "~/Content/site.css"));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CrochetByJk.Messaging.QueryHandlers
 
         public IEnumerable<string> Handle(GetAllProductNamesFromCategoryQuery query)
         {
-            return context.Products.Where(x=>x.IdCategory==query.CategoryId).Select(x => x.Name);
+            return context.Products.Where(x=>x.IdCategory==query.CategoryId).Select(x => x.UrlFriendlyName);
         }
     }
 }
