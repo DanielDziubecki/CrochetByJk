@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PictureResizerTests\product_resizer_tests.cs" />
     <Compile Include="ValidatorsTests\validator_tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,7 +92,12 @@
       <Project>{d798377d-e728-43d9-87cf-ee7921617b85}</Project>
       <Name>CrochetByJk.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CrochetByJk\CrochetByJk.Web.csproj">
+      <Project>{09C2D767-EFE3-4DE1-9064-ACD2147A3C3D}</Project>
+      <Name>CrochetByJk.Web</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

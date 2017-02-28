@@ -1,4 +1,4 @@
-const { Image } = ReactBootstrap;
+const { Grid,Col,Row,Image } = ReactBootstrap;
 
 var AboutMe = React.createClass({
     render: function () {

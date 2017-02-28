@@ -1,12 +1,11 @@
-﻿@model CrochetByJk.ViewModel.ProductsInCategoryViewModel
+﻿@model IEnumerable<CrochetByJk.ViewModel.ProductTileViewModel>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.React("CategoryProducts", new
 {
-    products = Model.Products,
-    categoryName = Model.CategoryName
+    products = Model
 })
 
 

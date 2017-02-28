@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Web;
 using CrochetByJk.Common.Constants;
@@ -52,7 +54,7 @@ namespace CrochetByJk.Components.ProductGalleryProvider
             if (!Directory.Exists(galleryUri)) return;
             var files = Directory.GetFiles(galleryUri);
             foreach (var file in files)
-                 File.Delete(file);
+                File.Delete(file);
 
             Directory.Delete(galleryUri);
         }
@@ -76,10 +78,9 @@ namespace CrochetByJk.Components.ProductGalleryProvider
                     var fileName = fileContent.FileName.RemoveSpecialCharacters()
                         .RemoveWhiteSpace();
                     var physicalPath = Path.Combine(galleryUri, fileName);
-                    using (var fileStream = File.Create(physicalPath))
-                    {
-                        stream.CopyTo(fileStream);
-                    }
+                    var img = Image.FromStream(stream);
+                    img.Save(physicalPath, ImageFormat.Jpeg);
+
                     var galleryUrl = Path.Combine(WebSiteRoot, galleryId);
                     var webPath = ConvertUriToUrl(Path.Combine(galleryUrl, fileName));
                     pictures.Add(new Picture
@@ -88,6 +89,8 @@ namespace CrochetByJk.Components.ProductGalleryProvider
                         IdProduct = gallery.GalleryId,
                         Url = webPath,
                         Name = fileName,
+                        Height = img.Height,
+                        Width = img.Width,
                         IsMainPhoto = file == PicturesConstants.MainPhoto
                     });
                 }

@@ -5,8 +5,8 @@ var AdminNavigationPanel = React.createClass({
     render: function () {
         return (
             <div id="adminButtonGroup">
-                <Button className="adminButton" onClick={addNewProductForm}>Dodaj produkt</Button>
-                <Button className="adminButton">Zarządzaj produktami</Button>
+                <Button className="adminButton" onClick={addNewProductForm} style={{margin: "4%"}}>Dodaj produkt</Button>
+                <Button className="adminButton" style={{margin: "4%"}}>Zarządzaj produktami</Button>
             </div>
         );
     }
@@ -31,7 +31,7 @@ var AddNewProduct = React.createClass({
                         <Col md={4}>
                             <div className="newProductFormSection">
                                 <FormGroup
-                                    controlId="productName"
+                                    controlId="newProductName"
                                     htmlFor="Name">
                                     <Col componentClass={ControlLabel}>
                                         Nazwa produktu
@@ -148,11 +148,14 @@ var AddNewProduct = React.createClass({
         var $gallery = $('#gallery-images');
         var $mainImage = $('#main-image');
         if ($gallery.length)
-            $gallery.fileinput();
+            $gallery.fileinput({
+               allowedFileExtensions : ['jpg', 'png']
+            });
 
         if ($mainImage.length)
             $mainImage.fileinput({
                 showUpload: false,
+                allowedFileExtensions : ['jpg', 'png']
             });
     },
     submitForm: function (e) {
@@ -177,11 +180,12 @@ var AddNewProduct = React.createClass({
         e.preventDefault();
         $('.btnAddNewProduct').text("");
         $('.btnAddNewProduct').append('Dodajemy produkt..&nbsp &nbsp<i class="fa fa-refresh fa-spin"></i>');
+        setTimeout(()=>{},2000);
         self.setState({
             formDisabled: true
         })
         var data = new FormData();
-        data.append("Name", $("#productName").val())
+        data.append("Name", $("#newProductName").val())
         data.append("Description", $("#productDescription").val())
         data.append("GalleryUri", $("#productGalleryImages").val())
 

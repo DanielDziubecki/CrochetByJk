@@ -11,8 +11,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-<div id="baner"></div>
+<div id="currentAction" style="display: none">
+    @Html.Raw(ViewContext.RouteData.Values["action"].ToString().ToLower())
+</div>
+<a href="@Url.Content("~/")" id="banerLink">
+    <div id="baner"></div>
+</a>
 <div id="navbar"></div>
 @RenderBody()
 <div id="footer"></div>
@@ -25,9 +29,28 @@
 <script src="~/Content/ReactComponents/Navbar.jsx"></script>
 <script src="~/Content/ReactComponents/Footer.jsx"></script>
 <script src="~/Content/ReactComponents/Baner.jsx"></script>
-@*<script src="~/Content/ReactComponents/ImageGallery.jsx"></script>*@
 <script src="~/Scripts/aos/aos.js"></script>
-
 @RenderSection("scripts", required: false)
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+
+            var actionName = $('#currentAction').text();
+            var menuItems = $("li a");
+            for (var i = 0; i < menuItems.length; i++) {
+                var menuItem = menuItems[i];
+                if (menuItem.id.trim() === actionName.trim()) {
+                    $(menuItem).addClass("selected-menu-item");
+                    $(menuItem).unbind('mouseenter mouseleave');
+                }
+            }
+            //document.addEventListener('click',
+            //    function (e) {
+            //        console.log(document.activeElement);
+            //        if (document.activeElement.hasClass("adminButton")) {
+            //            document.activeElement.blur();
+            //        }
+            //    });
+        });
+</script>

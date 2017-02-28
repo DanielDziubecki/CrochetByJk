@@ -5,13 +5,15 @@ using CrochetByJk.Model.Model;
 
 namespace CrochetByJk.Components.Validators
 {
+    //todo: testy do validatora
     public class PictureValidator : IValidator<IEnumerable<Picture>>
     {
         public void Validate(IEnumerable<Picture> objectToValidate)
         {
-            var duplicatedPictureNames = objectToValidate.GroupBy(x => x.Name)
-                                      .Where(x => x.Count() > 1)
-                                      .ToList();
+            var toValidate = objectToValidate as Picture[] ?? objectToValidate.ToArray();
+            var duplicatedPictureNames = toValidate.GroupBy(x => x.Name)
+                .Where(x => x.Count() > 1)
+                .ToList();
 
             if (!duplicatedPictureNames.Any()) return;
 
@@ -23,6 +25,9 @@ namespace CrochetByJk.Components.Validators
                     picture.Name = dupName + ShortGuid.NewGuid();
                 }
             }
+            var toLongPicNames = toValidate.Where(x => x.Name.Length > 50);
+            foreach (var longPicName in toLongPicNames)
+                longPicName.Name = longPicName.Name.Remove(10, longPicName.Name.Length-10);
         }
     }
 }

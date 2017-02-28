@@ -1,38 +1,32 @@
-const { Grid, Row, Col } = ReactBootstrap;
-
 var CategoryProducts = React.createClass({
     getInitialState: function () {
         return {
-            products: this.props.products,
-            categoryName: this.props.categoryName
+            products: this.props.products
         };
     },
     render: function () {
         return (
-            <Grid className="image-container">
-                {/*<Row className="headermessage">*/}
-                <h2>{this.state.categoryName}</h2>
-                {/*</Row>*/}
-                <Row>
-                    {GenerateTiles(this.state.products)}
-                </Row>
-            </Grid >
+            <div className="image-container">
+                {GenerateTiles(this.state.products)}
+                <div style={{ clear: "both" }}></div>
+            </div>
         );
     }
 });
 
 var Tile = ({product, animtation, delay}) => (
-    <Col lg={4} md={4} sm={6} xs={12}
+    <div
         className="image-block"
         onClick={GoToProductDetails(product.ProductUrl)}
         data-aos={animtation}
         data-aos-delay={delay}>
 
         <div className="image-block-body" style={
-            { background: 'url(' + product.PictureUri + ')', backgroundSize: '100% 100%' }}>
+            { height:product.Height, width:product.Width,
+             background: 'url(' + product.PictureUri + ')', backgroundSize: '100% 100%' }}>
             <p>{product.Name} </p>
         </div>
-    </Col>
+    </div>
 );
 
 function GenerateTiles(products) {
@@ -42,9 +36,11 @@ function GenerateTiles(products) {
         counter++;
         if (counter == 4)
             counter = 1;
+            console.log(product.PictureUri)
         return <Tile product={product} animtation={animtation} delay={counter * 300} />
     })
 }
+
 function GoToProductDetails(url) {
     return function (e) {
         document.location.href = url;

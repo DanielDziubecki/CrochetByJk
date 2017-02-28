@@ -12,6 +12,8 @@ namespace CrochetByJk.Model.Model
         public string Url { get; set; }
         public string Name { get; set; }
         public bool IsMainPhoto { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public Guid IdProduct { get; set; }
         [ForeignKey("IdProduct")]

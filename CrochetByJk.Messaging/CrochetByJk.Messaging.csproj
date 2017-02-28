@@ -97,6 +97,7 @@
     <Compile Include="Bus\CqrsBus.cs" />
     <Compile Include="CommandHandlers\SaveProductCommandHandler.cs" />
     <Compile Include="Commands\SaveProductCommand.cs" />
+    <Compile Include="Commands\SendProductQuestionEmailCommand.cs" />
     <Compile Include="Exceptions\NotImplementedHandlerException.cs" />
     <Compile Include="HandleResult\HandleResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

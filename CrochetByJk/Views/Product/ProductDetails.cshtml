@@ -3,14 +3,14 @@
 @{
     Layout = "../Shared/_Layout.cshtml";
 }
+    @Html.React("ProductDetails", new
+    {
+        product = Model
+    })
 
-@Html.React("ProductDetails", new
-{
-    product = Model
-})
 @section scripts
 {
-
     <script src="~/Content/ReactComponents/ProductDetails.jsx"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
     @Html.ReactInitJavaScript()
 }
