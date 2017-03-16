@@ -18,8 +18,8 @@ namespace CrochetByJk.Messaging.QueryHandlers
 
         public Product Handle(GetProductQuery query)
         {
-            return
-                context.Products.Include(x=>x.ProductGallery).SingleOrDefault(x => x.Category.IdCategory == query.Id && x.UrlFriendlyName == query.ProductName);
+            var products = context.Products.Include(x => x.ProductGallery).Include(x=>x.Category).ToList();
+            return products.SingleOrDefault(x => x.Category.IdCategory == query.Id && x.UrlFriendlyName == query.ProductName);
         }
     }
 }

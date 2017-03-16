@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='http://fonts.googleapis.com/css?family=Prompt&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="icon" href="~/Content/Img/crochetIcon.png">
+    <link rel="icon" href="~/Content/Img/main/crochetIcon.png">
     <title>Crochet by JK</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div class="pageLoaderContainer">
+        <div class="pageLoader">
+        </div>
+    </div>
 <div id="currentAction" style="display: none">
     @Html.Raw(ViewContext.RouteData.Values["action"].ToString().ToLower())
 </div>
@@ -34,8 +38,10 @@
 </body>
 </html>
 <script>
-    $(document).ready(function() {
-
+    $(document)
+        .ready(function () {
+            $(".pageLoaderContainer").fadeOut("slow");
+   
             var actionName = $('#currentAction').text();
             var menuItems = $("li a");
             for (var i = 0; i < menuItems.length; i++) {
@@ -45,12 +51,6 @@
                     $(menuItem).unbind('mouseenter mouseleave');
                 }
             }
-            //document.addEventListener('click',
-            //    function (e) {
-            //        console.log(document.activeElement);
-            //        if (document.activeElement.hasClass("adminButton")) {
-            //            document.activeElement.blur();
-            //        }
-            //    });
         });
+
 </script>

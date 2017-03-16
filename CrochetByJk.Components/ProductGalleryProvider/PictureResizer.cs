@@ -2,12 +2,14 @@
 {
     public class PictureResizer : IPictureResizer
     {
-        private const int MaxHeight = 250;
-
-        public void Resize(IPicture picture)
+        public void Resize(IPicture picture, bool isMobile)
         {
-            picture.Width = picture.Width * MaxHeight / picture.Height;
-            picture.Height = MaxHeight;
+            var maxHeight = isMobile ? 200 : 350;
+            if (picture.Height != 0 && picture.Width != 0)
+            {
+                picture.Width = picture.Width*maxHeight/picture.Height;
+                picture.Height = maxHeight;
+            }
         }
     }
 }

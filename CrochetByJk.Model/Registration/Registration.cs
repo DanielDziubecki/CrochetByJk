@@ -10,11 +10,11 @@ namespace CrochetByJk.Model.Registration
         {
             containerBuilder
                 .RegisterType<CrochetByJkDbContext>()
-                .InstancePerLifetimeScope();
+                .InstancePerRequest();
 
             containerBuilder
                 .RegisterType<SecurityContext>()
-                   .InstancePerLifetimeScope(); 
+                   .InstancePerRequest();
 
         }
     }

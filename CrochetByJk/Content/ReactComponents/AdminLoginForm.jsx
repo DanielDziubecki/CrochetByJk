@@ -38,7 +38,7 @@ var AdminForm = React.createClass({
 
         <FormGroup>
           <Col smOffset={2} sm={10}>
-            <Button className="admin-login-button" type="submit">
+            <Button className="adminButton" type="submit">
               Zaloguj
         </Button>
           </Col>

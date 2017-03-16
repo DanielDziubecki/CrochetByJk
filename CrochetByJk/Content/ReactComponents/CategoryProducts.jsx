@@ -8,7 +8,6 @@ var CategoryProducts = React.createClass({
         return (
             <div className="image-container">
                 {GenerateTiles(this.state.products)}
-                <div style={{ clear: "both" }}></div>
             </div>
         );
     }
@@ -20,7 +19,6 @@ var Tile = ({product, animtation, delay}) => (
         onClick={GoToProductDetails(product.ProductUrl)}
         data-aos={animtation}
         data-aos-delay={delay}>
-
         <div className="image-block-body" style={
             { height:product.Height, width:product.Width,
              background: 'url(' + product.PictureUri + ')', backgroundSize: '100% 100%' }}>
@@ -36,7 +34,7 @@ function GenerateTiles(products) {
         counter++;
         if (counter == 4)
             counter = 1;
-            console.log(product.PictureUri)
+        if(product.Width)
         return <Tile product={product} animtation={animtation} delay={counter * 300} />
     })
 }
@@ -46,4 +44,3 @@ function GoToProductDetails(url) {
         document.location.href = url;
     };
 }
-

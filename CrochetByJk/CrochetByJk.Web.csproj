@@ -144,6 +144,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -246,11 +250,11 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="ErrorHandlers\NlogHandleError.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Dto\ProductDto.cs" />
-    <Compile Include="ViewModel\ProductsInCategoryViewModel.cs" />
     <Compile Include="ViewModel\ProductTileViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
@@ -270,13 +274,24 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Img\1.jpg" />
-    <Content Include="Content\Img\2.jpg" />
-    <Content Include="Content\Img\3.jpg" />
-    <Content Include="Content\Img\crochetIcon.png" />
-    <Content Include="Content\Img\me.jpg" />
-    <Content Include="Content\Img\my.jpg" />
-    <Content Include="Content\Img\v3.jpg" />
+    <Content Include="Content\Img\main\crochetIcon.png" />
+    <Content Include="Content\Img\main\me.jpg" />
+    <Content Include="Content\Img\main\v3.jpg" />
+    <Content Include="Content\Img\unitegallery\button-close.png" />
+    <Content Include="Content\Img\unitegallery\button_fullscreen.png" />
+    <Content Include="Content\Img\unitegallery\button_fullscreen_single.png" />
+    <Content Include="Content\Img\unitegallery\cover-grid.png" />
+    <Content Include="Content\Img\unitegallery\grid_handle_black_bottom.png" />
+    <Content Include="Content\Img\unitegallery\grid_handle_black_left.png" />
+    <Content Include="Content\Img\unitegallery\grid_handle_black_right.png" />
+    <Content Include="Content\Img\unitegallery\grid_handle_black_top.png" />
+    <Content Include="Content\Img\unitegallery\loader-black1.gif" />
+    <Content Include="Content\Img\unitegallery\loader-white1.gif" />
+    <Content Include="Content\Img\unitegallery\loader.gif" />
+    <Content Include="Content\Img\unitegallery\not_loaded.png" />
+    <Content Include="Content\Img\unitegallery\play-button-square.png" />
+    <Content Include="Content\Img\unitegallery\slider_arrow_left.png" />
+    <Content Include="Content\Img\unitegallery\slider_arrow_right.png" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -303,6 +318,12 @@
     <Content Include="Content\Fileinput\sass\fileinput.scss" />
     <Content Include="Content\ReactComponents\ImageGallery.jsx" />
     <Content Include="Content\ReactComponents\ProductDetails.jsx" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\crochetbyjk.pl - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\babel.js" />

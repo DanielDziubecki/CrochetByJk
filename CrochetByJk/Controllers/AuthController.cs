@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Autofac;
+using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
@@ -11,14 +13,13 @@ using Microsoft.Owin.Security;
 namespace CrochetByJk.Controllers
 {
     [AllowAnonymous]
+    [NlogHandleError(View = "Error")]
     public class AuthController : Controller
     {
-        private readonly ICqrsBus bus;
         private readonly UserManager<ApplicationUser> userManager;
        
         public AuthController(ICqrsBus bus)
         {
-            this.bus = bus;
             userManager = bus.RunQuery<UserManager<ApplicationUser>>(new GetApplicationUserManagerQuery());
         }
 
@@ -95,7 +96,6 @@ namespace CrochetByJk.Controllers
 
             foreach (var error in result.Errors)
                     ModelState.AddModelError("", error);
-            
 
             return View();
         }

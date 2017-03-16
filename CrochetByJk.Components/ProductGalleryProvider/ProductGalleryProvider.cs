@@ -18,8 +18,6 @@ namespace CrochetByJk.Components.ProductGalleryProvider
         public ProductGalleryProvider(IValidator<IEnumerable<Picture>> validator)
         {
             this.validator = validator;
-            if (!IsDirectoryExists(ServerRoot))
-                CreateGalleriesRootDirectory();
         }
 
         private string ServerRoot { get; } = HttpContext.Current.Server.MapPath(WebSiteRoot);
@@ -50,6 +48,8 @@ namespace CrochetByJk.Components.ProductGalleryProvider
 
         public void DeleteProductGallery(Guid productId)
         {
+            if (!IsDirectoryExists(ServerRoot))
+                CreateGalleriesRootDirectory();
             var galleryUri = Path.Combine(ServerRoot, productId.ToString());
             if (!Directory.Exists(galleryUri)) return;
             var files = Directory.GetFiles(galleryUri);
@@ -61,6 +61,8 @@ namespace CrochetByJk.Components.ProductGalleryProvider
 
         public IEnumerable<Picture> SaveProductGallery(Gallery gallery)
         {
+            if (!IsDirectoryExists(ServerRoot))
+                CreateGalleriesRootDirectory();
             var files = gallery.Pictures;
             var pictures = new List<Picture>();
             var galleryId = gallery.GalleryId.ToString();

@@ -3,12 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="tiles"></div>
 @Html.React("CategoryProducts", new
 {
     products = Model
 })
-<div id="aboutMe" data-aos="fade-down"></div>
+<div id="aboutMeContainer" data-aos="fade-down"></div>
 
 @Scripts.Render("~/bundles/react")
 @section scripts{

@@ -24,7 +24,7 @@ namespace CrochetByJk.Components.Registration
             containerBuilder.RegisterType<PictureResizer>()
                .As<IPictureResizer>();
 
-            containerBuilder.RegisterType<EmailSender.EmailSender>()
+            containerBuilder.RegisterType<EmailSender.ProductQuestionSender>()
                .As<IEmailSender>();
         }
     }

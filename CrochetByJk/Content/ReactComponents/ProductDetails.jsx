@@ -1,9 +1,9 @@
-const {Form, Modal, Col, FormGroup, FormControl, ControlLabel, Button} = ReactBootstrap;
+const {Checkbox, Form, Modal, Col, FormGroup, FormControl, ControlLabel, Button} = ReactBootstrap;
 
 var ProductDetails = React.createClass({
     getInitialState: function () {
         return {
-            product: this.props.product
+            product: this.props.product,
         };
     },
     render() {
@@ -20,10 +20,9 @@ var ProductDetails = React.createClass({
                     <h2>{this.state.product.Name}</h2>
                     <p>{this.state.product.Description}</p>
                     <div id="contactForm">
-                        <AskForProduct />
+                        <AskForProduct productName={this.state.product.Name} />
                     </div>
                 </div>
-
             </div>)
     },
     componentDidMount() {
@@ -38,7 +37,8 @@ var ProductDetails = React.createClass({
             // gallery_width:"100%",	
             // gallery_height:"100%",
             // gallery_min_width: "100%",
-            gallery_min_height: 500,
+             gallery_min_height: 500,
+             gallery_min_width: 250,
             thumb_selected_border_width: 3,
             thumb_selected_border_color: "#67A3D9",
         });
@@ -55,15 +55,16 @@ var ProductDetails = React.createClass({
 });
 const AskForProduct = React.createClass({
     getInitialState() {
-        return { show: false };
+        return {
+            show: false,
+            productName: this.props.productName
+        };
     },
-
     render() {
         let close = () => this.setState({ show: false });
 
         return (
             <div className="modal-container">
-
                 <Button
                     className="adminButton"
                     id="askForProductButton"
@@ -72,75 +73,76 @@ const AskForProduct = React.createClass({
                     onClick={() => this.setState({ show: true })}>
                     Zapytaj o produkt
                     </Button>
+                <div id="productQuestionModalContainer">
+                    <Modal
+                        id="productQuestionModal"
+                        show={this.state.show}
+                        onHide={close}
+                        container={this}
+                        aria-labelledby="contained-modal-title"
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title"><b>Pytanie o produkt: {this.props.productName}</b></Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form id="productQuestionForm">
+                                <FormGroup
+                                    controlId="emailAdress"
+                                    htmlFor="email">
+                                    <Col componentClass={ControlLabel}>
+                                        Email
+                                   </Col>
+                                    <Col>
+                                        <FormControl
+                                            placeholder="Email"
+                                            name="email"
+                                            type="email"
+                                            minLength="5"
+                                            required />
+                                    </Col>
+                                </FormGroup>
 
-                <Modal
-                    show={this.state.show}
-                    onHide={close}
-                    container={this}
-                    aria-labelledby="contained-modal-title">
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title">Zapytaj o produkt</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form horizontal id="productQuestionForm">
-                            <FormGroup
-                                controlId="emailAdress"
-                                htmlFor="email">
-                                <Col componentClass={ControlLabel}>
-                                    Email
-                                   </Col>
-                                <Col>
-                                    <FormControl
-                                        placeholder="Email"
-                                        name="email"
-                                        type="email"
-                                        minLength="5"
-                                        required />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup
-                                controlId="emailTopic"
-                                htmlFor="topic">
-                                <Col componentClass={ControlLabel}>
-                                    Temat
-                                   </Col>
-                                <Col>
-                                    <FormControl
-                                        placeholder="Temat"
-                                        name="topic"
-                                        type="text"
-                                        minLength="5"
-                                        required />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup
-                                controlId="productQuestion"
-                                htmlFor="question">
-                                <Col componentClass={ControlLabel}>
-                                    Treść</Col>
-                                <Col>
-                                    <FormControl
-                                        placeholder="Treść"
-                                        componentClass="textarea"
-                                        className="newProductQuestion"
-                                        name="question"
-                                        minLength="10"
-                                        maxLength="250"
-                                        required />
-                                </Col>
-                            </FormGroup>
-                            <Button className="adminButton" onClick={this.submitForm} type="submit" block>
-                                Wyślij
+                                <FormGroup
+                                    controlId="productQuestion"
+                                    htmlFor="question">
+                                    <Col componentClass={ControlLabel}>
+                                        Treść</Col>
+                                    <Col>
+                                        <FormControl
+                                            placeholder="Treść"
+                                            componentClass="textarea"
+                                            className="newProductQuestion"
+                                            name="question"
+                                            minLength="10"
+                                            maxLength="250"
+                                            required />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId="newsLetter">
+                                    <Col>
+                                        <Checkbox defaultChecked inline>
+                                            <Col componentClass={ControlLabel}> Chcę otrzymywać powiadomienia o nowych produktach.</Col>
+                                        </Checkbox>
+                                    </Col>
+                                </FormGroup>
+                                <Button id="sendQuestion" className="adminButton" onClick={this.submitForm} type="submit" block>
+                                    Wyślij
                                 </Button>
-                        </Form>
-                    </Modal.Body>
-
-                </Modal>
+                            </Form>
+                            <div id="questionSend">
+                                <div id="questionSendButton">
+                                    Wysłano pomyślnie.
+                                </div>
+                            </div>
+                        </Modal.Body>
+                    </Modal>
+                </div>
 
             </div>
         );
     },
     submitForm: function (e) {
+        e.preventDefault();
         var form = $("#productQuestionForm");
         form.validate({
             errorPlacement: function (error, element) {
@@ -149,6 +151,32 @@ const AskForProduct = React.createClass({
         });
         if (!form.valid())
             return;
+
+        var emailMessage = JSON.stringify({
+            from: $("#emailAdress").val(),
+            to: "kontakt@crochetbyjk.pl",
+            subject: $("#contained-modal-title").val(),
+            body: $("#productQuestion").val()
+        });
+        $.ajax({
+            url: '/produkty/sendquestion',
+            type: 'post',
+            contentType: 'application/json',
+            dataType: "json",
+            data: emailMessage,
+            success: function (result) {
+
+            },
+            error: function (xhr) {
+
+            }
+        });
+        $('#sendQuestion').append('&nbsp &nbsp<i class="fa fa-refresh fa-spin"></i>');
+        setTimeout(() => {
+            $("#productQuestionForm").css('display', 'none');
+            $("#contained-modal-title").css('display', 'none');
+            $("#questionSend").fadeTo("slow", 1);
+        }, 2000)
     }
 });
 
@@ -160,4 +188,3 @@ function addFullScreenListeners(api) {
         });
     }
 }
-

@@ -8,7 +8,7 @@ namespace CrochetByJk.Messaging.Commands
 {
     public class SendProductQuestionEmailCommand
     {
-        public SendProductQuestionEmailCommand(IMailMe)
+        public SendProductQuestionEmailCommand()
         {
             
         }

@@ -180,7 +180,6 @@ var AddNewProduct = React.createClass({
         e.preventDefault();
         $('.btnAddNewProduct').text("");
         $('.btnAddNewProduct').append('Dodajemy produkt..&nbsp &nbsp<i class="fa fa-refresh fa-spin"></i>');
-        setTimeout(()=>{},2000);
         self.setState({
             formDisabled: true
         })
@@ -210,9 +209,6 @@ var AddNewProduct = React.createClass({
                 }
                 ReactDOM.unmountComponentAtNode(document.getElementById('addNewProductForm'));
                 newProductAdded(result.Url);
-            },
-            error: function(data){
-                console.log(data);
             }
         });
         $('.btnAddNewProduct').text("Dodaj nowy produkt");

@@ -2,6 +2,6 @@
 {
     public interface IPictureResizer
     {
-        void Resize(IPicture picture);
+        void Resize(IPicture picture,bool isMobile);
     }
 }

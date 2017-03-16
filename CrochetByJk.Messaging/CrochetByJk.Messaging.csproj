@@ -107,17 +107,23 @@
     <Compile Include="Queries\GetProductQuery.cs" />
     <Compile Include="Queries\GetProductsFromCategoryQuery.cs" />
     <Compile Include="Queries\GetAllProductNamesFromCategoryQuery.cs" />
+    <Compile Include="Queries\GetRandomProductsQuery.cs" />
     <Compile Include="QueryHandlers\GetAllCategoriesQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetApplicationUserManagerQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetLastProductsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductsFromCategoryQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetAllProductNamesFromCategoryQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetRandomProductsQueryHandler.cs" />
     <Compile Include="Registration\Registration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrochetByJk.Messaging.Core\CrochetByJk.Messaging.Core.csproj">

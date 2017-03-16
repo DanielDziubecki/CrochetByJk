@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CrochetByJk.Messaging.Core;
+﻿using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Contexts;
 using CrochetByJk.Model.Model;

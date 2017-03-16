@@ -7,19 +7,19 @@ var Tiles = React.createClass({
                 <Row>
                     <Col lg={4} md={4} sm={6} xs={12} className="image-block">
                         <div className="image-block-body" style={
-                            { background: 'url(/Content/Img/3.jpg)', backgroundSize: '100% 100%' }}>
+                            { background: 'url(/Content/Img/3.jpg)', backgroundSize: '100% 100%' , alignSelf: 'stretch'}}>
                             <p> </p>
                         </div>
                     </Col>
                     <Col lg={4} md={4} sm={6} xs={12} className="image-block">
                         <div className="image-block-body" style={
-                            { background: 'url(/Content/Img/2.jpg)', backgroundSize: '100% 100%' }}>
+                            { background: 'url(/Content/Img/2.jpg)', backgroundSize: '100% 100%' , alignSelf: 'center'}}>
                             <p> </p>
                         </div>
                     </Col>
                     <Col lg={4} md={4} sm={6} xs={12} className="image-block">
                         <div className="image-block-body" style={
-                            { background: 'url(/Content/Img/1.jpg)', backgroundSize: '100% 100%' }}>
+                            { background: 'url(/Content/Img/1.jpg)', backgroundSize: '100% 100%' , alignSelf: 'flex-end'}}>
                             <p> </p>
                         </div>
                     </Col>

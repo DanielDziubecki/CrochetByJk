@@ -5,6 +5,7 @@ using CrochetByJk.Common.Roles;
 using CrochetByJk.Components.ProductGalleryProvider;
 using CrochetByJk.Components.Validators;
 using CrochetByJk.Dto;
+using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
@@ -13,6 +14,7 @@ using CrochetByJk.Model.Model;
 namespace CrochetByJk.Controllers
 {
     [Authorize(Roles = ApplicationRoles.Administrator)]
+    [NlogHandleError(View = "Error")]
     public class AdminController : Controller
     {
         private readonly ICqrsBus bus;
