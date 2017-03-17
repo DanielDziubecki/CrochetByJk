@@ -126,7 +126,7 @@ var AddNewProduct = React.createClass({
                             </Col>
 
                             <div className="newProductFormSection">
-                                <Button className="btnAddNewProduct" onClick={this.submitForm} type="submit" block>
+                                <Button className="adminButton" onClick={this.submitForm} type="submit" block>
                                     Dodaj nowy produkt
                                 </Button>
                             </div>

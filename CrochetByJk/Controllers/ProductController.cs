@@ -35,88 +35,71 @@ namespace CrochetByJk.Controllers
         [Route("sukienki")]
         public ActionResult Dresses()
         {
-            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
-            {
-                CategoryId = new Guid(CategoriesConstants.Dresses)
-            });
-            var dressesTiles = mapper.Map<ProductTileViewModel[]>(products);
-            foreach (var productTileViewModel in dressesTiles)
-                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return View("ProductsInCategory", dressesTiles);
+            var dresses = PrepareTilesViewModel(CategoriesConstants.Dresses);
+            return View("ProductsInCategory", dresses);
         }
 
         [Route("sukienki/{name}")]
         public ActionResult Dresses(string name)
         {
-            var selectedProduct = bus.RunQuery<Product>(new GetProductQuery
-            {
-                Id = new Guid(CategoriesConstants.Dresses),
-                ProductName = name
-            });
-            var viewModel = mapper.Map<ProductViewModel>(selectedProduct);
-            var seeAlsoProducts = bus.RunQuery<Product[]>(new GetRandomProductsQuery { Amount = 3});
-            var seeAlsoVm = mapper.Map<ProductTileViewModel[]>(seeAlsoProducts);
-            foreach (var productTileViewModel in seeAlsoVm)
-            {
-                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            }
-            viewModel.SeeAlsoProducts = seeAlsoVm;
+            var viewModel = PrepareProductViewModel(name, CategoriesConstants.Dresses);
             return View("ProductDetails", viewModel);
         }
 
         [Route("dladzieci")]
         public ActionResult ForChildren()
         {
-            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
-            {
-                CategoryId = new Guid(CategoriesConstants.ForChildren)
-            });
-            var forChildren =
-                mapper.Map<ProductTileViewModel[]>(products);
-            foreach (var productTileViewModel in forChildren)
-                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return View("ProductsInCategory", forChildren);
+            var forChildren = PrepareTilesViewModel(CategoriesConstants.ForChildren);
+            return forChildren.Length > 0 ? View("ProductsInCategory", forChildren) : View("NoProducts");
+        }
+
+        [Route("dladzieci/{name}")]
+        public ActionResult ForChildren(string name)
+        {
+            var productDetails = PrepareProductViewModel(name, CategoriesConstants.ForChildren);
+            return View("ProductDetails", productDetails);
         }
 
         [Route("swetry")]
         public ActionResult Sweaters()
         {
-            var products =
-                bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
-                {
-                    CategoryId = new Guid(CategoriesConstants.Sweaters)
-                });
-            var sweaters = mapper.Map<ProductTileViewModel[]>(products);
-            foreach (var productTileViewModel in sweaters)
-                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return View("ProductsInCategory", sweaters);
+            var sweaters = PrepareTilesViewModel(CategoriesConstants.Sweaters);
+            return sweaters.Length > 0 ? View("ProductsInCategory", sweaters) : View("NoProducts");
+        }
+
+        [Route("swetry/{name}")]
+        public ActionResult Sweaters(string name)
+        {
+            var productDetails = PrepareProductViewModel(name, CategoriesConstants.Sweaters);
+            return View("ProductDetails", productDetails);
         }
 
         [Route("torebki")]
         public ActionResult Bags()
         {
-            var products =
-                bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
-                {
-                    CategoryId = new Guid(CategoriesConstants.Bags)
-                });
-            var bags = mapper.Map<ProductTileViewModel[]>(products);
-            foreach (var productTileViewModel in bags)
-                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return View("ProductsInCategory", bags);
+            var bags = PrepareTilesViewModel(CategoriesConstants.Bags);
+            return bags.Length > 0 ? View("ProductsInCategory", bags) : View("NoProducts");
+        }
+
+        [Route("torebki/{name}")]
+        public ActionResult Bags(string name)
+        {
+            var productDetails = PrepareProductViewModel(name, CategoriesConstants.Bags);
+            return View("ProductDetails", productDetails);
         }
 
         [Route("dekoracje")]
         public ActionResult Decor()
         {
-            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
-            {
-                CategoryId = new Guid(CategoriesConstants.Decor)
-            });
-            var decors = mapper.Map<ProductTileViewModel[]>(products);
-            foreach (var productTileViewModel in decors)
-                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return View("ProductsInCategory", decors);
+            var decors = PrepareTilesViewModel(CategoriesConstants.Decor);
+            return decors.Length > 0 ? View("ProductsInCategory", decors) : View("NoProducts");
+        }
+
+        [Route("dekoracje/{name}")]
+        public ActionResult Decor(string name)
+        {
+            var productDetails = PrepareProductViewModel(name, CategoriesConstants.Decor);
+            return View("ProductDetails", productDetails);
         }
 
         [Route("sendquestion")]
@@ -131,6 +114,36 @@ namespace CrochetByJk.Controllers
             {
                 return Json(new {Success = "False"});
             }
+        }
+
+        private ProductTileViewModel[] PrepareTilesViewModel(string categoryId)
+        {
+            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
+            {
+                CategoryId = new Guid(categoryId)
+            });
+            var viewModel = mapper.Map<ProductTileViewModel[]>(products);
+            foreach (var productTileViewModel in viewModel)
+                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
+            return viewModel;
+        }
+
+        private ProductWithSeeAlsoProductsViewModel PrepareProductViewModel(string name, string categoryId)
+        {
+            var selectedProduct = bus.RunQuery<Product>(new GetProductQuery
+            {
+                Id = new Guid(categoryId),
+                ProductName = name
+            });
+            var viewModel = mapper.Map<ProductWithSeeAlsoProductsViewModel>(selectedProduct);
+            var seeAlsoProducts = bus.RunQuery<Product[]>(new GetRandomProductsQuery {Amount = 3});
+            var seeAlsoVm = mapper.Map<ProductTileViewModel[]>(seeAlsoProducts);
+            foreach (var productTileViewModel in seeAlsoVm)
+            {
+                pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
+            }
+            viewModel.SeeAlsoProducts = seeAlsoVm;
+            return viewModel;
         }
     }
 }

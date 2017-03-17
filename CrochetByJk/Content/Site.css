@@ -321,7 +321,7 @@ textarea { max-width: 280px; }*/
         .adminButton,
         .btnGoToNewProduct {
             /*display: inline-block;*/
-            padding: 2%;
+            /*padding: 2%;*/
             font-size: 24px;
             /*width: 150px;*/
             cursor: pointer;
@@ -354,10 +354,10 @@ textarea { max-width: 280px; }*/
             color: white;
         }
         
-        .btnAddNewProduct:hover {
+        /*.btnAddNewProduct:hover {
             background-color: #67A3D9;
             color: white
-        }
+        }*/
         
         .newProductDescription {
             min-height: 111px;
@@ -411,7 +411,7 @@ textarea { max-width: 280px; }*/
         }
         
         #productName {
-            align-self: stretch;
+            align-self: flex-start;
             padding-left: 5%;
             padding-right: 1%;
             text-align: left;
@@ -421,7 +421,7 @@ textarea { max-width: 280px; }*/
         }
         
         #galleryContainer {
-            align-self: stretch;
+            align-self: flex-start;
             padding: 2%;
             height: 100%;
             width: 50%;
@@ -549,7 +549,6 @@ textarea { max-width: 280px; }*/
             #productDetails {
                 justify-content: center;
                 margin: 0;
-           
             }
             #galleryContainer {
                 padding: 0;
@@ -560,10 +559,9 @@ textarea { max-width: 280px; }*/
                 margin-bottom: 3%;
                 width: auto;
                 height: auto;
-                    padding-left: 0;
-            padding-right: 0%;
-            word-wrap: break-word;
-           
+                padding-left: 0;
+                padding-right: 0%;
+                word-wrap: break-word;
             }
         }
         

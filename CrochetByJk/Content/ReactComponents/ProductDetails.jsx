@@ -18,6 +18,7 @@ var ProductDetails = React.createClass({
                 </div>
                 <div id="productName">
                     <h2>{this.state.product.Name}</h2>
+                    <br />
                     <p>{this.state.product.Description}</p>
                     <div id="contactForm">
                         <AskForProduct productName={this.state.product.Name} />
@@ -37,8 +38,8 @@ var ProductDetails = React.createClass({
             // gallery_width:"100%",	
             // gallery_height:"100%",
             // gallery_min_width: "100%",
-             gallery_min_height: 500,
-             gallery_min_width: 250,
+            gallery_min_height: 500,
+            gallery_min_width: 250,
             thumb_selected_border_width: 3,
             thumb_selected_border_color: "#67A3D9",
         });
@@ -61,7 +62,12 @@ const AskForProduct = React.createClass({
         };
     },
     render() {
-        let close = () => this.setState({ show: false });
+        let close = () => {
+            this.setState({ show: false },
+                $("#seeAlsoContainer").css('opacity', 1),
+                $("#footer").css('opacity', 1)
+            )
+        };
 
         return (
             <div className="modal-container">
@@ -70,7 +76,9 @@ const AskForProduct = React.createClass({
                     id="askForProductButton"
                     bsStyle="primary"
                     bsSize="large"
-                    onClick={() => this.setState({ show: true })}>
+                    onClick={() => this.setState({ show: true }, 
+                                   $("#seeAlsoContainer").css('opacity', 0.1),
+                                   $("#footer").css('opacity', 0.1))}>
                     Zapytaj o produkt
                     </Button>
                 <div id="productQuestionModalContainer">

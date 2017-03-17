@@ -19,7 +19,7 @@ namespace CrochetByJk
                     .ForMember(vm => vm.Width,
                         opt => opt.MapFrom(m => m.ProductGallery.Single(x => x.IsMainPhoto).Width));
 
-                cfg.CreateMap<Product, ProductViewModel>()
+                cfg.CreateMap<Product, ProductWithSeeAlsoProductsViewModel>()
                     .ForMember(vm => vm.PictureUrls, opt => opt
                         .MapFrom(m => m.ProductGallery.Select(x => x.Url)));
             });

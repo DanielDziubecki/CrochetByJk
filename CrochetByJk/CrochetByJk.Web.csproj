@@ -256,7 +256,7 @@
     </Compile>
     <Compile Include="Dto\ProductDto.cs" />
     <Compile Include="ViewModel\ProductTileViewModel.cs" />
-    <Compile Include="ViewModel\ProductViewModel.cs" />
+    <Compile Include="ViewModel\ProductWithSeeAlsoProductsViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\UserLoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -443,6 +443,7 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Product\ProductsInCategory.cshtml" />
     <Content Include="Views\Product\ProductDetails.cshtml" />
+    <Content Include="Views\Product\NoProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

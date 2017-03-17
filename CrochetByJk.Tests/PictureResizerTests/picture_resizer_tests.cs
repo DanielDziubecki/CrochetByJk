@@ -17,7 +17,7 @@ namespace CrochetByJk.Tests.PictureResizerTests
                 Width = 1000
             };
             pictureResizer.Resize(pictrue, false);
-            pictrue.Width.Should().Be(500);
+            pictrue.Width.Should().Be(700);
         }
 
         [Fact]
