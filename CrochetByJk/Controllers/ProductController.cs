@@ -122,6 +122,7 @@ namespace CrochetByJk.Controllers
             {
                 CategoryId = new Guid(categoryId)
             });
+            
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);

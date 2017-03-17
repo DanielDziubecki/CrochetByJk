@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <connectionStrings>
+    <!--<add name="CrochetByJk" connectionString="Server=DESKTOP-J45OU76\SQLEXPRESS;Database=CrochetByJk;Trusted_Connection=True;" providerName="System.Data.SqlClient" />
+    <add name="CrochetByJk" 
+         connectionString="Server=mssql.webio.pl,2401;Database=jk_production;User Id=jk_crochetAdmin;Password=Error!991;"
+         providerName="System.Data.SqlClient"/>-->
+  </connectionStrings>
+</configuration>
