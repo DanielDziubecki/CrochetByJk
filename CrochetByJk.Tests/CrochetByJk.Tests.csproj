@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Newsletter\newsletter_tests.cs" />
     <Compile Include="PictureResizerTests\picture_resizer_tests.cs" />
     <Compile Include="ValidatorsTests\validator_tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

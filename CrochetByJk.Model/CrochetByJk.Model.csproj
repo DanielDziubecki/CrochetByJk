@@ -67,6 +67,7 @@
     <Compile Include="Contexts\SecurityContext.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Gallery.cs" />
+    <Compile Include="Model\NewsletterClient.cs" />
     <Compile Include="Model\Picture.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -22,10 +22,13 @@ namespace CrochetByJk.Components.Registration
                 .As<IValidator<IEnumerable<Picture>>>();
 
             containerBuilder.RegisterType<PictureResizer>()
-               .As<IPictureResizer>();
+                .As<IPictureResizer>();
 
-            containerBuilder.RegisterType<EmailSender.ProductQuestionSender>()
-               .As<IEmailSender>();
+            containerBuilder.RegisterType<MailMessageFactory>()
+                .As<IMailMessageFactory>();
+
+            containerBuilder.RegisterType<EmailSender.EmailSender>()
+                .As<IEmailSender>();
         }
     }
 }

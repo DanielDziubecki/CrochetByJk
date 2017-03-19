@@ -50,10 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmailSender\ProductQuestion.cs" />
-    <Compile Include="EmailSender\ProductQuestionSender.cs" />
+    <Compile Include="EmailSender\IMailMessageFactory.cs" />
+    <Compile Include="EmailSender\MailMessageFactory.cs" />
+    <Compile Include="EmailSender\NewsletterMessage.cs" />
+    <Compile Include="EmailSender\ProductQuestionMessage.cs" />
+    <Compile Include="EmailSender\EmailSender.cs" />
     <Compile Include="EmailSender\IEmailSender.cs" />
     <Compile Include="EmailSender\IEmailMessage.cs" />
+    <Compile Include="Exceptions\UnknownEmailMessageType.cs" />
     <Compile Include="ProductGalleryProvider\IPicture.cs" />
     <Compile Include="ProductGalleryProvider\IPictureResizer.cs" />
     <Compile Include="ProductGalleryProvider\PictureResizer.cs" />
@@ -87,9 +91,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

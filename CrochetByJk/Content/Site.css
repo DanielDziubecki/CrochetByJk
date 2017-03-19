@@ -184,7 +184,6 @@ textarea { max-width: 280px; }*/
         }
         
         .image-container {
-            /*margin: 0 5% 5% 5%;*/
             display: flex;
             align-content: space-between;
             align-items: stretch;
@@ -196,13 +195,10 @@ textarea { max-width: 280px; }*/
             border: 10px solid #f5f5f5;
             background-color: white;
             padding: 15px;
-            /*height: 350px;*/
             text-align: center;
             transition: background-color 1s;
-            /*float: left;*/
             height: auto;
             width: auto;
-            /*margin: 0 auto;*/
         }
         
         .image-block:hover {
@@ -277,6 +273,12 @@ textarea { max-width: 280px; }*/
             margin-top: 21px;
         }
         
+        #emailContactOptions,
+        #facebookContactOptions {
+            display: flex;
+            justify-content: center;
+        }
+        
         .adminForm {
             margin: 10% !important;
             display: block;
@@ -300,15 +302,24 @@ textarea { max-width: 280px; }*/
         }
         
         #adminButtonGroup,
-        .goToNewProductContainer {
+        #addNewProductForm,
+        #goToNewProduct {
             display: flex;
-            justify-content: center;
-            width: 100%;
+            justify-content: space-around;
+            flex-wrap: wrap;
         }
         
-        #addNewProductForm {
-            margin: 5% 15% 5% 15%;
+        #addNewProductForm,
+        #goToNewProduct {
+            margin: 5%;
         }
+        /*#addNewProductForm, 
+        #goToNewProduct{
+            
+        }*/
+        /*#addNewProductForm {
+            margin: 5% 15% 5% 15%;
+        }*/
         
         .error {
             color: #d82323
@@ -353,7 +364,6 @@ textarea { max-width: 280px; }*/
             background-color: #67A3D9;
             color: white;
         }
-        
         /*.btnAddNewProduct:hover {
             background-color: #67A3D9;
             color: white

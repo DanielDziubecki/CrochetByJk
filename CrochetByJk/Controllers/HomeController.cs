@@ -33,5 +33,11 @@ namespace CrochetByJk.Controllers
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
             return View("Index", viewModel);
         }
+
+        [Route("kontakt")]
+        public ActionResult Contact()
+        {
+            return View("Contact");
+        }
     }
 }

@@ -35,9 +35,6 @@ var ProductDetails = React.createClass({
             slider_control_zoom: false,
             slider_enable_zoom_panel: false,
             slider_enable_play_button: false,
-            // gallery_width:"100%",	
-            // gallery_height:"100%",
-            // gallery_min_width: "100%",
             gallery_min_height: 500,
             gallery_min_width: 250,
             thumb_selected_border_width: 3,
@@ -128,7 +125,7 @@ const AskForProduct = React.createClass({
                                 </FormGroup>
                                 <FormGroup controlId="newsLetter">
                                     <Col>
-                                        <Checkbox defaultChecked inline>
+                                        <Checkbox id="addToNewsletter" defaultChecked inline>
                                             <Col componentClass={ControlLabel}> Chcę otrzymywać powiadomienia o nowych produktach.</Col>
                                         </Checkbox>
                                     </Col>
@@ -162,12 +159,14 @@ const AskForProduct = React.createClass({
 
         var emailMessage = JSON.stringify({
             from: $("#emailAdress").val(),
-            to: "kontakt@crochetbyjk.pl",
-            subject: $("#contained-modal-title").val(),
-            body: $("#productQuestion").val()
+            to: ["kontakt@crochetbyjk.pl"],
+            subject: $("#contained-modal-title b").text(),
+            body: $("#productQuestion").val(),
+            addToNewsletter: $("#addToNewsletter").is(':checked')
         });
+
         $.ajax({
-            url: '/produkty/sendquestion',
+            url: '/produkty/zadajpytanie',
             type: 'post',
             contentType: 'application/json',
             dataType: "json",

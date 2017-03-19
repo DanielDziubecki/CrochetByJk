@@ -4,34 +4,38 @@ using System.Threading.Tasks;
 
 namespace CrochetByJk.Components.EmailSender
 {
-    public class ProductQuestionSender : IEmailSender
+    public class EmailSender : IEmailSender
     {
+        private readonly IMailMessageFactory mailMessageFactory;
+
+
+        public EmailSender(IMailMessageFactory mailMessageFactory)
+        {
+            this.mailMessageFactory = mailMessageFactory;
+        }
+
         public void Send(IEmailMessage emailMessage)
         {
-            var message = GetMessage(emailMessage);
+            var messages = mailMessageFactory.GetMessages(emailMessage);
             using (var smtpClient = GetSmtpClient())
             {
-                smtpClient.Send(message);
+                foreach (var mailMessage in messages)
+                {
+                    smtpClient.Send(mailMessage);
+                }
             }
         }
 
         public async Task SendAsync(IEmailMessage emailMessage)
         {
-            var message = GetMessage(emailMessage);
+            var messages = mailMessageFactory.GetMessages(emailMessage);
             using (var smtpClient = GetSmtpClient())
             {
-                await smtpClient.SendMailAsync(message);
+                foreach (var mailMessage in messages)
+                {
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
             }
-        }
-
-        private MailMessage GetMessage(IEmailMessage emailMessage)
-        {
-            var message = new MailMessage(emailMessage.From, emailMessage.To, emailMessage.Subject, emailMessage.Body);
-            message.To.Add(emailMessage.To);
-            message.Subject = emailMessage.Subject;
-            message.Body = emailMessage.Body;
-
-            return message;
         }
 
         private SmtpClient GetSmtpClient()

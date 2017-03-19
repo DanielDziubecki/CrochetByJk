@@ -16,7 +16,7 @@
     font-size: 999px;
     text-align: right;
     color: #fff;
-    background: transparent url('../img/loading.gif') top left no-repeat;
+    background: transparent url('../Content/Fileinput/img/loading.gif') top left no-repeat;
     border: none;
 }
 
@@ -182,7 +182,7 @@
 }
 
 .file-thumb-loading {
-    background: transparent url('../img/loading.gif') no-repeat scroll center center content-box !important;
+    background: transparent url('../Content/Fileinput/img/loading.gif') no-repeat scroll center center content-box !important;
 }
 
 .file-actions {

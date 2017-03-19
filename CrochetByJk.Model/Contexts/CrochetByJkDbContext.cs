@@ -8,6 +8,7 @@ namespace CrochetByJk.Model.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Picture> Pictures { get; set; }
+        public DbSet<NewsletterClient> NewsletterClients { get; set; }
 
         public CrochetByJkDbContext():base("CrochetByJk")
         {

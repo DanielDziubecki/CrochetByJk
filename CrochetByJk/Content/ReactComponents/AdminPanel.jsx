@@ -5,8 +5,8 @@ var AdminNavigationPanel = React.createClass({
     render: function () {
         return (
             <div id="adminButtonGroup">
-                <Button className="adminButton" onClick={addNewProductForm} style={{margin: "4%"}}>Dodaj produkt</Button>
-                <Button className="adminButton" style={{margin: "4%"}}>Zarządzaj produktami</Button>
+                <Button className="adminButton" onClick={addNewProductForm} style={{margin:"2%"}}>Dodaj produkt</Button>
+                <Button className="adminButton" style={{margin:"2%"}}>Zarządzaj produktami</Button>
             </div>
         );
     }
@@ -126,7 +126,7 @@ var AddNewProduct = React.createClass({
                             </Col>
 
                             <div className="newProductFormSection">
-                                <Button className="adminButton" onClick={this.submitForm} type="submit" block>
+                                <Button id="newProduct" className="adminButton" onClick={this.submitForm} type="submit" block>
                                     Dodaj nowy produkt
                                 </Button>
                             </div>
@@ -149,13 +149,16 @@ var AddNewProduct = React.createClass({
         var $mainImage = $('#main-image');
         if ($gallery.length)
             $gallery.fileinput({
-               allowedFileExtensions : ['jpg', 'png']
+                showUpload: false,
+               allowedFileExtensions: ['jpg', 'png'],
+                maxFileSize: 1000
             });
 
         if ($mainImage.length)
             $mainImage.fileinput({
-                showUpload: false,
-                allowedFileExtensions : ['jpg', 'png']
+                 showUpload: false,
+                allowedFileExtensions : ['jpg', 'png'],
+                 maxFileSize: 1000
             });
     },
     submitForm: function (e) {
@@ -175,11 +178,10 @@ var AddNewProduct = React.createClass({
         });
         if (!form.valid())
             return;
-
         var self = this;
         e.preventDefault();
-        $('.btnAddNewProduct').text("");
-        $('.btnAddNewProduct').append('Dodajemy produkt..&nbsp &nbsp<i class="fa fa-refresh fa-spin"></i>');
+        $('#newProduct').text("");
+        $('#newProduct').append('Dodajemy produkt..&nbsp &nbsp<i class="fa fa-refresh fa-spin"></i>');
         self.setState({
             formDisabled: true
         })
@@ -197,7 +199,7 @@ var AddNewProduct = React.createClass({
         data.append('CategoryName', $("#productCategory option:selected").text());
 
         $.ajax({
-            url: '/addnewproduct',
+            url: 'produkty/dodajnowy',
             type: 'post',
             contentType: false,
             processData: false,
@@ -211,7 +213,6 @@ var AddNewProduct = React.createClass({
                 newProductAdded(result.Url);
             }
         });
-        $('.btnAddNewProduct').text("Dodaj nowy produkt");
         self.setState({ formDisabled: false });
     }
 });
@@ -221,7 +222,7 @@ var GoToNewProduct = ({url}) => (
         <ReactCSSTransitionGroup transitionName="adminFormAnimation"
             transitionAppear={true}
             transitionAppearTimeout={500}>
-            <Button className="btnGoToNewProduct" href={url}>
+            <Button className="adminButton" href={url}>
                 Przejdź do produktu
           </Button>
         </ReactCSSTransitionGroup>

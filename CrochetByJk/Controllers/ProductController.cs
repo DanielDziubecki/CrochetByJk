@@ -4,13 +4,20 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using CrochetByJk.Common.Constants;
+using CrochetByJk.Common.Roles;
 using CrochetByJk.Components.EmailSender;
 using CrochetByJk.Components.ProductGalleryProvider;
+using CrochetByJk.Components.Validators;
+using CrochetByJk.Dto;
 using CrochetByJk.ErrorHandlers;
+using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
 using CrochetByJk.ViewModel;
+using Newtonsoft.Json;
+using NLog;
+using ILogger = NLog.ILogger;
 
 namespace CrochetByJk.Controllers
 {
@@ -23,20 +30,31 @@ namespace CrochetByJk.Controllers
         private readonly IMapper mapper;
         private readonly IPictureResizer pictureResizer;
         private readonly IEmailSender emailSender;
+        private readonly IValidator<Product> validator;
+        private readonly ILogger logger;
+        private readonly IProductGalleryProvider galleryProvider;
 
-        public ProductController(ICqrsBus bus, IMapper mapper, IPictureResizer pictureResizer, IEmailSender emailSender)
+        public ProductController(ICqrsBus bus,
+            IMapper mapper,
+            IPictureResizer pictureResizer,
+            IEmailSender emailSender,
+            IProductGalleryProvider galleryProvider,
+            IValidator<Product> validator)
         {
             this.bus = bus;
             this.mapper = mapper;
             this.pictureResizer = pictureResizer;
             this.emailSender = emailSender;
+            this.galleryProvider = galleryProvider;
+            this.validator = validator;
+            logger = LogManager.GetLogger("crochetDbLogger");
         }
 
         [Route("sukienki")]
         public ActionResult Dresses()
         {
             var dresses = PrepareTilesViewModel(CategoriesConstants.Dresses);
-            return View("ProductsInCategory", dresses);
+            return dresses.Length > 0 ? View("ProductsInCategory", dresses) : View("NoProducts");
         }
 
         [Route("sukienki/{name}")]
@@ -102,18 +120,100 @@ namespace CrochetByJk.Controllers
             return View("ProductDetails", productDetails);
         }
 
-        [Route("sendquestion")]
-        public async Task<JsonResult> SendProductQuestion(ProductQuestion productQuestion)
+        [Route("newsletter/usun/{email}")]
+        public ActionResult RemoveClientFromNewsletter(string email)
         {
+            return View("DeletedFromNewsLetter");
+        }
+
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [Route("dodajnowy")]
+        [HttpPost]
+        public JsonResult AddNewProduct(ProductDto productDto)
+        {
+            if (!ModelState.IsValid)
+                return Json(new {Success = "False", responseText = "Wystąpił błąd. Wprowadź poprawne dane."});
+
+            var productId = Guid.NewGuid();
             try
             {
-                await emailSender.SendAsync(productQuestion);
+                var productGallery =
+                    galleryProvider.SaveProductGallery(new Gallery(productId, Request.Files, productDto.MainPhoto))
+                        .ToArray();
+                var mainPicture = productGallery.Single(x => x.IsMainPhoto);
+                var product = new Product
+                {
+                    IdProduct = productId,
+                    Name = productDto.Name,
+                    IdCategory = productDto.IdCategory,
+                    Description = productDto.Description,
+                    IdMainPicture = mainPicture.IdPicture,
+                    InsertDate = DateTime.Now,
+                    ProductGallery = productGallery,
+                    UrlFriendlyName = productDto.Name
+                };
+                validator.Validate(product);
+                if (Request.Url == null)
+                    throw new ArgumentNullException(nameof(Request.Url));
+                var baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+                product.ProductUrl = $"{baseUrl}/Produkty/{productDto.CategoryName}/{product.UrlFriendlyName}";
+                bus.ExecuteCommand(new SaveProductCommand(product));
+                SendEmailsAboutNewProduct(product);
+                return Json(new {Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl});
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                galleryProvider.DeleteProductGallery(productId);
+                return
+                    Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
+            }
+        }
+
+        [Route("zadajpytanie")]
+        public async Task<JsonResult> SendProductQuestion(ProductQuestionMessage productQuestionMessage)
+        {
+            if (productQuestionMessage.AddToNewsletter)
+                AddClientToNewsletter(productQuestionMessage.From);
+            try
+            {
+                await emailSender.SendAsync(productQuestionMessage);
                 return Json(new {Success = "True"});
             }
             catch (Exception ex)
             {
+                var serializedQuestion = JsonConvert.SerializeObject(productQuestionMessage);
+                logger.Error(ex, "Failed to send email\r\n" + serializedQuestion);
                 return Json(new {Success = "False"});
             }
+        }
+
+        public void SendEmailsAboutNewProduct(Product newProduct)
+        {
+            var emailAdresses = bus.RunQuery<string[]>(new GetNewletterClientsEmailsQuery());
+
+            var newsLetter = new NewsletterMessage
+            {
+                To = emailAdresses.ToArray(),
+                Body = "",
+                From = "joannakuczynska@crochetbyjk.pl",
+                Subject = "Dodano nowy produkt na crochetbyjk.pl",
+                ProductUrl = newProduct.ProductUrl
+            };
+            try
+            {
+                emailSender.SendAsync(newsLetter);
+            }
+            catch (Exception ex)
+            {
+                var message = JsonConvert.SerializeObject(newsLetter);
+                logger.Error(ex, "Newsletter send failed to " + message);
+            }
+        }
+
+        private void AddClientToNewsletter(string email)
+        {
+            bus.ExecuteCommand(new AddNewsletterClientCommand {ClientEmail = email});
         }
 
         private ProductTileViewModel[] PrepareTilesViewModel(string categoryId)
@@ -122,7 +222,7 @@ namespace CrochetByJk.Controllers
             {
                 CategoryId = new Guid(categoryId)
             });
-            
+
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);

@@ -15,7 +15,7 @@ var MyNavbar = React.createClass({
                     <MenuItem href="/Produkty/Torebki/" id="bags">TOREBKI</MenuItem>
                     <MenuItem href="/Produkty/DlaDzieci/" id="forchildren">DLA DZIECI</MenuItem>
                     <MenuItem href="/Produkty/Dekoracje/" id="decor" >DEKORACJE</MenuItem>
-                    <MenuItem href="/Produkty/Kontakt/" id="contact">KONTAKT</MenuItem>
+                    <MenuItem href="/Kontakt/" id="contact">KONTAKT</MenuItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>);
