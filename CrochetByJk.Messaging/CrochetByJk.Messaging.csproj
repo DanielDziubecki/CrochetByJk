@@ -107,7 +107,7 @@
     <Compile Include="Queries\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetApplicationUserManagerQuery.cs" />
     <Compile Include="Queries\GetLastProductsQuery.cs" />
-    <Compile Include="Queries\GetNewletterClientsEmailsQuery.cs" />
+    <Compile Include="Queries\GetNewletterClientsQuery.cs" />
     <Compile Include="Queries\GetProductQuery.cs" />
     <Compile Include="Queries\GetProductsFromCategoryQuery.cs" />
     <Compile Include="Queries\GetAllProductNamesFromCategoryQuery.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="QueryHandlers\GetAllCategoriesQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetApplicationUserManagerQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetLastProductsQueryHandler.cs" />
-    <Compile Include="QueryHandlers\GetNewletterClientsEmailsQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetNewletterClientsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductsFromCategoryQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetAllProductNamesFromCategoryQueryHandler.cs" />
@@ -129,6 +129,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrochetByJk.Common\CrochetByJk.Common.csproj">
+      <Project>{51736241-5ea5-4ae9-b5ff-1cd986aac07f}</Project>
+      <Name>CrochetByJk.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CrochetByJk.Messaging.Core\CrochetByJk.Messaging.Core.csproj">
       <Project>{f20a8f04-7131-4a2e-8b94-bd193056730a}</Project>
       <Name>CrochetByJk.Messaging.Core</Name>

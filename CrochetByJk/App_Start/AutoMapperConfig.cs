@@ -13,7 +13,7 @@ namespace CrochetByJk
             {
                 cfg.CreateMap<Product, ProductTileViewModel>()
                     .ForMember(vm => vm.PictureUri, opt => opt
-                        .MapFrom(m => m.ProductGallery.Single(e => e.IsMainPhoto).Url))
+                        .MapFrom(m => m.ProductGallery.Single(e => e.IsMainPhoto).Uri))
                     .ForMember(vm => vm.Height,
                         opt => opt.MapFrom(m => m.ProductGallery.Single(x => x.IsMainPhoto).Height))
                     .ForMember(vm => vm.Width,
@@ -21,7 +21,7 @@ namespace CrochetByJk
 
                 cfg.CreateMap<Product, ProductWithSeeAlsoProductsViewModel>()
                     .ForMember(vm => vm.PictureUrls, opt => opt
-                        .MapFrom(m => m.ProductGallery.Select(x => x.Url)));
+                        .MapFrom(m => m.ProductGallery.Select(x => x.Uri)));
             });
             return config.CreateMapper();
         }

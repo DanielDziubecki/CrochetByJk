@@ -207,6 +207,7 @@ var AddNewProduct = React.createClass({
             success: function (result) {
                 if (result.Success == "False") {
                     $('#validationMsg').text(result.responseText);
+                    $('#newProduct').text("Dodaj nowy produkt");
                     return;
                 }
                 ReactDOM.unmountComponentAtNode(document.getElementById('addNewProductForm'));

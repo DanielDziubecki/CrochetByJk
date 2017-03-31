@@ -46,6 +46,10 @@
       <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -102,7 +106,9 @@
       <Name>CrochetByJk.Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Newsletter\TestFiles\3.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -34,6 +34,10 @@
       <HintPath>..\packages\Autofac.4.0.0\lib\net451\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -51,8 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailSender\IMailMessageFactory.cs" />
+    <Compile Include="EmailSender\IMailTemplateReader.cs" />
     <Compile Include="EmailSender\MailMessageFactory.cs" />
+    <Compile Include="EmailSender\MailTemplateReader.cs" />
+    <Compile Include="EmailSender\MailTemplateType.cs" />
     <Compile Include="EmailSender\NewsletterMessage.cs" />
+    <Compile Include="EmailSender\NewsletterPicture.cs" />
     <Compile Include="EmailSender\ProductQuestionMessage.cs" />
     <Compile Include="EmailSender\EmailSender.cs" />
     <Compile Include="EmailSender\IEmailSender.cs" />
@@ -91,7 +99,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

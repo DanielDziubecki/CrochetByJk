@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CrochetByJk.Common.ShortGuid;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Model.Contexts;
@@ -28,7 +29,7 @@ namespace CrochetByJk.Messaging.CommandHandlers
             context.NewsletterClients.Add(new NewsletterClient
             {
                 Email = clientEmail,
-                Id = Guid.NewGuid(),
+                Id = ShortGuid.NewGuid(),
                 InsertDate = DateTime.Now
             });
             context.SaveChanges();

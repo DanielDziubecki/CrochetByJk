@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
@@ -121,7 +124,7 @@ namespace CrochetByJk.Controllers
         }
 
         [Route("newsletter/usun/{email}")]
-        public ActionResult RemoveClientFromNewsletter(string email)
+        public ActionResult RemoveClientFromNewsletter(string id)
         {
             return View("DeletedFromNewsLetter");
         }
@@ -182,32 +185,43 @@ namespace CrochetByJk.Controllers
             }
             catch (Exception ex)
             {
-                var serializedQuestion = JsonConvert.SerializeObject(productQuestionMessage);
-                logger.Error(ex, "Failed to send email\r\n" + serializedQuestion);
+                //var serializedQuestion = JsonConvert.SerializeObject(productQuestionMessage);
+                logger.Error(ex);
                 return Json(new {Success = "False"});
             }
         }
 
         public void SendEmailsAboutNewProduct(Product newProduct)
         {
-            var emailAdresses = bus.RunQuery<string[]>(new GetNewletterClientsEmailsQuery());
+            var newsletterClients = bus.RunQuery<NewsletterClient[]>(new GetNewletterClientsQuery());
+            var mainPicture = newProduct.ProductGallery.ToArray().Single(x => x.IsMainPhoto);
 
             var newsLetter = new NewsletterMessage
             {
-                To = emailAdresses.ToArray(),
+                To = newsletterClients.Select(x=>x.Email).ToArray(),
                 Body = "",
                 From = "joannakuczynska@crochetbyjk.pl",
                 Subject = "Dodano nowy produkt na crochetbyjk.pl",
-                ProductUrl = newProduct.ProductUrl
+                ProductUrl = newProduct.ProductUrl,
+                NewsLetterPicture = new NewsletterPicture
+                {
+                    Width = mainPicture.Width,
+                    Height = mainPicture.Height,
+                    LinkedResource = new LinkedResource(Path.Combine("wwww.crochetbyjk.pl",
+                        System.Web.HttpContext.Current.Server.MapPath(Path.Combine("~", mainPicture.Uri))),MediaTypeNames.Image.Jpeg)
+                },
+                NewsletterClients = newsletterClients
             };
+
             try
             {
-                emailSender.SendAsync(newsLetter);
+                emailSender.Send(newsLetter);
             }
             catch (Exception ex)
             {
-                var message = JsonConvert.SerializeObject(newsLetter);
-                logger.Error(ex, "Newsletter send failed to " + message);
+                //var message = JsonConvert.SerializeObject(newsLetter,
+                //  new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
+                logger.Error(ex);
             }
         }
 

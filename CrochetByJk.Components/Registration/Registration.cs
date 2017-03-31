@@ -24,6 +24,8 @@ namespace CrochetByJk.Components.Registration
             containerBuilder.RegisterType<PictureResizer>()
                 .As<IPictureResizer>();
 
+            containerBuilder.RegisterType<MailTemplateReader>().As<IMailTemplateReader>();
+
             containerBuilder.RegisterType<MailMessageFactory>()
                 .As<IMailMessageFactory>();
 

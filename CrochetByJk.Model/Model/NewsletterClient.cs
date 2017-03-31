@@ -8,7 +8,7 @@ namespace CrochetByJk.Model.Model
     public class NewsletterClient
     {
         [Key]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Email { get; set; }
         public DateTime InsertDate { get; set; }
     }

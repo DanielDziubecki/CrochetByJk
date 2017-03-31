@@ -1,4 +1,6 @@
-﻿namespace CrochetByJk.Components.EmailSender
+﻿using CrochetByJk.Model.Model;
+
+namespace CrochetByJk.Components.EmailSender
 {
     public class NewsletterMessage : IEmailMessage
     {
@@ -7,6 +9,7 @@
         public string Subject { get; set; }
         public string Body { get; set; }
         public string ProductUrl { get; set; }
-        public string MainImageUrl { get; set; }
+        public NewsletterPicture NewsLetterPicture { get; set; }
+        public NewsletterClient[] NewsletterClients { get; set; }
     }
 }

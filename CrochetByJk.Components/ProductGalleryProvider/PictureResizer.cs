@@ -2,7 +2,7 @@
 {
     public class PictureResizer : IPictureResizer
     {
-        public void Resize(IPicture picture, bool isMobile)
+        public void Resize(IPicture picture, bool isMobile = false)
         {
             var maxHeight = isMobile ? 200 : 350;
             if (picture.Height != 0 && picture.Width != 0)

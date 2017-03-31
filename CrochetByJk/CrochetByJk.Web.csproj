@@ -292,6 +292,7 @@
     <Content Include="Content\Img\unitegallery\play-button-square.png" />
     <Content Include="Content\Img\unitegallery\slider_arrow_left.png" />
     <Content Include="Content\Img\unitegallery\slider_arrow_right.png" />
+    <Content Include="Content\MailTemplates\newsletter_template.html" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

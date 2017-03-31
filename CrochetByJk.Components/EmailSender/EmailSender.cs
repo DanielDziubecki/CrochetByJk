@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -7,7 +8,6 @@ namespace CrochetByJk.Components.EmailSender
     public class EmailSender : IEmailSender
     {
         private readonly IMailMessageFactory mailMessageFactory;
-
 
         public EmailSender(IMailMessageFactory mailMessageFactory)
         {

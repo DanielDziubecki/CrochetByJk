@@ -89,7 +89,7 @@ namespace CrochetByJk.Components.ProductGalleryProvider
                     {
                         IdPicture = Guid.NewGuid(),
                         IdProduct = gallery.GalleryId,
-                        Url = webPath,
+                        Uri = webPath,
                         Name = fileName,
                         Height = img.Height,
                         Width = img.Width,

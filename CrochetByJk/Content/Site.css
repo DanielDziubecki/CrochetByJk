@@ -331,21 +331,14 @@ textarea { max-width: 280px; }*/
         
         .adminButton,
         .btnGoToNewProduct {
-            /*display: inline-block;*/
-            /*padding: 2%;*/
             font-size: 24px;
-            /*width: 150px;*/
             cursor: pointer;
-            /*text-align: center;*/
             text-decoration: none;
             outline: none;
             color: #fff;
             background-color: #67A3D9;
             border: none;
             border-radius: 2px;
-            /*box-shadow: 9px 9px #999;*/
-            /*white-space: normal;*/
-            /*margin: 1%;*/
         }
         
         .adminButton:hover,

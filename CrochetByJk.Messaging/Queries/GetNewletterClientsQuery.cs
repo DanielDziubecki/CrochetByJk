@@ -2,7 +2,7 @@
 
 namespace CrochetByJk.Messaging.Queries
 {
-    public class GetNewletterClientsEmailsQuery : IQuery
+    public class GetNewletterClientsQuery : IQuery
     {
         
     }

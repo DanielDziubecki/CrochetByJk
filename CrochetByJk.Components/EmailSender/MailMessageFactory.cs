@@ -1,12 +1,26 @@
 ﻿using System.Collections.Concurrent;
+using System.IO;
+using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using CrochetByJk.Components.Exceptions;
+using CrochetByJk.Components.ProductGalleryProvider;
+using HtmlAgilityPack;
 
 namespace CrochetByJk.Components.EmailSender
 {
     public class MailMessageFactory : IMailMessageFactory
     {
+        private readonly IPictureResizer pictureResizer;
+        private readonly IMailTemplateReader templateReader;
+
+        public MailMessageFactory(IPictureResizer pictureResizer, IMailTemplateReader templateReader)
+        {
+            this.pictureResizer = pictureResizer;
+            this.templateReader = templateReader;
+        }
+
         public MailMessage[] GetMessages(IEmailMessage emailMessage)
         {
             if (emailMessage is ProductQuestionMessage)
@@ -22,20 +36,33 @@ namespace CrochetByJk.Components.EmailSender
         {
             var message = (NewsletterMessage) emailMessage;
             var mailMessages = new ConcurrentBag<MailMessage>();
-            var body = "<html><body><div style=\"text-align=center;\"><p>Witaj, dodałam nowy produkt. Być może Cię zainteresuje."
-                       + "<img src=\"" + message.MainImageUrl + "\"/>" +
-                       "Znajduje się on pod tym linkiem: " + message.ProductUrl + "\r\n" +
-                       "Jeśli chcesz zrezygnować z newslettera kliknij w ten link: <a href=\"www.crochetbyjk.pl/newsletter/usun/>\"</p></div></body></html>";
+            pictureResizer.Resize(message.NewsLetterPicture);
 
-            Parallel.ForEach(emailMessage.To, email =>
+            var template = templateReader.GetTemplate(MailTemplateType.Newsletter);
+            var html = new HtmlDocument();
+            html.LoadHtml(template);
+            var root = html.DocumentNode;
+            var img = root.Descendants("img").Single(x=>x.Id == "newProductImage").Attributes.Append("src",$"cid:{message.NewsLetterPicture.LinkedResource.ContentId}");
+            var product = root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"{message.ProductUrl}");
+            Parallel.ForEach(message.NewsletterClients, client =>
             {
+                var cancelSub = root.Descendants("a").Single(x => x.Id == "cancelSubLink").Attributes.Append("href", $"www.crochetbyjk.pl/newsletter/usun/{client.Id}");
+                var htmlBody = root.InnerHtml;
+
+                var avHtml = AlternateView.CreateAlternateViewFromString
+                    (htmlBody, null, MediaTypeNames.Text.Html);
+
+                avHtml.LinkedResources.Add(message.NewsLetterPicture.LinkedResource);
+
                 var mailMessage = new MailMessage
                 {
                     From = new MailAddress(emailMessage.From),
                     Subject = emailMessage.Subject,
-                    Body = body + email,
-                    To = {email}
+                    Body = htmlBody,
+                    To = {client.Email},
+                    IsBodyHtml = true
                 };
+                mailMessage.AlternateViews.Add(avHtml);
                 mailMessages.Add(mailMessage);
             });
             return mailMessages.ToArray();
