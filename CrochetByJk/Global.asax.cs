@@ -9,12 +9,12 @@ namespace CrochetByJk
     {
         protected void Application_Start()
         {
+            SerializerConfig.Configure();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterComponents();
-            
         }
     }
 }

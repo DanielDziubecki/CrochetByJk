@@ -474,12 +474,7 @@ textarea { max-width: 280px; }*/
             cursor: default;
             text-align: center;
             font-weight: normal;
-            text-decoration: none;
-            outline: none;
-            color: #fff;
-            background-color: #67A3D9;
-            border: none;
-            border-radius: 2px;
+            color: white;
         }
         
         .modal {
@@ -545,6 +540,10 @@ textarea { max-width: 280px; }*/
                 vertical-align: middle;
                 content: " ";
                 height: 100%;
+            }
+            .navbar-nav>li>a{
+                /*padding-bottom: 10px; 
+                padding-top: 10px;*/
             }
         }
         
@@ -623,13 +622,15 @@ textarea { max-width: 280px; }*/
                 box-shadow: 10px 10px 5px #888888;
                 border-radius: 4px;
             }
-            .selected-menu-item-small-size {
+            .selected-menu-item-small-size,
+            .selected-menu-item {
                 padding-bottom: 8px;
                 background-color: #67A3D9;
-                color: white;
+                color: white !important;
                 box-shadow: 10px 10px 5px #888888;
                 border-radius: 4px;
             }
+
             .icon-bar {
                 background-color: white;
             }

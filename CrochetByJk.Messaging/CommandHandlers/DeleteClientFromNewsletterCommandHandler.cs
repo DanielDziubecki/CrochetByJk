@@ -15,7 +15,7 @@ namespace CrochetByJk.Messaging.CommandHandlers
         }
         public void Handle(DeleteClientFromNewsletterCommand command)
         {
-            var client = context.NewsletterClients.SingleOrDefault(x => x.Email == command.Email.Trim().ToLowerInvariant());
+            var client = context.NewsletterClients.SingleOrDefault(x => x.Id == command.Id);
             if (client == null) return;
             context.NewsletterClients.Remove(client);
             context.SaveChanges();

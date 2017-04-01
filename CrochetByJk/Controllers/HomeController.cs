@@ -39,5 +39,11 @@ namespace CrochetByJk.Controllers
         {
             return View("Contact");
         }
+
+        [Route("blad")]
+        public ActionResult Error()
+        {
+            return View("Error");
+        }
     }
 }

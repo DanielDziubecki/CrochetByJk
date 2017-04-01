@@ -3,6 +3,7 @@
 @{
     Layout = "../Shared/_Layout.cshtml";
 }
+
 @Html.React("ProductDetails", new
 {
     product = Model
@@ -11,15 +12,16 @@
 <div id="seeAlsoContainer">
     <p>Zobacz również</p>
     @Html.React("CategoryProducts", new
-{
-    products = Model.SeeAlsoProducts
-})
+    {
+        products = Model.SeeAlsoProducts
+    })
 </div>
+
 @section scripts
 {
     <script src="~/Content/ReactComponents/ProductDetails.jsx"></script>
     <script src="~/Content/ReactComponents/CategoryProducts.jsx"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script>AOS.init({ duration: 2000 });</script>
-@Html.ReactInitJavaScript()
+    @Html.ReactInitJavaScript()
 }

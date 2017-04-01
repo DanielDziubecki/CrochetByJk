@@ -1,0 +1,15 @@
+﻿@model string
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+@Html.React("DeleteFromNewsletter", new
+{
+    clientId = Model.ToString()
+})
+
+@section scripts
+{
+    <script src="~/Content/ReactComponents/DeleteFromNewsletter.jsx"></script>
+    @Html.ReactInitJavaScript()
+}

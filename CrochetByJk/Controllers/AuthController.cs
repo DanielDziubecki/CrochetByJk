@@ -79,7 +79,6 @@ namespace CrochetByJk.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            
 
             var user = new ApplicationUser
             {

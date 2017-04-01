@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -35,19 +35,19 @@ namespace CrochetByJk.Components.EmailSender
         private MailMessage[] GetNewsletterTypeofMessages(IEmailMessage emailMessage)
         {
             var message = (NewsletterMessage) emailMessage;
-            var mailMessages = new ConcurrentBag<MailMessage>();
-            pictureResizer.Resize(message.NewsLetterPicture);
+            var mailMessages = new List<MailMessage>();
+            pictureResizer.Resize(message.NewsLetterPicture, true);
 
-            var template = templateReader.GetTemplate(MailTemplateType.Newsletter);
-            var html = new HtmlDocument();
-            html.LoadHtml(template);
-            var root = html.DocumentNode;
-            var img = root.Descendants("img").Single(x=>x.Id == "newProductImage").Attributes.Append("src",$"cid:{message.NewsLetterPicture.LinkedResource.ContentId}");
-            var product = root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"{message.ProductUrl}");
-            Parallel.ForEach(message.NewsletterClients, client =>
+            var htmlTemplate = templateReader.GetTemplate(MailTemplateType.Newsletter);
+            var baseNewsletter = GetBaseOfNewsletterMessage(htmlTemplate, message);
+
+            foreach (var client in message.NewsletterClients)
             {
-                var cancelSub = root.Descendants("a").Single(x => x.Id == "cancelSubLink").Attributes.Append("href", $"www.crochetbyjk.pl/newsletter/usun/{client.Id}");
-                var htmlBody = root.InnerHtml;
+                baseNewsletter.Descendants("a").Single(x => x.Id == "cancelSubLink").Attributes.Remove("href");
+                baseNewsletter.Descendants("a")
+                    .Single(x => x.Id == "cancelSubLink")
+                    .Attributes.Append("href", "https://" + $"www.crochetbyjk.pl/newsletter/potwierdz/{client.Id}");
+                var htmlBody = baseNewsletter.InnerHtml;
 
                 var avHtml = AlternateView.CreateAlternateViewFromString
                     (htmlBody, null, MediaTypeNames.Text.Html);
@@ -64,8 +64,20 @@ namespace CrochetByJk.Components.EmailSender
                 };
                 mailMessage.AlternateViews.Add(avHtml);
                 mailMessages.Add(mailMessage);
-            });
+            }
             return mailMessages.ToArray();
+        }
+
+        private static HtmlNode GetBaseOfNewsletterMessage(string template, NewsletterMessage message)
+        {
+            var html = new HtmlDocument();
+            html.LoadHtml(template);
+            var root = html.DocumentNode;
+            root.Descendants("img")
+                .Single(x => x.Id == "newProductImage")
+                .Attributes.Append("src", $"cid:{message.NewsLetterPicture.LinkedResource.ContentId}");
+            root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"{message.ProductUrl}");
+            return root;
         }
 
         private MailMessage[] GetProductQuestionTypeofMessages(IEmailMessage emailMessage)

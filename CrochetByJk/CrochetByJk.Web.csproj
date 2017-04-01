@@ -245,10 +245,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SerializerConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NewsletterController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="ErrorHandlers\NlogHandleError.cs" />
     <Compile Include="Global.asax.cs">
@@ -320,6 +322,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ApplicationInsights.config" />
+    <Content Include="Content\ReactComponents\DeleteFromNewsletter.jsx" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -439,7 +442,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Product\DeletedFromNewsLetter.cshtml" />
+    <Content Include="Views\Newsletter\DeleteFromNewsletter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

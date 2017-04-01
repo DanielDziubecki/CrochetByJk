@@ -134,7 +134,7 @@ const AskForProduct = React.createClass({
                                     Wyślij
                                 </Button>
                             </Form>
-                            <div id="questionSend">
+                            <div id="questionSend" className="aboutMe">
                                 <div id="questionSendButton">
                                     Wysłano pomyślnie.
                                 </div>
