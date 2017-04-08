@@ -258,7 +258,8 @@
     </Compile>
     <Compile Include="Dto\ProductDto.cs" />
     <Compile Include="ViewModel\ProductTileViewModel.cs" />
-    <Compile Include="ViewModel\ProductWithSeeAlsoProductsViewModel.cs" />
+    <Compile Include="ViewModel\ProductDetailsWithSeeAlsoProductsViewModel.cs" />
+    <Compile Include="ViewModel\ProductToManageViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\UserLoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -296,15 +297,14 @@
     <Content Include="Content\Img\unitegallery\slider_arrow_right.png" />
     <Content Include="Content\MailTemplates\newsletter_template.html" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\toastr.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\aos\aos.js" />
-    <Content Include="Content\ReactComponents\AdminLoginForm.jsx" />
+    <Content Include="Content\ReactComponents\AdminLogin.jsx" />
     <Content Include="Content\ReactComponents\AdminPanel.jsx" />
-    <Content Include="Content\ReactComponents\Carousel.jsx" />
     <Content Include="Content\ReactComponents\Footer.jsx" />
-    <Content Include="Content\ReactComponents\ItemCointainer.jsx" />
     <Content Include="Content\ReactComponents\Navbar.jsx" />
     <Content Include="Content\ReactComponents\Baner.jsx" />
     <Content Include="Content\ReactComponents\AboutMe.jsx" />
@@ -316,13 +316,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\Fileinput\sass\fileinput.scss" />
-    <Content Include="Content\ReactComponents\ImageGallery.jsx" />
     <Content Include="Content\ReactComponents\ProductDetails.jsx" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ApplicationInsights.config" />
     <Content Include="Content\ReactComponents\DeleteFromNewsletter.jsx" />
+    <Content Include="Content\ReactComponents\AdminManagePanel.jsx" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

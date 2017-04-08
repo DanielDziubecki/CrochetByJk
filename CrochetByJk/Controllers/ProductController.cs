@@ -124,8 +124,24 @@ namespace CrochetByJk.Controllers
         }
 
         [Authorize(Roles = ApplicationRoles.Administrator)]
-        [Route("dodajnowy")]
-        [HttpPost]
+        [Route("pobierzprodukty")]
+        public JsonResult GetProductsByCategory(string categoryId)
+        {
+           // Task.Delay(5000).Wait();
+            var category = Guid.Parse(categoryId);
+            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery {CategoryId = category});
+            var productViewModel = mapper.Map<ProductTileViewModel[]>(products);
+            var productsJson = JsonConvert.SerializeObject(productViewModel,
+                Formatting.None,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+            return Json(productsJson, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [Route("dodajnowy"), HttpPost]
         public JsonResult AddNewProduct(ProductDto productDto)
         {
             if (!ModelState.IsValid)
@@ -192,9 +208,9 @@ namespace CrochetByJk.Controllers
             }
         }
 
-        private void  SendEmailsAboutNewProduct(Product newProduct)
+        private void SendEmailsAboutNewProduct(Product newProduct)
         {
-            var newsletterClients =  bus.RunQuery<NewsletterClient[]>(new GetNewletterClientsQuery());
+            var newsletterClients = bus.RunQuery<NewsletterClient[]>(new GetNewletterClientsQuery());
             var mainPicture = newProduct.ProductGallery.ToArray().Single(x => x.IsMainPhoto);
 
             var newsLetter = new NewsletterMessage
@@ -278,14 +294,14 @@ namespace CrochetByJk.Controllers
             return viewModel;
         }
 
-        private ProductWithSeeAlsoProductsViewModel PrepareProductViewModel(string name, string categoryId)
+        private ProductDetailsWithSeeAlsoProductsViewModel PrepareProductViewModel(string name, string categoryId)
         {
             var selectedProduct = bus.RunQuery<Product>(new GetProductQuery
             {
                 Id = new Guid(categoryId),
                 ProductName = name
             });
-            var viewModel = mapper.Map<ProductWithSeeAlsoProductsViewModel>(selectedProduct);
+            var viewModel = mapper.Map<ProductDetailsWithSeeAlsoProductsViewModel>(selectedProduct);
             var seeAlsoProducts = bus.RunQuery<Product[]>(new GetRandomProductsQuery {Amount = 3});
             var seeAlsoVm = mapper.Map<ProductTileViewModel[]>(seeAlsoProducts);
             foreach (var productTileViewModel in seeAlsoVm)

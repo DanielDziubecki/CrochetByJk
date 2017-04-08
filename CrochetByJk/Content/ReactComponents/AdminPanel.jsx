@@ -1,164 +1,197 @@
 ﻿const {Form, Grid, Row, Col, FormGroup, FormControl, ControlLabel, HelpBlock, Checkbox, Radio, Button} = ReactBootstrap;
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+const AdminManagePanel = AdminManagePanel;
 
 var AdminNavigationPanel = React.createClass({
+
+    getInitialState: function () {
+        return {
+            categories: [],
+            showNewProductForm: false,
+            showManagePanel: false,
+        }
+    },
+    newProductButtonClick: function () {
+        this.setState({
+            showNewProductForm: !this.state.showNewProductForm,
+            showManagePanel: this.state.showNewProductForm
+        })
+    },
+    managePanelButtonClick: function () {
+        this.setState({
+            showManagePanel: !this.state.showManagePanel,
+            showNewProductForm: this.state.showManagePanel
+        })
+    },
     render: function () {
         return (
             <div id="adminButtonGroup">
-                <Button className="adminButton" onClick={addNewProductForm} style={{margin:"2%"}}>Dodaj produkt</Button>
-                <Button className="adminButton" style={{margin:"2%"}}>Zarządzaj produktami</Button>
+                <Button id="addProductBtn" className="adminButton" onClick={this.newProductButtonClick} style={{ margin: "2%" }}>Dodaj produkt</Button>
+                <Button id="managePanelBtn"  className="adminButton" onClick={this.managePanelButtonClick} style={{ margin: "2%" }}>Zarządzaj produktami</Button>
+                {this.state.showNewProductForm ? <AddNewProduct categories={this.state.categories} /> : null}
+                {this.state.showManagePanel ?<AdminManagePanel categories={this.state.categories}/> : null}
             </div>
         );
+    },
+    componentWillMount: function () { 
+        $.ajax({
+            url: "/categories",
+            success: (data) => {
+                this.setState({
+                    categories: data
+                })
+            }
+        });
     }
+
 });
 
 var AddNewProduct = React.createClass({
     getInitialState: function () {
         return {
-            data: [],
-            formDisabled: false
+            categories: this.props.categories,
+            formDisabled: false,
+            showGoToProductButton: false,
+            productUrl: null
         }
     },
     render: function () {
         return (
-            <ReactCSSTransitionGroup transitionName="adminFormAnimation"
-                transitionAppear={true}
-                transitionAppearTimeout={500}>
-                <div id="validationMsg"></div>
-                <fieldset disabled={this.state.formDisabled}>
-                    <Form horizontal className="addNewProductForm" method="POST" id="productForm">
-                        {/*Section one*/}
-                        <Col md={4}>
-                            <div className="newProductFormSection">
-                                <FormGroup
-                                    controlId="newProductName"
-                                    htmlFor="Name">
-                                    <Col componentClass={ControlLabel}>
-                                        Nazwa produktu
-                                   </Col>
-                                    <Col>
-                                        <FormControl
-                                            placeholder="Nazwa"
-                                            name="Name"
-                                            type="text"
-                                            minLength="5"
-                                            required />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup controlId="productCategory">
-                                    <Col componentClass={ControlLabel}>
-                                        Kategoria produktu</Col>
-                                    <Col>
-                                        <FormControl
-                                            componentClass="select"
-                                            placeholder="select"
-                                            className="productCategories">
-                                            {this.state.data.map((category,index) =>{
-                                                return <option value={category.IdCategory}>{category.Name}</option>
-                                            })}
-                                        </FormControl>
-                                    </Col>
-                                </FormGroup>
-                            </div>
-                        </Col>
-
-                        {/*Section two*/}
-                        <Col md={8}>
-                            <div className="newProductFormSection">
-                                <FormGroup
-                                    controlId="productDescription"
-                                    htmlFor="Description">
-                                    <Col componentClass={ControlLabel}>
-                                        Opis produktu</Col>
-                                    <Col>
-                                        <FormControl
-                                            placeholder="Opis"
-                                            componentClass="textarea"
-                                            className="newProductDescription"
-                                            name="Description"
-                                            minLength="10"
-                                            maxLength="250"
-                                            required />
-                                    </Col>
-                                </FormGroup>
-                            </div>
-                        </Col>
-                        <Col>
-                            {/*Section three*/}
-                            <Col md={12}>
+            this.state.showGoToProductButton ?
+                <GoToNewProduct url={this.state.productUrl} /> :
+                 <div id="addNewProductForm">
+                <ReactCSSTransitionGroup transitionName="adminFormAnimation"
+                    transitionAppear={true}
+                    transitionAppearTimeout={500}>
+                   
+                    <div id="validationMsg"></div>
+                    <fieldset disabled={this.state.formDisabled}>
+                        <Form horizontal method="POST" id="productForm">
+                            {/*Section one*/}
+                            <Col md={4}>
                                 <div className="newProductFormSection">
                                     <FormGroup
-                                        controlId="productImages"
-                                        htmlFor="galleryImages">
+                                        controlId="newProductName"
+                                        htmlFor="Name">
                                         <Col componentClass={ControlLabel}>
-                                            Wybierz zdjęcia do galerii</Col>
+                                            Nazwa produktu
+                                   </Col>
                                         <Col>
-                                            <input
-                                                id="gallery-images"
-                                                type="file"
-                                                className="file"
-                                                name="galleryImages"
-                                                multiple data-show-upload="false"
-                                                data-show-caption="true"
-                                                accept=".png, .jpg, .jpeg"
+                                            <FormControl
+                                                placeholder="Nazwa"
+                                                name="Name"
+                                                type="text"
+                                                minLength="5"
                                                 required />
                                         </Col>
-                                        <div id="galleryImagesError"></div>
                                     </FormGroup>
-
-                                    <FormGroup
-                                        controlId="productMainImage"
-                                        htmlFor="mainImage">
+                                    <FormGroup controlId="productCategory">
                                         <Col componentClass={ControlLabel}>
-                                            Wybierz zdjęcie główne</Col>
+                                            Kategoria produktu</Col>
                                         <Col>
-                                            <input
-                                                id="main-image"
-                                                type="file"
-                                                className="file"
-                                                name="mainImage"
-                                                accept=".png, .jpg, .jpeg"
-                                                required />
+                                            <FormControl
+                                                componentClass="select"
+                                                placeholder="select"
+                                                className="productCategories">
+                                                {this.state.categories.map((category, index) => {
+                                                    return <option value={category.IdCategory}>{category.Name}</option>
+                                                })}
+                                            </FormControl>
                                         </Col>
-                                        <div id="mainImageError"></div>
                                     </FormGroup>
                                 </div>
                             </Col>
 
-                            <div className="newProductFormSection">
-                                <Button id="newProduct" className="adminButton" onClick={this.submitForm} type="submit" block>
-                                    Dodaj nowy produkt
+                            {/*Section two*/}
+                            <Col md={8}>
+                                <div className="newProductFormSection">
+                                    <FormGroup
+                                        controlId="productDescription"
+                                        htmlFor="Description">
+                                        <Col componentClass={ControlLabel}>
+                                            Opis produktu</Col>
+                                        <Col>
+                                            <FormControl
+                                                placeholder="Opis"
+                                                componentClass="textarea"
+                                                className="newProductDescription"
+                                                name="Description"
+                                                minLength="10"
+                                                maxLength="250"
+                                                required />
+                                        </Col>
+                                    </FormGroup>
+                                </div>
+                            </Col>
+                            <Col>
+                                {/*Section three*/}
+                                <Col md={12}>
+                                    <div className="newProductFormSection">
+                                        <FormGroup
+                                            controlId="productImages"
+                                            htmlFor="galleryImages">
+                                            <Col componentClass={ControlLabel}>
+                                                Wybierz zdjęcia do galerii</Col>
+                                            <Col>
+                                                <input
+                                                    id="gallery-images"
+                                                    type="file"
+                                                    className="file"
+                                                    name="galleryImages"
+                                                    multiple data-show-upload="false"
+                                                    data-show-caption="true"
+                                                    accept=".png, .jpg, .jpeg"
+                                                    required />
+                                            </Col>
+                                            <div id="galleryImagesError"></div>
+                                        </FormGroup>
+
+                                        <FormGroup
+                                            controlId="productMainImage"
+                                            htmlFor="mainImage">
+                                            <Col componentClass={ControlLabel}>
+                                                Wybierz zdjęcie główne</Col>
+                                            <Col>
+                                                <input
+                                                    id="main-image"
+                                                    type="file"
+                                                    className="file"
+                                                    name="mainImage"
+                                                    accept=".png, .jpg, .jpeg"
+                                                    required />
+                                            </Col>
+                                            <div id="mainImageError"></div>
+                                        </FormGroup>
+                                    </div>
+                                </Col>
+
+                                <div className="newProductFormSection">
+                                    <Button id="newProduct" className="adminButton" onClick={this.submitForm} type="submit" block>
+                                        Dodaj nowy produkt
                                 </Button>
-                            </div>
-                        </Col>
-                    </Form>
-                </fieldset >
-            </ReactCSSTransitionGroup >
+                                </div>
+                            </Col>
+                        </Form>
+                    </fieldset >
+                   
+                </ReactCSSTransitionGroup > </div>
         );
     },
     componentDidMount: function () {
-        $.ajax({
-            url: "/categories",
-            success: (data) => {
-                this.setState({
-                    data: data
-                })
-            }
-        });
         var $gallery = $('#gallery-images');
         var $mainImage = $('#main-image');
         if ($gallery.length)
             $gallery.fileinput({
                 showUpload: false,
-               allowedFileExtensions: ['jpg', 'png'],
+                allowedFileExtensions: ['jpg', 'png'],
                 maxFileSize: 1000
             });
 
         if ($mainImage.length)
             $mainImage.fileinput({
-                 showUpload: false,
-                allowedFileExtensions : ['jpg', 'png'],
-                 maxFileSize: 1000
+                showUpload: false,
+                allowedFileExtensions: ['jpg', 'png'],
+                maxFileSize: 1000
             });
     },
     submitForm: function (e) {
@@ -210,8 +243,11 @@ var AddNewProduct = React.createClass({
                     $('#newProduct').text("Dodaj nowy produkt");
                     return;
                 }
-                ReactDOM.unmountComponentAtNode(document.getElementById('addNewProductForm'));
-                newProductAdded(result.Url);
+                self.setState({
+                    productUrl: result.Url,
+                    showGoToProductButton: true
+                })
+
             }
         });
         self.setState({ formDisabled: false });
@@ -219,7 +255,7 @@ var AddNewProduct = React.createClass({
 });
 
 var GoToNewProduct = ({url}) => (
-    <div className="goToNewProductContainer">
+    <div id="goToNewProduct">
         <ReactCSSTransitionGroup transitionName="adminFormAnimation"
             transitionAppear={true}
             transitionAppearTimeout={500}>
@@ -227,14 +263,9 @@ var GoToNewProduct = ({url}) => (
                 Przejdź do produktu
           </Button>
         </ReactCSSTransitionGroup>
-    </div>
+     </div>
 );
 
-function addNewProductForm() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('goToNewProduct'));
-    ReactDOM.render(<AddNewProduct />, document.getElementById('addNewProductForm'));
-}
-function newProductAdded(url) {
-    ReactDOM.render(<GoToNewProduct url={url} />, document.getElementById('goToNewProduct'));
-}
+
+
 ReactDOM.render(<AdminNavigationPanel />, document.getElementById('adminNavigationPanel'));

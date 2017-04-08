@@ -1,5 +1,4 @@
-﻿using System;
-using CrochetByJk.Messaging.Commands;
+﻿using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Model.Contexts;
 

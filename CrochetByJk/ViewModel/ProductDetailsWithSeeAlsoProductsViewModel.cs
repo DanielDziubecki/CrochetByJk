@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CrochetByJk.ViewModel
 {
-    public class ProductWithSeeAlsoProductsViewModel
+    public class ProductDetailsWithSeeAlsoProductsViewModel
     {
         public Guid IdProduct { get; set; }
         public string Name { get; set; }
