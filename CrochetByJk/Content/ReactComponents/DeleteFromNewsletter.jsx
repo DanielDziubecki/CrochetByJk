@@ -2,21 +2,29 @@ const {Button} = ReactBootstrap;
 
 var DeleteFromNewsletter = React.createClass({
     getInitialState: function () {
-        return {
-            clientId: this.props.clientId,
-        };
+        return {clientId: this.props.clientId};
     },
     render() {
-        return (<div id="adminButtonGroup" style={{ margin: "10%" }}>
-            <Button id="confirmDelete" className="adminButton" onClick={this.confirm} type="submit">
-                Usuń mnie z newslettera
+        return (
+            <div
+                id="adminButtonGroup"
+                style={{
+                margin: "10%"
+            }}>
+                <Button
+                    id="confirmDelete"
+                    className="adminButton"
+                    onClick={this.confirm}
+                    type="submit">
+                    Usuń mnie z newslettera
                 </Button>
-            <div id="questionSend" className="aboutMe">
-                <div id="questionSendButton">
-                    Twój adres email nie znajduję się już w naszej bazie.
-                  </div>
+                <div id="questionSend" className="aboutMe">
+                    <div id="questionSendButton">
+                        Twój adres email nie znajduję się już w naszej bazie.
+                    </div>
+                </div>
             </div>
-        </div>)
+        )
     },
     confirm: function (e) {
         var clientId = this.props.clientId;
@@ -26,9 +34,7 @@ var DeleteFromNewsletter = React.createClass({
             url: '/newsletter/usun/',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({clientId: clientId}),
-            success: function (result) {
-
-            },
+            success: function (result) {},
             error: function (jqXHR, exception) {
                 console.log(jqXHR);
 

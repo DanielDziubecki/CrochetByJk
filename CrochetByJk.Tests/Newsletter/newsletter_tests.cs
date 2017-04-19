@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using CrochetByJk.Common.ShortGuid;
 using CrochetByJk.Components.EmailSender;
 using CrochetByJk.Components.ProductGalleryProvider;
 using CrochetByJk.Model.Model;
@@ -108,6 +109,7 @@ namespace CrochetByJk.Tests.Newsletter
             const string template = "<html><body><img id=\"newProductImage\" /><a id=\"cancelSubLink\" /><a id=\"goToProduct\"/></body></html>";
             templateReader.GetTemplate(MailTemplateType.Newsletter).Returns(x => template);
 
+            var productId = Guid.NewGuid();
             var mailMessage = new NewsletterMessage
             {
                 To = new[] { "test1@wp.pl" },
@@ -115,6 +117,7 @@ namespace CrochetByJk.Tests.Newsletter
                 From = "test2@wp.pl",
                 Subject = "Subject",
                 ProductUrl = "TestUri",
+                ProductId = productId,
                 NewsLetterPicture = new NewsletterPicture
                 {
                     LinkedResource = resource
@@ -133,7 +136,7 @@ namespace CrochetByJk.Tests.Newsletter
             var messageFactory = new MailMessageFactory(pictureRes, templateReader);
             var messages = messageFactory.GetMessages(mailMessage);
 
-            messages.First().Body.Should().Contain($"href=\"{mailMessage.ProductUrl}\"");
+            messages.First().Body.Should().Contain($"<a id=\"goToProduct\" href=\"www.crochetbyjk.pl/newsletter/{ShortGuid.Encode(productId)}\"");
         }
 
         [Fact]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Web;
+using System.Web.Hosting;
 using CrochetByJk.Common.Constants;
 using CrochetByJk.Common.Utils;
 using CrochetByJk.Components.Validators;
@@ -20,7 +20,7 @@ namespace CrochetByJk.Components.ProductGalleryProvider
             this.validator = validator;
         }
 
-        private string ServerRoot { get; } = HttpContext.Current.Server.MapPath(WebSiteRoot);
+        private string ServerRoot { get; } = HostingEnvironment.MapPath(WebSiteRoot);
 
         private static string WebSiteRoot { get; } = @"~\Content\ProductsGalleries";
 
@@ -46,19 +46,6 @@ namespace CrochetByJk.Components.ProductGalleryProvider
             return uri.Replace("\\", "/").Replace("~", "");
         }
 
-        public void DeleteProductGallery(Guid productId)
-        {
-            if (!IsDirectoryExists(ServerRoot))
-                CreateGalleriesRootDirectory();
-            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
-            if (!Directory.Exists(galleryUri)) return;
-            var files = Directory.GetFiles(galleryUri);
-            foreach (var file in files)
-                File.Delete(file);
-
-            Directory.Delete(galleryUri);
-        }
-
         public IEnumerable<Picture> SaveProductGallery(Gallery gallery)
         {
             if (!IsDirectoryExists(ServerRoot))
@@ -70,35 +57,56 @@ namespace CrochetByJk.Components.ProductGalleryProvider
 
             if (!IsDirectoryExists(galleryUri))
                 CreateGalleryDirectory(galleryId);
-
+  
             foreach (string file in files)
             {
                 var fileContent = files[file];
                 if (fileContent != null && fileContent.ContentLength > 0)
                 {
-                    var stream = fileContent.InputStream;
-                    var fileName = fileContent.FileName.RemoveSpecialCharacters()
-                        .RemoveWhiteSpace();
-                    var physicalPath = Path.Combine(galleryUri, fileName);
-                    var img = Image.FromStream(stream);
-                    img.Save(physicalPath, ImageFormat.Jpeg);
-
-                    var galleryUrl = Path.Combine(WebSiteRoot, galleryId);
-                    var webPath = ConvertUriToUrl(Path.Combine(galleryUrl, fileName));
-                    pictures.Add(new Picture
+                    using (var stream = fileContent.InputStream)
                     {
-                        IdPicture = Guid.NewGuid(),
-                        IdProduct = gallery.GalleryId,
-                        Uri = webPath,
-                        Name = fileName,
-                        Height = img.Height,
-                        Width = img.Width,
-                        IsMainPhoto = file == PicturesConstants.MainPhoto
-                    });
+                        
+                        var fileName = fileContent.FileName.RemoveSpecialCharacters()
+                            .RemoveWhiteSpace();
+                        var physicalPath = Path.Combine(galleryUri, fileName);
+                        Image img;
+                        using (img = Image.FromStream(stream))
+                        {
+                            var galleryUrl = Path.Combine(WebSiteRoot, galleryId);
+                            var webPath = ConvertUriToUrl(Path.Combine(galleryUrl, fileName));
+                            pictures.Add(new Picture
+                            {
+                                IdPicture = Guid.NewGuid(),
+                                IdProduct = gallery.GalleryId,
+                                Uri = webPath,
+                                Name = fileName,
+                                Height = img.Height,
+                                Width = img.Width,
+                                IsMainPhoto = file == PicturesConstants.MainPhoto
+                            });
+                            img.Save(physicalPath, ImageFormat.Jpeg);
+                        }
+                        stream.Close();
+                    }
                 }
             }
             validator.Validate(pictures);
             return pictures;
+        }
+
+        public void ClearProductGallery(Guid productId)
+        {
+            var galleryUri = Path.Combine(ServerRoot, productId.ToString());
+            if (!Directory.Exists(galleryUri)) return;
+            var newPath = galleryUri+"_d";
+            var copyNumber = 0;
+
+            while (Directory.Exists(newPath))
+            {
+                copyNumber++;
+                newPath += $"({copyNumber})";
+            }
+            Directory.Move(galleryUri, newPath);
         }
     }
 }

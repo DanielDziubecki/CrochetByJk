@@ -3,9 +3,9 @@ using CrochetByJk.Messaging.Core;
 
 namespace CrochetByJk.Messaging.Queries
 {
-    public class GetProductQuery : IQuery
+    public class GetProductByNameInCategoryQuery : IQuery
     {
-        public Guid Id { get; set; }
+        public Guid CategoryId { get; set; }
         public string ProductName { get; set; }
     }
 }

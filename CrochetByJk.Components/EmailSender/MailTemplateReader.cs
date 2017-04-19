@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Web;
+using System.Web.Hosting;
 using CrochetByJk.Components.Exceptions;
 
 namespace CrochetByJk.Components.EmailSender
 {
     public class MailTemplateReader : IMailTemplateReader
     {
-        private static readonly string ServerRoot = HttpContext.Current.Server.MapPath(WebSiteRoot);
+        private static readonly string ServerRoot = HostingEnvironment.MapPath(WebSiteRoot);
         private const string WebSiteRoot = @"~\Content\MailTemplates\";
 
         private static readonly string NewsletterPath = Path.Combine(ServerRoot, "newsletter_template.html");

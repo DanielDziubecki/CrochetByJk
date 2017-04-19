@@ -102,9 +102,11 @@
     <Compile Include="CommandHandlers\AddNewsletterClientCommandHandler.cs" />
     <Compile Include="CommandHandlers\DeleteClientFromNewsletterCommandHandler.cs" />
     <Compile Include="CommandHandlers\SaveProductCommandHandler.cs" />
+    <Compile Include="CommandHandlers\UpdateProductCommandHandler.cs" />
     <Compile Include="Commands\AddNewsletterClientCommand.cs" />
     <Compile Include="Commands\DeleteClientFromNewsletterCommand.cs" />
     <Compile Include="Commands\SaveProductCommand.cs" />
+    <Compile Include="Commands\UpdateProductCommand.cs" />
     <Compile Include="Exceptions\NotImplementedHandlerException.cs" />
     <Compile Include="HandleResult\HandleResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,7 +114,8 @@
     <Compile Include="Queries\GetApplicationUserManagerQuery.cs" />
     <Compile Include="Queries\GetLastProductsQuery.cs" />
     <Compile Include="Queries\GetNewletterClientsQuery.cs" />
-    <Compile Include="Queries\GetProductQuery.cs" />
+    <Compile Include="Queries\GetProductByIdQuery.cs" />
+    <Compile Include="Queries\GetProductByNameInCategoryQuery.cs" />
     <Compile Include="Queries\GetProductsFromCategoryQuery.cs" />
     <Compile Include="Queries\GetAllProductNamesFromCategoryQuery.cs" />
     <Compile Include="Queries\GetRandomProductsQuery.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="QueryHandlers\GetApplicationUserManagerQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetLastProductsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetNewletterClientsQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetProductByIdQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetProductsFromCategoryQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetAllProductNamesFromCategoryQueryHandler.cs" />

@@ -8,7 +8,6 @@
     <link rel="icon" href="~/Content/Img/main/crochetIcon.png">
     <title>Crochet by JK</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 
@@ -25,10 +24,15 @@
 </div>
 @RenderBody()
 <div id="footer"></div>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/bundles/react")
 
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.translations.js"></script>
+@Scripts.Render("~/bundles/react")
+@Scripts.Render("~/bundles/components")
 <script src="~/Content/ReactComponents/Navbar.jsx"></script>
 <script src="~/Content/ReactComponents/Footer.jsx"></script>
 <script src="~/Content/ReactComponents/Baner.jsx"></script>
@@ -37,7 +41,8 @@
 </body>
 </html>
 <script>
-    $(document).ready(function() {
+    $(document)
+        .ready(function() {
             $(".pageLoaderContainer").fadeOut("slow");
             var actionName = $('#currentAction').text();
             var menuItems = $("li a");

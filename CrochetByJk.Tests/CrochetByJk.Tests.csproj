@@ -85,6 +85,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrochetByJk.Common\CrochetByJk.Common.csproj">
+      <Project>{51736241-5ea5-4ae9-b5ff-1cd986aac07f}</Project>
+      <Name>CrochetByJk.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CrochetByJk.Components\CrochetByJk.Components.csproj">
       <Project>{d7b83a38-9fa5-4a6d-8f8d-74bb122b2fdb}</Project>
       <Name>CrochetByJk.Components</Name>

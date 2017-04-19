@@ -320,6 +320,17 @@ textarea { max-width: 280px; }*/
             color: white;
         }
         
+        .btn-primary {
+            background-color: #67A3D9 !important;
+              border-color:#67A3D9 !important;
+        }
+        
+        .btn-primary:hover {
+            border-color:#7fb1df !important;
+            background-color: #7fb1df !important; 
+            color: white !important
+        }
+        
         #formHorizontalEmail:focus,
         #formHorizontalPassword:focus {
             outline: none;
@@ -333,11 +344,11 @@ textarea { max-width: 280px; }*/
             flex-wrap: wrap;
         }
         
-        #goToNewProduct,
-        {
+        #goToNewProduct {
             display: flex;
             justify-content: center;
             flex-basis: 100%;
+            margin: 5%;
         }
         
         #adminManagePanel {
@@ -346,7 +357,7 @@ textarea { max-width: 280px; }*/
         }
         
         #addNewProductForm {
-            margin: 5%;
+            margin: 5% 30% 5% 30%;
         }
         
         #productsAdminTableContainer {
@@ -366,8 +377,10 @@ textarea { max-width: 280px; }*/
             vertical-align: middle;
         }
         
-        #productsAdminTable>thead>tr>th {
-            text-align: center
+        #adminTableHeader {
+            text-align: center;
+            background-color: #67A3D9;
+            color: #ffffff;
         }
         
         .pagination>.active>a {
@@ -379,7 +392,7 @@ textarea { max-width: 280px; }*/
             width: '265px' !important;
             height: '44px' !important;
         }
-        
+
         #productsAdminTable_info {
             display: none;
         }

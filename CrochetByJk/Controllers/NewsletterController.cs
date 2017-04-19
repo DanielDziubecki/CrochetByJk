@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Web.Mvc;
+using CrochetByJk.Common.ShortGuid;
 using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
+using CrochetByJk.Messaging.Queries;
+using CrochetByJk.Model.Model;
 using NLog;
 
 namespace CrochetByJk.Controllers
@@ -22,10 +25,20 @@ namespace CrochetByJk.Controllers
             logger = LogManager.GetLogger("crochetDbLogger");
         }
 
+        public ActionResult RedirectToProduct(string productId)
+        {
+            var encodedId = ShortGuid.Decode(productId);
+            var product = bus.RunQuery<Product>(new GetProductByIdQuery {ProductId = encodedId});
+            if (product == null)
+                return View("Error");
+
+            return Redirect(product.ProductUrl);
+        }
+
         [Route("potwierdz/{clientId}")]
         public ActionResult ConfirmDeletion(string clientId)
         {
-            return View("DeleteFromNewsletter", (object)clientId);
+            return View("DeleteFromNewsletter", (object) clientId);
         }
 
         [Route("usun")]
@@ -44,7 +57,7 @@ namespace CrochetByJk.Controllers
             {
                 logger.Error(ex, $"Cannot delete newletter client with id = {clientId}");
             }
-            return Json(HttpStatusCode.Accepted,JsonRequestBehavior.AllowGet);
+            return Json(HttpStatusCode.Accepted, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,8 +1,6 @@
 var CategoryProducts = React.createClass({
     getInitialState: function () {
-        return {
-            products: this.props.products
-        };
+        return {products: this.props.products};
     },
     render: function () {
         return (
@@ -19,10 +17,16 @@ var Tile = ({product, animtation, delay}) => (
         onClick={GoToProductDetails(product.ProductUrl)}
         data-aos={animtation}
         data-aos-delay={delay}>
-        <div className="image-block-body" style={
-            { height:product.Height, width:product.Width,
-             background: 'url(' + product.PictureUri + ')', backgroundSize: '100% 100%' }}>
-            <p>{product.Name} </p>
+        <div
+            className="image-block-body"
+            style={{
+            height: product.Height,
+            width: product.Width,
+            background: 'url(' + product.PictureUri + ')',
+            backgroundSize: '100% 100%'
+        }}>
+            <p>{product.Name}
+            </p>
         </div>
     </div>
 );
@@ -32,10 +36,10 @@ function GenerateTiles(products) {
     return products.map((product, index) => {
         var animtation = "fade-up"
         counter++;
-        if (counter == 4)
+        if (counter == 4) 
             counter = 1;
-        if(product.Width)
-        return <Tile product={product} animtation={animtation} delay={counter * 300} />
+        if (product.Width) 
+            return <Tile product={product} animtation={animtation} delay={counter * 300}/>
     })
 }
 

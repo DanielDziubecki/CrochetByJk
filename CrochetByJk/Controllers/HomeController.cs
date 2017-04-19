@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using AutoMapper;
 using CrochetByJk.Components.ProductGalleryProvider;
 using CrochetByJk.ErrorHandlers;
@@ -27,11 +26,11 @@ namespace CrochetByJk.Controllers
 
         public ActionResult Index()
         {
-            var products = bus.RunQuery<Product[]>(new GetLastProductsQuery {Amount = 3});
+            var products = bus.RunQuery<Product[]>(new GetLastProductsQuery { Amount = 3 });
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return View("Index", viewModel);
+            return View("Index" , viewModel);
         }
 
         [Route("kontakt")]

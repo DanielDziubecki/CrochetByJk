@@ -7,7 +7,7 @@ using CrochetByJk.Model.Model;
 
 namespace CrochetByJk.Messaging.QueryHandlers
 {
-    public class GetProductQueryHandler : IQueryHandler<GetProductQuery, Product>
+    public class GetProductQueryHandler : IQueryHandler<GetProductByNameInCategoryQuery, Product>
     {
         private readonly CrochetByJkDbContext context;
 
@@ -16,10 +16,10 @@ namespace CrochetByJk.Messaging.QueryHandlers
             this.context = context;
         }
 
-        public Product Handle(GetProductQuery query)
+        public Product Handle(GetProductByNameInCategoryQuery query)
         {
             var products = context.Products.Include(x => x.ProductGallery).Include(x=>x.Category).ToList();
-            return products.SingleOrDefault(x => x.Category.IdCategory == query.Id && x.UrlFriendlyName == query.ProductName);
+            return products.SingleOrDefault(x => x.Category.IdCategory == query.CategoryId && x.UrlFriendlyName == query.ProductName);
         }
     }
 }

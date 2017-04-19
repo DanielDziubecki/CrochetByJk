@@ -1,37 +1,27 @@
 ﻿using System.Web.Optimization;
+using System.Web.Optimization.React;
 
 namespace CrochetByJk
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-
-            bundles.Add(new Bundle("~/bundles/react")
+          
+            bundles.Add(new ScriptBundle("~/bundles/react")
                 .Include(
                     "~/Scripts/react/react-with-addons.js",
                     "~/Scripts/react/react-dom.js",
                     "~/Scripts/react/react-bootstrap.js",
-                    "~/Content/ReactComponents/AdminManagePanel.jsx",
                     "~/Scripts/unitegallery/js/unitegallery.js",
-                    "~/Scripts/unitegallery/themes/grid/ug-theme-grid.js"
-                   ));
+                    "~/Scripts/fileinput.js",
+                    "~/Scripts/unitegallery/themes/grid/ug-theme-grid.js",
+                    "~/Scripts/footable/js/footable.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                "~/Scripts/jquery.validate*"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js",
-                "~/Scripts/respond.js"));
+            bundles.Add(new BabelBundle("~/bundles/components")
+                .Include("~/Content/ReactComponents/ManageProductsPanel.jsx",
+                "~/Content/ReactComponents/AddNewProduct.jsx",
+                "~/Content/ReactComponents/ProductForm.jsx"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
@@ -41,7 +31,8 @@ namespace CrochetByJk
                 "~/Content/toastr.css",
                 "~/Scripts/unitegallery/css/ug-theme-default.css",
                 "~/Scripts/unitegallery/css/unite-gallery.css",
-                 "~/Content/site.css"));
+                "~/Scripts/footable/css/footable.bootstrap.min.css",
+                "~/Content/site.css"));
         }
     }
 }

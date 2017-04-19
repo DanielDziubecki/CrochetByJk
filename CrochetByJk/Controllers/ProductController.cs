@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using AutoMapper;
 using CrochetByJk.Common.Constants;
@@ -127,7 +128,6 @@ namespace CrochetByJk.Controllers
         [Route("pobierzprodukty")]
         public JsonResult GetProductsByCategory(string categoryId)
         {
-           // Task.Delay(5000).Wait();
             var category = Guid.Parse(categoryId);
             var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery {CategoryId = category});
             var productViewModel = mapper.Map<ProductTileViewModel[]>(products);
@@ -172,19 +172,83 @@ namespace CrochetByJk.Controllers
 
                 var baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
                 product.ProductUrl = $"{baseUrl}/Produkty/{productDto.CategoryName}/{product.UrlFriendlyName}";
-                bus.ExecuteCommand(new SaveProductCommand(product));
 
-                //Task.Run(() => { SendEmailsAboutNewProductAsync(product); }).ContinueWith(tsk =>
-                //{
-                //    if (tsk.Exception != null) logger.Error(tsk.Exception);
-                //}, TaskContinuationOptions.OnlyOnFaulted);
-                SendEmailsAboutNewProduct(product);
+                bus.ExecuteCommand(new SaveProductCommand(product));
+                var newsletterClients = bus.RunQuery<NewsletterClient[]>(new GetNewletterClientsQuery());
+
+                Task.Run(async () => { await SendEmailsAboutNewProductAsync(product, newsletterClients); })
+                    .ContinueWith(tsk =>
+                    {
+                        if (tsk.Exception != null)
+                        {
+                            foreach (var exception in tsk.Exception.InnerExceptions)
+                            {
+                                logger.Error(exception);
+                            }
+                        }
+                    }, TaskContinuationOptions.OnlyOnFaulted);
+
                 return Json(new {Success = "True", responseText = "Dodano produkt.", Url = product.ProductUrl});
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                galleryProvider.DeleteProductGallery(productId);
+                return
+                    Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
+            }
+        }
+
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [Route("zaaktualizuj"), HttpPost]
+        public JsonResult UpdateProduct(ProductDto productDto)
+        {
+            try
+            {
+                var productId = Guid.Parse(productDto.ProductId);
+                var updatedProduct = new Product
+                {
+                    IdProduct = productId,
+                    Name = productDto.Name,
+                    IdCategory = productDto.IdCategory,
+                    Description = productDto.Description,
+                    InsertDate = DateTime.Now,
+                    UrlFriendlyName = productDto.Name
+                };
+
+                if (productDto.OverridePictures)
+                {
+                    galleryProvider.ClearProductGallery(productId);
+
+                    var productGallery =
+                        galleryProvider.SaveProductGallery(new Gallery(productId, Request.Files, productDto.MainPhoto))
+                            .ToArray();
+
+                    var mainPicture = productGallery.Single(x => x.IsMainPhoto);
+
+                    updatedProduct.IdMainPicture = mainPicture.IdPicture;
+                    updatedProduct.ProductGallery = productGallery;
+                }
+
+                validator.Validate(updatedProduct);
+
+                if (Request.Url == null)
+                    throw new ArgumentNullException(nameof(Request.Url));
+
+                var baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+                updatedProduct.ProductUrl =
+                    $"{baseUrl}/Produkty/{productDto.CategoryName}/{updatedProduct.UrlFriendlyName}";
+
+                bus.ExecuteCommand(new UpdateProductCommand {UpdatedProduct = updatedProduct});
+
+                return Json(new
+                {
+                    Success = "True",
+                    responseText = "Dodano produkt."
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
                 return
                     Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
             }
@@ -208,10 +272,10 @@ namespace CrochetByJk.Controllers
             }
         }
 
-        private void SendEmailsAboutNewProduct(Product newProduct)
+        private async Task SendEmailsAboutNewProductAsync(Product newProduct, NewsletterClient[] newsletterClients)
         {
-            var newsletterClients = bus.RunQuery<NewsletterClient[]>(new GetNewletterClientsQuery());
             var mainPicture = newProduct.ProductGallery.ToArray().Single(x => x.IsMainPhoto);
+            var serverPath = HostingEnvironment.MapPath(Path.Combine("~", mainPicture.Uri));
 
             var newsLetter = new NewsletterMessage
             {
@@ -220,64 +284,36 @@ namespace CrochetByJk.Controllers
                 From = "joannakuczynska@crochetbyjk.pl",
                 Subject = "Dodano nowy produkt na crochetbyjk.pl",
                 ProductUrl = newProduct.ProductUrl,
+                ProductId = newProduct.IdProduct,
                 NewsLetterPicture = new NewsletterPicture
                 {
                     Width = mainPicture.Width,
                     Height = mainPicture.Height,
-                    LinkedResource = new LinkedResource(Path.Combine("wwww.crochetbyjk.pl",
-                            System.Web.HttpContext.Current.Server.MapPath(Path.Combine("~", mainPicture.Uri))),
-                        MediaTypeNames.Image.Jpeg)
+                    LinkedResource = new LinkedResource(Path.Combine("wwww.crochetbyjk.pl", serverPath), MediaTypeNames.Image.Jpeg)
                 },
                 NewsletterClients = newsletterClients
             };
 
             try
             {
-                emailSender.Send(newsLetter);
+                await emailSender.SendAsync(newsLetter);
             }
             catch (Exception ex)
             {
-                var message = JsonConvert.SerializeObject(newsLetter);
+                newsLetter.NewsLetterPicture.LinkedResource.Dispose();
+                var message = JsonConvert.SerializeObject(new {newsLetter.Body, Clients = newsLetter.NewsletterClients});
                 logger.Error(ex, message);
+            }
+            finally
+            {
+                newsLetter.NewsLetterPicture.LinkedResource.Dispose();
             }
         }
 
-        //private async Task SendEmailsAboutNewProductAsync(Product newProduct)
-        //{
-        //    var newsletterClients = await bus.RunQueryAsync<NewsletterClient[]>(new GetNewletterClientsQuery());
-        //    var mainPicture = newProduct.ProductGallery.ToArray().Single(x => x.IsMainPhoto);
-
-        //    var newsLetter = new NewsletterMessage
-        //    {
-        //        To = newsletterClients.Select(x => x.Email).ToArray(),
-        //        Body = "",
-        //        From = "joannakuczynska@crochetbyjk.pl",
-        //        Subject = "Dodano nowy produkt na crochetbyjk.pl",
-        //        ProductUrl = newProduct.ProductUrl,
-        //        NewsLetterPicture = new NewsletterPicture
-        //        {
-        //            Width = mainPicture.Width,
-        //            Height = mainPicture.Height,
-        //            LinkedResource = new LinkedResource(Path.Combine("wwww.crochetbyjk.pl",
-        //                    System.Web.HttpContext.Current.Server.MapPath(Path.Combine("~", mainPicture.Uri))),
-        //                MediaTypeNames.Image.Jpeg)
-        //        },
-        //        NewsletterClients = newsletterClients
-        //    };
-
-        //    try
-        //    {
-        //        emailSender.Send(newsLetter);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var message = JsonConvert.SerializeObject(newsLetter);
-        //        logger.Error(ex, message);
-        //    }
-        //}
-
         private void AddClientToNewsletter(string email)
         {
+            if (string.IsNullOrEmpty(email))
+                return;
             bus.ExecuteCommand(new AddNewsletterClientCommand {ClientEmail = email});
         }
 
@@ -291,14 +327,14 @@ namespace CrochetByJk.Controllers
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return viewModel;
+            return viewModel.OrderBy(x => x.InsertDate).ToArray();
         }
 
         private ProductDetailsWithSeeAlsoProductsViewModel PrepareProductViewModel(string name, string categoryId)
         {
-            var selectedProduct = bus.RunQuery<Product>(new GetProductQuery
+            var selectedProduct = bus.RunQuery<Product>(new GetProductByNameInCategoryQuery
             {
-                Id = new Guid(categoryId),
+                CategoryId = new Guid(categoryId),
                 ProductName = name
             });
             var viewModel = mapper.Map<ProductDetailsWithSeeAlsoProductsViewModel>(selectedProduct);

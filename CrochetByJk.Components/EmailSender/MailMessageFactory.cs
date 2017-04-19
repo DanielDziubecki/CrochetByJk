@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using CrochetByJk.Common.ShortGuid;
 using CrochetByJk.Components.Exceptions;
 using CrochetByJk.Components.ProductGalleryProvider;
 using HtmlAgilityPack;
@@ -53,7 +54,7 @@ namespace CrochetByJk.Components.EmailSender
                     (htmlBody, null, MediaTypeNames.Text.Html);
 
                 avHtml.LinkedResources.Add(message.NewsLetterPicture.LinkedResource);
-
+               
                 var mailMessage = new MailMessage
                 {
                     From = new MailAddress(emailMessage.From),
@@ -76,7 +77,7 @@ namespace CrochetByJk.Components.EmailSender
             root.Descendants("img")
                 .Single(x => x.Id == "newProductImage")
                 .Attributes.Append("src", $"cid:{message.NewsLetterPicture.LinkedResource.ContentId}");
-            root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"{message.ProductUrl}");
+            root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"https://www.crochetbyjk/newsletter/{ShortGuid.Encode(message.ProductId)}");
             return root;
         }
 

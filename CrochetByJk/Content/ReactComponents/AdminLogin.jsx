@@ -1,4 +1,13 @@
-﻿const {Form, FormGroup, ControlLabel, HelpBlock, Checkbox, Radio, Button, Col} = ReactBootstrap;
+﻿const {
+  Form,
+  FormGroup,
+  ControlLabel,
+  HelpBlock,
+  Checkbox,
+  Radio,
+  Button,
+  Col
+} = ReactBootstrap;
 
 var AdminForm = React.createClass({
   render: function () {
@@ -7,26 +16,29 @@ var AdminForm = React.createClass({
         <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
             Email
-      </Col>
+          </Col>
           <Col sm={10}>
-            <FormControl placeholder="Email"
+            <FormControl
+              placeholder="Email"
               data-val="true"
               data-val-email="Podaj poprawny adres email"
               data-val-required="Adres email jest wymagany"
-              name="Email" />
+              name="Email"/>
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalPassword">
           <Col componentClass={ControlLabel} sm={2}>
             Hasło
-      </Col>
+          </Col>
           <Col sm={10}>
-            <FormControl type="password" placeholder="Hasło"
+            <FormControl
+              type="password"
+              placeholder="Hasło"
               data-val="true"
               data-val-password="Podaj poprawne hasło"
               data-val-required="Podaj hasło"
-              name="Password" />
+              name="Password"/>
           </Col>
         </FormGroup>
 
@@ -40,11 +52,12 @@ var AdminForm = React.createClass({
           <Col smOffset={2} sm={10}>
             <Button className="adminButton" type="submit">
               Zaloguj
-        </Button>
+            </Button>
           </Col>
         </FormGroup>
       </Form>
     );
   }
 });
-ReactDOM.render(<AdminForm />, document.getElementById('adminForm'));
+ReactDOM.render(
+  <AdminForm/>, document.getElementById('adminForm'));
