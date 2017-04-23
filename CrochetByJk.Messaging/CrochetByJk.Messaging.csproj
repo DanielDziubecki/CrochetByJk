@@ -101,10 +101,12 @@
     <Compile Include="Bus\CqrsBus.cs" />
     <Compile Include="CommandHandlers\AddNewsletterClientCommandHandler.cs" />
     <Compile Include="CommandHandlers\DeleteClientFromNewsletterCommandHandler.cs" />
+    <Compile Include="CommandHandlers\DeleteProductCommandHandler.cs" />
     <Compile Include="CommandHandlers\SaveProductCommandHandler.cs" />
     <Compile Include="CommandHandlers\UpdateProductCommandHandler.cs" />
     <Compile Include="Commands\AddNewsletterClientCommand.cs" />
     <Compile Include="Commands\DeleteClientFromNewsletterCommand.cs" />
+    <Compile Include="Commands\DeleteProductCommand.cs" />
     <Compile Include="Commands\SaveProductCommand.cs" />
     <Compile Include="Commands\UpdateProductCommand.cs" />
     <Compile Include="Exceptions\NotImplementedHandlerException.cs" />

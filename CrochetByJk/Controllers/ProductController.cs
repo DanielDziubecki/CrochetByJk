@@ -217,7 +217,7 @@ namespace CrochetByJk.Controllers
 
                 if (productDto.OverridePictures)
                 {
-                    galleryProvider.ClearProductGallery(productId);
+                    galleryProvider.MarkAsToDeleteGallery(productId);
 
                     var productGallery =
                         galleryProvider.SaveProductGallery(new Gallery(productId, Request.Files, productDto.MainPhoto))
@@ -251,6 +251,28 @@ namespace CrochetByJk.Controllers
                 logger.Error(ex);
                 return
                     Json(new {Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę."});
+            }
+        }
+
+        [Authorize(Roles = ApplicationRoles.Administrator)]
+        [Route("usun"), HttpPost]
+        public JsonResult DeleteProduct(string idProduct)
+        {
+            try
+            {
+               var id = Guid.Parse(idProduct);
+                bus.ExecuteCommand(new DeleteProductCommand() {IdProduct = id });
+                galleryProvider.MarkAsToDeleteGallery(id);
+                return Json(new
+                {
+                    Success = "True",
+                    responseText = "Usunięto produkt."
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Unable to delete product={idProduct}");
+                return Json(new { Success = "False", responseText = "Wystąpił błąd. Spróbuj ponownie lub odśwież stronę." });
             }
         }
 
@@ -327,7 +349,7 @@ namespace CrochetByJk.Controllers
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
-            return viewModel.OrderBy(x => x.InsertDate).ToArray();
+            return viewModel.OrderBy(x=>x.Width).ThenBy(x => x.InsertDate).ToArray();
         }
 
         private ProductDetailsWithSeeAlsoProductsViewModel PrepareProductViewModel(string name, string categoryId)

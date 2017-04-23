@@ -11,18 +11,20 @@
 </head>
 <body>
 
-<div id="currentAction" style="display: none">
-    @Html.Raw(ViewContext.RouteData.Values["action"].ToString().ToLower())
-</div>
-<a href="@Url.Content("~/")" id="banerLink">
-    <div id="baner"></div>
-</a>
-<div id="navbar"></div>
-<div class="pageLoaderContainer">
-    <div class="pageLoader">
-    </div>
-</div>
-@RenderBody()
+    <div class="page-wrap">
+            <div id="currentAction" style="display: none">
+                @Html.Raw(ViewContext.RouteData.Values["action"].ToString().ToLower())
+            </div>
+            <a href="@Url.Content("~/")" id="banerLink">
+                <div id="baner"></div>
+            </a>
+            <div id="navbar"></div>
+            <div class="pageLoaderContainer">
+                <div class="pageLoader">
+                </div>
+            </div>
+            @RenderBody()
+        </div>
 <div id="footer"></div>
 
 

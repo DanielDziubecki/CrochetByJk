@@ -7,6 +7,6 @@ namespace CrochetByJk.Components.ProductGalleryProvider
     public interface IProductGalleryProvider
     {
         IEnumerable<Picture> SaveProductGallery(Gallery gallery);
-        void ClearProductGallery(Guid productId);
+        void MarkAsToDeleteGallery(Guid productId);
     }
 }

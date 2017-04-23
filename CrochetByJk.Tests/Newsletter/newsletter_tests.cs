@@ -136,7 +136,7 @@ namespace CrochetByJk.Tests.Newsletter
             var messageFactory = new MailMessageFactory(pictureRes, templateReader);
             var messages = messageFactory.GetMessages(mailMessage);
 
-            messages.First().Body.Should().Contain($"<a id=\"goToProduct\" href=\"www.crochetbyjk.pl/newsletter/{ShortGuid.Encode(productId)}\"");
+            messages.First().Body.Should().Contain($"href=\"www.crochetbyjk.pl/newsletter/{ShortGuid.Encode(productId)}\"");
         }
 
         [Fact]

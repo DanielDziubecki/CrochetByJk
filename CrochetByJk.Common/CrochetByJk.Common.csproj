@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\CategoriesConstants.cs" />
+    <Compile Include="Constants\GalleryConstants.cs" />
     <Compile Include="Constants\PicturesConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\ApplicationRoles.cs" />

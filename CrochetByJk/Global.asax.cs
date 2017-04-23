@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using CrochetByJk.Components.Hangifre;
+using Hangfire;
 
 namespace CrochetByJk
 {

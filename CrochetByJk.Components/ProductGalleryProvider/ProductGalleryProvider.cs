@@ -20,9 +20,7 @@ namespace CrochetByJk.Components.ProductGalleryProvider
             this.validator = validator;
         }
 
-        private string ServerRoot { get; } = HostingEnvironment.MapPath(WebSiteRoot);
-
-        private static string WebSiteRoot { get; } = @"~\Content\ProductsGalleries";
+        private string ServerRoot { get; } = HostingEnvironment.MapPath(GalleryConstants.ProductGalleriesPath);
 
         private bool IsDirectoryExists(string path)
         {
@@ -72,7 +70,7 @@ namespace CrochetByJk.Components.ProductGalleryProvider
                         Image img;
                         using (img = Image.FromStream(stream))
                         {
-                            var galleryUrl = Path.Combine(WebSiteRoot, galleryId);
+                            var galleryUrl = Path.Combine(GalleryConstants.ProductGalleriesPath, galleryId);
                             var webPath = ConvertUriToUrl(Path.Combine(galleryUrl, fileName));
                             pictures.Add(new Picture
                             {
@@ -94,11 +92,11 @@ namespace CrochetByJk.Components.ProductGalleryProvider
             return pictures;
         }
 
-        public void ClearProductGallery(Guid productId)
+        public void MarkAsToDeleteGallery(Guid productId)
         {
             var galleryUri = Path.Combine(ServerRoot, productId.ToString());
             if (!Directory.Exists(galleryUri)) return;
-            var newPath = galleryUri+"_d";
+            var newPath = galleryUri+GalleryConstants.ToDeleteMark;
             var copyNumber = 0;
 
             while (Directory.Exists(newPath))

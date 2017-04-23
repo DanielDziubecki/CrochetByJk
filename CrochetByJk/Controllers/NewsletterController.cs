@@ -25,6 +25,7 @@ namespace CrochetByJk.Controllers
             logger = LogManager.GetLogger("crochetDbLogger");
         }
 
+        [Route("{productId}")]
         public ActionResult RedirectToProduct(string productId)
         {
             var encodedId = ShortGuid.Decode(productId);

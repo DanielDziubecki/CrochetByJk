@@ -28,7 +28,6 @@ var DeleteFromNewsletter = React.createClass({
     },
     confirm: function (e) {
         var clientId = this.props.clientId;
-        console.log(clientId);
         $.ajax({
             type: 'POST',
             url: '/newsletter/usun/',

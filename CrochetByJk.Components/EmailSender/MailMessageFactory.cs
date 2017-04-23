@@ -77,7 +77,7 @@ namespace CrochetByJk.Components.EmailSender
             root.Descendants("img")
                 .Single(x => x.Id == "newProductImage")
                 .Attributes.Append("src", $"cid:{message.NewsLetterPicture.LinkedResource.ContentId}");
-            root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"https://www.crochetbyjk/newsletter/{ShortGuid.Encode(message.ProductId)}");
+            root.Descendants("a").Single(x => x.Id == "goToProduct").Attributes.Append("href", $"https://www.crochetbyjk.pl/newsletter/{ShortGuid.Encode(message.ProductId)}");
             return root;
         }
 

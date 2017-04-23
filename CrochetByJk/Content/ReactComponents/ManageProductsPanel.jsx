@@ -227,18 +227,22 @@ class ProductGridRow extends React.Component
                     </a>
                 </td>
                 <td>
-                    <ProductFormModal
+                    <EditProductModal
                         productToEdit={this.props.product}
                         categories={this.props.categories}
                         refresh={this.props.refresh}/>
                 </td>
-                <td>{'Delete'}</td>
+                <td>
+                    <DeleteProductModal
+                        productToDelete={this.props.product}
+                        refresh={this.props.refresh}/>
+                </td>
             </tr>
 
         )
     }
     formatDate(date) {
-        return new Date(date).toLocaleString();
+        return new Date(date).getUTCDate;
     }
 }
 
@@ -261,7 +265,84 @@ class LoadingComponent extends React.Component {
     }
 }
 
-class ProductFormModal extends React.Component {
+class DeleteProductModal extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            show: false,
+            succcesfullyDeleted: false,
+            backdrop: true,
+            keyboard: true,
+            closeButton: true,
+            productCategoryId: this.props.productToDelete.IdCategory
+        }
+    }
+    render() {
+        let close = () => {
+            if (this.state.succcesfullyDeleted && this.state.productCategoryId !== undefined) {
+                this
+                    .props
+                    .refresh(this.state.productCategoryId)
+            }
+            this.setState({show: false})
+        };
+        return (
+            <div>
+                <Button
+                    className="adminButton"
+                    style={{
+                    backgroundColor: '#FF4C4C'
+                }}
+                    onClick={() => this.setState({show: true, succcesfullyDeleted: false})}>Usuń
+                </Button>
+                <Modal
+                    show={this.state.show}
+                    onHide={close}
+                    container={this}
+                    backdrop={this.state.backdrop}
+                    keyboard={this.state.keyboard}
+                    aria-labelledby="contained-modal-title">
+                    <Modal.Header closeButton={this.state.closeButton}>
+                        <Modal.Title id="contained-modal-title">
+                            <b>Usuń produkt</b>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body >
+                        {this.state.succcesfullyDeleted
+                            ? <MessageBox message={"Pomyślnie usunięto produkt"}/>
+                            : <div id="adminButtonGroup">
+                                <Button
+                                    id="deleteProduct"
+                                    className="adminButton"
+                                    onClick={() => {
+                                    this.deleteProduct()
+                                }}>
+                                    Chcę usunąć ten produkt
+                                </Button>
+                            </div>}
+                    </Modal.Body>
+                </Modal>
+            </div>
+        );
+    }
+    deleteProduct(e) {
+        this.setState({formDisabled: true, backdrop: 'static', keyboard: false, closeButton: false})
+        $('#deleteProduct').text("");
+        $('#deleteProduct').append('Usuwamy produkt..&nbsp &nbsp<i class="fa fa-refresh fa-spin"></i>');
+        var productId = this.props.productToDelete.IdProduct;
+        $.ajax({
+            url: 'produkty/usun',
+            type: 'post',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({idProduct: productId}),
+            success: (result) => {
+                this.setState({backdrop: true, keyboard: true, closeButton: true, succcesfullyDeleted: true})
+            }
+        });
+    }
+}
+
+class EditProductModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -272,7 +353,6 @@ class ProductFormModal extends React.Component {
             backdrop: true,
             keyboard: true,
             closeButton: true
-
         }
         this.submitEditedProduct = this
             .submitEditedProduct
@@ -311,7 +391,7 @@ class ProductFormModal extends React.Component {
                     </Modal.Header>
                     <Modal.Body >
                         {this.state.succcesfullyUpdated
-                            ? <ProductUpdatedMessage/>
+                            ? <MessageBox message={"Pomyślnie zaaktualizowano produkt"}/>
                             : <ProductForm
                                 productToEdit={this.props.productToEdit}
                                 categories={this.props.categories}
@@ -387,7 +467,7 @@ class ProductFormModal extends React.Component {
     }
 }
 
-class ProductUpdatedMessage extends React.Component {
+class MessageBox extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -400,7 +480,7 @@ class ProductUpdatedMessage extends React.Component {
                 <div >
                     <div className="aboutMe">
                         <div id="questionSendButton">
-                            Pomyślnie zaaktualizowano produkt.
+                            {this.props.message}
                         </div>
                     </div>
                 </div>
