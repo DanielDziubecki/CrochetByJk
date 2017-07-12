@@ -4,9 +4,9 @@ namespace CrochetByJk.Messaging.Core
 {
     public interface ICqrsBus
     {
-        IHandleResult ExecuteCommand(ICommand command);
+        void ExecuteCommand(ICommand command);
 
-        TResult RunQuery<TResult>(IQuery query);
-        Task<TResult> RunQueryAsync<TResult>(IQuery query);
+        TResult RunQuery<TResult>(IQuery<TResult> query);
     }
 }
+

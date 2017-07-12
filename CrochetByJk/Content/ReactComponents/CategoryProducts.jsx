@@ -4,7 +4,7 @@ var CategoryProducts = React.createClass({
     },
     render: function () {
         return (
-            <div className="image-container">
+            <div className={this.props.cssClass}>
                 {GenerateTiles(this.state.products)}
             </div>
         );

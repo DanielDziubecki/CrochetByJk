@@ -13,7 +13,8 @@
     <p>Zobacz również</p>
     @Html.React("CategoryProducts", new
     {
-        products = Model.SeeAlsoProducts
+        products = Model.SeeAlsoProducts,
+        cssClass = "image-container"
     })
 </div>
 

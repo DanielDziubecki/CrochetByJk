@@ -7,11 +7,11 @@ using CrochetByJk.Model.Model;
 
 namespace CrochetByJk.Messaging.QueryHandlers
 {
-    public class GetProductQueryHandler : IQueryHandler<GetProductByNameInCategoryQuery, Product>
+    public class GetProductByNameInCategoryQueryHandler : IQueryHandler<GetProductByNameInCategoryQuery, Product>
     {
         private readonly CrochetByJkDbContext context;
 
-        public GetProductQueryHandler(CrochetByJkDbContext context)
+        public GetProductByNameInCategoryQueryHandler(CrochetByJkDbContext context)
         {
             this.context = context;
         }

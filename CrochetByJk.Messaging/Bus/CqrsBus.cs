@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Autofac;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Exceptions;
@@ -18,7 +17,7 @@ namespace CrochetByJk.Messaging.Bus
             logger = LogManager.GetLogger("crochetDbLogger");
         }
 
-        public IHandleResult ExecuteCommand(ICommand command)
+        public void ExecuteCommand(ICommand command)
         {
             try
             {
@@ -27,17 +26,15 @@ namespace CrochetByJk.Messaging.Bus
                 if (handler == null)
                     throw new NotImplementedHandlerException($"Cannot find handler for {command.GetType()}");
                 handler.Handle((dynamic) command);
-                return new HandleResult.HandleResult(true);
 
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
             }
-            return new HandleResult.HandleResult(false);
         }
 
-        public TResult RunQuery<TResult>(IQuery query)
+        public TResult RunQuery<TResult>(IQuery<TResult> query)
         {
             try
             {
@@ -52,11 +49,6 @@ namespace CrochetByJk.Messaging.Bus
                 logger.Error(ex);
                 throw;
             }
-        }
-
-        public Task<TResult> RunQueryAsync<TResult>(IQuery query)
-        {
-            return Task.Run(() => RunQuery<TResult>(query));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace CrochetByJk.Components.Validators
 
         public void Validate(Product objectToValidate)
         {
-            var productNames = bus.RunQuery<IEnumerable<string>>(new GetAllProductNamesFromCategoryQuery {CategoryId = objectToValidate.IdCategory});
+            var productNames = bus.RunQuery(new GetAllProductNamesFromCategoryQuery {CategoryId = objectToValidate.IdCategory});
             var name = objectToValidate.UrlFriendlyName
                                        .RemoveWhiteSpace()
                                        .RemoveSpecialCharacters();

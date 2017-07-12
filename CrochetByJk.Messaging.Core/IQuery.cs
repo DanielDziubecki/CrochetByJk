@@ -1,6 +1,6 @@
 ﻿namespace CrochetByJk.Messaging.Core
 {
-    public interface IQuery
+    public interface IQuery<out TResult>
     {
         
     }

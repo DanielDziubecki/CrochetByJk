@@ -5,3 +5,4 @@
         void Handle(TCommand command);
     }
 }
+
