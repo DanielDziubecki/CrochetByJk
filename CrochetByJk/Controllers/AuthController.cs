@@ -17,10 +17,10 @@ namespace CrochetByJk.Controllers
     public class AuthController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-       
+
         public AuthController(ICqrsBus bus)
         {
-            userManager = bus.RunQuery<UserManager<ApplicationUser>>(new GetApplicationUserManagerQuery());
+            userManager = bus.RunQuery(new GetApplicationUserManagerQuery());
         }
 
         public ActionResult Index()
@@ -94,7 +94,7 @@ namespace CrochetByJk.Controllers
             }
 
             foreach (var error in result.Errors)
-                    ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error);
 
             return View();
         }
@@ -114,11 +114,13 @@ namespace CrochetByJk.Controllers
 
             GetAuthenticationManager().SignIn(identity);
         }
+
         private IAuthenticationManager GetAuthenticationManager()
         {
             var ctx = Request.GetOwinContext();
             return ctx.Authentication;
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -126,7 +128,5 @@ namespace CrochetByJk.Controllers
 
             base.Dispose(disposing);
         }
-
-      
     }
 }

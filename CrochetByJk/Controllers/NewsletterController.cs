@@ -6,7 +6,6 @@ using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
-using CrochetByJk.Model.Model;
 using NLog;
 
 namespace CrochetByJk.Controllers

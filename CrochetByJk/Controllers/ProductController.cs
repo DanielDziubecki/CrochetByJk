@@ -43,7 +43,7 @@ namespace CrochetByJk.Controllers
             IPictureResizer pictureResizer,
             IEmailSender emailSender,
             IProductGalleryProvider galleryProvider,
-            IValidator<Product> validator)
+            IValidator<Product> validator,ILogger logger)
         {
             this.bus = bus;
             this.mapper = mapper;
@@ -51,7 +51,7 @@ namespace CrochetByJk.Controllers
             this.emailSender = emailSender;
             this.galleryProvider = galleryProvider;
             this.validator = validator;
-            logger = LogManager.GetLogger("crochetDbLogger");
+            this.logger = logger;
         }
 
         [Route("sukienki")]
@@ -129,7 +129,7 @@ namespace CrochetByJk.Controllers
         public JsonResult GetProductsByCategory(string categoryId)
         {
             var category = Guid.Parse(categoryId);
-            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery {CategoryId = category});
+            var products = bus.RunQuery(new GetProductsFromCategoryQuery {CategoryId = category});
             var productViewModel = mapper.Map<ProductTileViewModel[]>(products);
             var productsJson = JsonConvert.SerializeObject(productViewModel,
                 Formatting.None,
@@ -174,7 +174,7 @@ namespace CrochetByJk.Controllers
                 product.ProductUrl = $"{baseUrl}/Produkty/{productDto.CategoryName}/{product.UrlFriendlyName}";
 
                 bus.ExecuteCommand(new SaveProductCommand(product));
-                var newsletterClients = bus.RunQuery<NewsletterClient[]>(new GetNewletterClientsQuery());
+                var newsletterClients = bus.RunQuery(new GetNewletterClientsQuery());
 
                 Task.Run(async () => { await SendEmailsAboutNewProductAsync(product, newsletterClients); })
                     .ContinueWith(tsk =>
@@ -341,7 +341,7 @@ namespace CrochetByJk.Controllers
 
         private ProductTileViewModel[] PrepareTilesViewModel(string categoryId)
         {
-            var products = bus.RunQuery<Product[]>(new GetProductsFromCategoryQuery
+            var products = bus.RunQuery(new GetProductsFromCategoryQuery
             {
                 CategoryId = new Guid(categoryId)
             });
@@ -354,13 +354,13 @@ namespace CrochetByJk.Controllers
 
         private ProductDetailsWithSeeAlsoProductsViewModel PrepareProductViewModel(string name, string categoryId)
         {
-            var selectedProduct = bus.RunQuery<Product>(new GetProductByNameInCategoryQuery
+            var selectedProduct = bus.RunQuery(new GetProductByNameInCategoryQuery
             {
                 CategoryId = new Guid(categoryId),
                 ProductName = name
             });
             var viewModel = mapper.Map<ProductDetailsWithSeeAlsoProductsViewModel>(selectedProduct);
-            var seeAlsoProducts = bus.RunQuery<Product[]>(new GetRandomProductsQuery {Amount = 3});
+            var seeAlsoProducts = bus.RunQuery(new GetRandomProductsQuery {Amount = 3});
             var seeAlsoVm = mapper.Map<ProductTileViewModel[]>(seeAlsoProducts);
             foreach (var productTileViewModel in seeAlsoVm)
             {

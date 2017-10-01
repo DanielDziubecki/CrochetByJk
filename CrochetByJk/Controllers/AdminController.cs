@@ -29,7 +29,7 @@ namespace CrochetByJk.Controllers
         [Route("categories")]
         public JsonResult GetCategories()
         {
-            var categories = bus.RunQuery<Category[]>(new GetAllCategoriesQuery());
+            var categories = bus.RunQuery(new GetAllCategoriesQuery());
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
     }

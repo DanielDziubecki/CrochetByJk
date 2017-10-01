@@ -42,7 +42,7 @@ namespace CrochetByJk.Tests.ValidatorsTests
 
             var cqrsBusMock = Substitute.For<ICqrsBus>();
 
-            cqrsBusMock.RunQuery<IEnumerable<string>>(Arg.Any<GetAllProductNamesFromCategoryQuery>())
+            cqrsBusMock.RunQuery(Arg.Any<GetAllProductNamesFromCategoryQuery>())
             .Returns(info => new List<string>
             {
                 "Name1"

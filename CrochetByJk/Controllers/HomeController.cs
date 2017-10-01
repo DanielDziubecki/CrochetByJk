@@ -26,7 +26,7 @@ namespace CrochetByJk.Controllers
 
         public ActionResult Index()
         {
-            var products = bus.RunQuery<Product[]>(new GetLastProductsQuery { Amount = 3 });
+            var products = bus.RunQuery(new GetLastProductsQuery { Amount = 3 });
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
