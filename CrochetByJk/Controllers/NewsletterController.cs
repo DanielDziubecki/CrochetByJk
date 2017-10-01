@@ -19,17 +19,17 @@ namespace CrochetByJk.Controllers
         private readonly ICqrsBus bus;
         private readonly ILogger logger;
 
-        public NewsletterController(ICqrsBus bus)
+        public NewsletterController(ICqrsBus bus,ILogger logger)
         {
             this.bus = bus;
-            logger = LogManager.GetLogger("crochetDbLogger");
+            this.logger = logger;
         }
 
         [Route("{productId}")]
         public ActionResult RedirectToProduct(string productId)
         {
             var encodedId = ShortGuid.Decode(productId);
-            var product = bus.RunQuery<Product>(new GetProductByIdQuery {ProductId = encodedId});
+            var product = bus.RunQuery(new GetProductByIdQuery {ProductId = encodedId});
             if (product == null)
                 return View("Error");
 
