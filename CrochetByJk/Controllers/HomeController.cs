@@ -12,7 +12,7 @@ namespace CrochetByJk.Controllers
 {
     [AllowAnonymous]
     [NlogHandleError(View = "Error")]
-    [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
+  //  [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
     public class HomeController : Controller
     {
         private readonly ICqrsBus bus;

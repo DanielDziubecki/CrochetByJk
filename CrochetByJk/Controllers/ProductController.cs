@@ -29,7 +29,7 @@ namespace CrochetByJk.Controllers
     [AllowAnonymous]
     [RoutePrefix("produkty")]
     [NlogHandleError(View = "Error")]
-    [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
+    [DonutOutputCache(Duration = 60 * 60, Location = OutputCacheLocation.ServerAndClient)]
     public class ProductController : Controller
     {
         private readonly ICqrsBus bus;
