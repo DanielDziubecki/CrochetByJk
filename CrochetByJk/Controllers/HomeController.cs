@@ -1,10 +1,10 @@
 ﻿using System.Web.Mvc;
+using System.Web.UI;
 using AutoMapper;
 using CrochetByJk.Components.ProductGalleryProvider;
 using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
-using CrochetByJk.Model.Model;
 using CrochetByJk.ViewModel;
 using DevTrends.MvcDonutCaching;
 
@@ -12,6 +12,7 @@ namespace CrochetByJk.Controllers
 {
     [AllowAnonymous]
     [NlogHandleError(View = "Error")]
+    [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
     public class HomeController : Controller
     {
         private readonly ICqrsBus bus;
@@ -25,7 +26,7 @@ namespace CrochetByJk.Controllers
             this.pictureResizer = pictureResizer;
         }
 
-     //  [DonutOutputCache(Duration = 60*600, Location =)]
+     
         public ActionResult Index()
         {
             var products = bus.RunQuery(new GetLastProductsQuery { Amount = 4 });
