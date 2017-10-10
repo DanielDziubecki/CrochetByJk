@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.UI;
 using CrochetByJk.Common.ShortGuid;
 using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Commands;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
+using DevTrends.MvcDonutCaching;
 using NLog;
 
 namespace CrochetByJk.Controllers
@@ -13,6 +15,7 @@ namespace CrochetByJk.Controllers
     [AllowAnonymous]
     [RoutePrefix("newsletter")]
     [NlogHandleError(View = "Error")]
+    [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
     public class NewsletterController : Controller
     {
         private readonly ICqrsBus bus;

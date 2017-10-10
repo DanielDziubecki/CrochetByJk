@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Web.UI;
 using AutoMapper;
 using CrochetByJk.Common.Constants;
 using CrochetByJk.Common.Roles;
@@ -19,8 +20,8 @@ using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
 using CrochetByJk.ViewModel;
+using DevTrends.MvcDonutCaching;
 using Newtonsoft.Json;
-using NLog;
 using ILogger = NLog.ILogger;
 
 namespace CrochetByJk.Controllers
@@ -28,6 +29,7 @@ namespace CrochetByJk.Controllers
     [AllowAnonymous]
     [RoutePrefix("produkty")]
     [NlogHandleError(View = "Error")]
+    [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
     public class ProductController : Controller
     {
         private readonly ICqrsBus bus;

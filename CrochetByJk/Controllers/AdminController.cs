@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.UI;
 using CrochetByJk.Common.Roles;
 using CrochetByJk.Components.ProductGalleryProvider;
 using CrochetByJk.Components.Validators;
@@ -6,11 +7,13 @@ using CrochetByJk.ErrorHandlers;
 using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
+using DevTrends.MvcDonutCaching;
 
 namespace CrochetByJk.Controllers
 {
     [Authorize(Roles = ApplicationRoles.Administrator)]
     [NlogHandleError(View = "Error")]
+    [DonutOutputCache(Duration = 60 * 600, Location = OutputCacheLocation.ServerAndClient)]
     public class AdminController : Controller
     {
         private readonly ICqrsBus bus;

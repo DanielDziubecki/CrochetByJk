@@ -6,6 +6,7 @@ using CrochetByJk.Messaging.Core;
 using CrochetByJk.Messaging.Queries;
 using CrochetByJk.Model.Model;
 using CrochetByJk.ViewModel;
+using DevTrends.MvcDonutCaching;
 
 namespace CrochetByJk.Controllers
 {
@@ -24,9 +25,10 @@ namespace CrochetByJk.Controllers
             this.pictureResizer = pictureResizer;
         }
 
+     //  [DonutOutputCache(Duration = 60*600, Location =)]
         public ActionResult Index()
         {
-            var products = bus.RunQuery(new GetLastProductsQuery { Amount = 3 });
+            var products = bus.RunQuery(new GetLastProductsQuery { Amount = 4 });
             var viewModel = mapper.Map<ProductTileViewModel[]>(products);
             foreach (var productTileViewModel in viewModel)
                 pictureResizer.Resize(productTileViewModel, Request.Browser.IsMobileDevice);
