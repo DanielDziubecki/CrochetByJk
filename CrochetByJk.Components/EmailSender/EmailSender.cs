@@ -44,7 +44,7 @@ namespace CrochetByJk.Components.EmailSender
             {
                 Host = "smtp.webio.pl",
                 EnableSsl = true,
-                Credentials = new NetworkCredential("kontakt@crochetbyjk.pl", "Daniel!991")
+                Credentials = new NetworkCredential("kontakt@crochetbyjk.pl", Environment.GetEnvironmentVariable("smtp_pass")
             };
         }
     }
