@@ -17,12 +17,11 @@ namespace CrochetByJk.Messaging.Bus
             logger = LogManager.GetLogger("crochetDbLogger");
         }
 
-        public void ExecuteCommand(MSMQMessage command)
+        public void ExecuteCommand(ICommand command)
         {
-            var type = Type.GetType(command.IncomingMessageNamespace)
             try
             {
-                var handlerType = typeof(ICommandHandler<>).MakeGenericType(type);
+                var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
                 dynamic handler = context.Resolve(handlerType);
                 if (handler == null)
                     throw new NotImplementedHandlerException($"Cannot find handler for {command.GetType()}");
